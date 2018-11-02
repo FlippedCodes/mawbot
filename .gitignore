@@ -1,0 +1,5 @@
+credentials.json
+config/test_token.json
+.vscode/
+node_modules/
+package_lock.json
