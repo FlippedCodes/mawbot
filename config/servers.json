@@ -1,0 +1,30 @@
+{
+    "main": "300051375914483715",
+    "testing": "451833819910373406",
+    "night_dragon": "378063566881685504",
+    "voretv": "484842261515862017",
+
+    "rolerequest_main": "496961294721875969",
+    "rolerequest_testing": "469120653459456000",
+    "rolerequest_night_dragon": "468121381972738068",
+    "rolerequest_voretv": "367013023044590000",
+
+    "saveme_main": "496961663661244416",
+    "saveme_testing": "493510451234078730",
+    "saveme_night_dragon": "468121381972738068",
+    "saveme_voretv": "367013023044590000",
+    
+    "sharedChannel_main": "496962042784120832",
+    "sharedChannel_testing": "451833819910373408",
+    "sharedChannel_night_dragon": "477251068057747469",
+    "sharedChannel_voretv": "484868764362342404",
+    "NSFWsharedChannel_main": "496962080465747968",
+    "NSFWsharedChannel_testing": "480083212715163680",
+    "NSFWsharedChannel_night_dragon": "480110098837143622",
+    "NSFWsharedChannel_voretv": "485112304824877069",
+
+    "invite_main": "Jy4ZuCc",
+    "invite_testing": "sorry,_you_cant_join_here",
+    "invite_night_dragon": "er7vwWN",
+    "invite_voretv": "RKgBKfd"
+}
