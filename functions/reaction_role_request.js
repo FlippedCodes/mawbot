@@ -138,5 +138,5 @@ module.exports.run = async (reaction, requester, config, user, con) => {
 };
 
 module.exports.help = {
-  name: 'role_request',
+  name: 'reaction_role_request',
 };
