@@ -100,11 +100,11 @@ module.exports.run = async (reaction, requester, config, user, con) => {
           requester.addRole(config.noNSFW);
           reaction.message.channel.send('The NSFW channels are hidden now!')
             .then(message => message.delete(6000));
-          reaction.remove(user);
         } else {
           reaction.message.channel.send('Sorry, but due to repeated breaking of rules, you have been disallowed of the ability to assign this role.')
             .then(message => message.delete(6000));
         }
+        reaction.remove(user);
       });
       return;
 
@@ -124,11 +124,11 @@ module.exports.run = async (reaction, requester, config, user, con) => {
           requester.addRole(config.NSFL);
           reaction.message.channel.send('The NSFL channels are shown now!')
             .then(message => message.delete(6000));
-          reaction.remove(user);
         } else {
           reaction.message.channel.send('Sorry, but due to repeated breaking of rules, you have been disallowed of the ability to assign this role.')
             .then(message => message.delete(6000));
         }
+        reaction.remove(user);
       });
       return;
 
