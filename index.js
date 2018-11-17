@@ -211,6 +211,31 @@ client.on('message', async (message) => {
   }
 });
 
+client.on('guildMemberAdd', (guildMember) => {
+  let config;
+  if (guildMember.guild.id === servers.main) {
+    config = require('./config/main/config.json');
+  }
+  if (guildMember.guild.id === servers.night_dragon) {
+    config = require('./config/night_dragon/config.json');
+  }
+  if (guildMember.guild.id === servers.voretv) {
+    config = require('./config/voretv/config.json');
+  }
+  if (guildMember.guild.id === servers.testing) {
+    config = require('./config/testing/config.json');
+  }
+
+  con.query(`SELECT * FROM muted_user WHERE id = '${guildMember.id}'`, (err, rows) => {
+    if (err) throw err;
+    if (rows[0]) {
+      guildMember.addRole(guildMember.guild.roles.find('id', config.mutedRole));
+      guildMember.send('Sorry, but you have been muted before on this server. Please don\'t try to rejoin to get rid of the mute!');
+      client.channels.get(config.muteChannel).send(`[SYSTEM MESSAGE] <@&${config.team}> >>${guildMember.id} (${guildMember.user.tag} | ${guildMember.user.username}) tried to relog while muted!<<`);
+    }
+  });
+});
+
 client.on('error', e => console.error(e));
 
 client.on('warn', e => console.warn(e));
