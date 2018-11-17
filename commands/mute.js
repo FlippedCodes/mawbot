@@ -7,7 +7,6 @@ module.exports.run = async (client, message, args, con, config) => {
 
   await member.removeRoles(member.roles);
   await member.addRole(config.mutedRole);
-  const fetchchannel = await message.guild.channels.get(config.logChannel);
 
   con.query(`SELECT * FROM muted_user WHERE id = '${member.id}'`, (err, rows) => {
     if (err) throw err;
@@ -17,7 +16,7 @@ module.exports.run = async (client, message, args, con, config) => {
   });
 
   message.react('✅');
-  await fetchchannel.send(`<@${message.author.id}> Muted User ${member.id} (${member.user.tag} | ${member.user.username})`);
+  await message.guild.channels.get(config.teamActions).send(`<@${message.author.id}> Muted User ${member.id} (${member.user.tag} | ${member.user.username})`);
 };
 
 module.exports.help = {
