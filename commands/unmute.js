@@ -8,7 +8,16 @@ module.exports.run = async (client, message, args, con, config) => {
   await member.removeRole(config.mutedRole);
   await member.addRole(config.checkinRole);
   const fetchchannel = await message.guild.channels.get(config.logChannel);
-  await fetchchannel.send(`<@${message.author.id}> Unmuted User ${message.mentions.members.first()}`);
+
+  con.query(`SELECT * FROM muted_user WHERE id = '${member.id}'`, (err, rows) => {
+    if (err) throw err;
+    if (!rows.length < 1) {
+      con.query(`DELETE FROM muted_user WHERE id = '${member.id}'`);
+    }
+  });
+
+  message.react('✅');
+  await fetchchannel.send(`<@${message.author.id}> Unmuted User ${member.id} (${member.user.tag} | ${member.user.username})`);
 };
 
 module.exports.help = {
