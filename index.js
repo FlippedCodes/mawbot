@@ -171,13 +171,6 @@ client.on('message', async (message) => {
     config = require('./config/testing/config.json');
   }
 
-  con.query(`SELECT * FROM disabled_channels WHERE id = '${message.author.id}'`, (err, rows) => {
-    if (err) throw err;
-    if (rows[0]) {
-      if (!message.member.roles.find('name', config.teamRole)) return message.author.send(`Sorry, but you cant use comments in <#${rows[0]}>!`);
-    }
-  });
-
   // let config = client.functions.get('config').run(servers, message);
 
   // settings
@@ -194,7 +187,6 @@ client.on('message', async (message) => {
   if (message.channel.id === servers.sharedChannel_NSFWvoretv) return;
 
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
-    message.react('👌');
     if (teamlist.indexOf('online' || 'dnd') === -1) {
       message.channel.send('Sorry There are no team members currently online.\nPlease wait until someone is available!');
     }
@@ -207,15 +199,26 @@ client.on('message', async (message) => {
 
   if (!command.startsWith(config.prefix)) return;
 
-  let cmd = client.commands.get(command.slice(config.prefix.length));
+  con.query(`SELECT * FROM disabled_channels WHERE id = '${message.channel.id}'`, (err, rows) => {
+    if (err) throw err;
+    if (rows[0]) {
+      if (!message.member.roles.find('name', config.teamRole)) {
+        message.author.send(`Sorry, but you can't use comments in <#${rows[0].id}>!`)
+          .then(message.delete());
+        return;
+      }
+    }
 
-  if (cmd) {
-    cmd.run(client, message, args, con, config)
-      .catch(console.log);
-  } else {
-    message.react('❌')
-      .catch(console.log);
-  }
+    let cmd = client.commands.get(command.slice(config.prefix.length));
+
+    if (cmd) {
+      cmd.run(client, message, args, con, config)
+        .catch(console.log);
+    } else {
+      message.react('❌')
+        .catch(console.log);
+    }
+  });
 });
 
 client.on('guildMemberAdd', (guildMember) => {
