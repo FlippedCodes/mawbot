@@ -171,6 +171,13 @@ client.on('message', async (message) => {
     config = require('./config/testing/config.json');
   }
 
+  con.query(`SELECT * FROM disabled_channels WHERE id = '${message.author.id}'`, (err, rows) => {
+    if (err) throw err;
+    if (rows[0]) {
+      if (!message.member.roles.find('name', config.teamRole)) return message.author.send(`Sorry, but you cant use comments in <#${rows[0]}>!`);
+    }
+  });
+
   // let config = client.functions.get('config').run(servers, message);
 
   // settings
