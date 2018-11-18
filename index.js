@@ -203,6 +203,7 @@ client.on('message', async (message) => {
     if (err) throw err;
     if (rows[0]) {
       if (!message.member.roles.find('name', config.teamRole)) {
+        message.guild.channels.get(config.logMessageDelete).send(`[SYSTEM MESSAGE] ${message.author.id} (${message.author.tag} | ${message.author.username}) tried using a command in <#${rows[0].id}> and got blocked doing it!`);
         message.author.send(`Sorry, but you can't use comments in <#${rows[0].id}>!`)
           .then(message.delete());
         return;
