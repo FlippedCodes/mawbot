@@ -38,11 +38,16 @@ module.exports.run = async (client, servers, fs, con) => {
         }
       });
 
+      // test if some time left
+      // warn user
+
       // test if time is up
       con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}'`, (err, rows) => {
         if (err) throw err;
         // remove channel rights, only readable
         // move channel to deactivated rooms
+        // write in channel that timer run out
+        // (add reaction for team to activate channel again)
       });
       console.log('checkmate!');
       // ^remove in final verstion!
