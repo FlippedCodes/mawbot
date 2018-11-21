@@ -12,6 +12,7 @@
   "dependencies": {
     "discord.js": "^11.3.2",
     "mysql": "github:mysqljs/mysql",
+    "pretty-ms": "^4.0.0",
     "snekfetch": "^4.0.4"
   },
   "devDependencies": {
