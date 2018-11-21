@@ -25,7 +25,10 @@
 
     "RPChannelCategory_main": "514177874954158080",
     "RPChannelCategory_testing": "455027708838150154",
-    "RPChannelTime": "900000",
+    "RPChannelArchive_main": "514905722387955799",
+    "RPChannelArchive_testing": "514905580154912779",
+    "RPChannelTime": 259200000,
+    "RPChannelTimeWarn": 43500000,
 
     "invite_main": "Jy4ZuCc",
     "invite_testing": "sorry,_you_cant_join_here",
