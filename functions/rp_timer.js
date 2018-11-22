@@ -1,6 +1,6 @@
 /* eslint-disable no-else-return */
 
-const toMs = require('pretty-ms');
+const toTime = require('pretty-ms');
 
 module.exports.run = async (client, servers, fs, con) => {
   let server;
@@ -31,7 +31,7 @@ module.exports.run = async (client, servers, fs, con) => {
           if (err) throw err;
           if (rows[0]) {
             const carc = rows[0].timeLeft - 300000;
-            channel.setTopic(`active: ${toMs(carc)} left, before this channel gets archived!`);
+            channel.setTopic(`active: ${toTime(carc)} left, before this channel gets archived!`);
             con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
 
             if (rows[0].timeLeft <= servers.RPChannelTimeWarn && rows[0].warned === 'f') {
@@ -39,21 +39,21 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`SELECT * FROM rp_owner WHERE channelID = '${channel.id}'`, async (suberr, user) => {
                 if (suberr) throw suberr;
                 // NEEDS FIX: user is undefined
-                // await channel.send(`<@${user.ownerID}>, Your Channel gets deactivated in the next ${toMs(parseInt(rows[0].timeLeft, 10))}!`);
-                await channel.send(`This Channel gets deactivated in the next ${toMs(parseInt(rows[0].timeLeft, 10))}!`);
+                // await channel.send(`<@${user.ownerID}>, Your Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
+                await channel.send(`This Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
               });
             }
 
             if (rows[0].timeLeft <= 0) {
               channel.setParent(RPChannelArchive);
               // remove channel rights, only readable (bot needs writeing rights!)
-              channel.send(`The time has run out and this channel got now archived! It will be open for the next ${toMs(servers.PRChannelArchivedTime)} before complete deletion.`);
+              channel.send(`The time has run out and this channel got now archived! It will be open for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.`);
               // add reaction for team to activate channel again
               // log archived
             }
           } else {
             con.query(`INSERT INTO rp_timer (id, timeLeft, warned) VALUES ('${channel.id}', '${servers.RPChannelTime}', 'f')`);
-            channel.setTopic(`active: ${toMs(servers.RPChannelTime)} left, before this channel gets archived!`);
+            channel.setTopic(`active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
           }
         });
       });
@@ -64,7 +64,7 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) {
           const carc = rows[0].timeLeft - 300000;
-          channel.setTopic(`archived: ${toMs(carc)} left, before deletion!`);
+          channel.setTopic(`archived: ${toTime(carc)} left, before deletion!`);
           con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
 
           if (rows[0].timeLeft <= 0) {
@@ -74,7 +74,7 @@ module.exports.run = async (client, servers, fs, con) => {
           }
         } else {
           con.query(`INSERT INTO rp_timer (id, timeLeft, warned) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't')`);
-          channel.setTopic(`archived: ${toMs(servers.RPChannelTime)} left, before deletion!`);
+          channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
         }
       });
     });
