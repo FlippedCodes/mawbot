@@ -1,6 +1,5 @@
 credentials.json
 config/test_token.json
 .vscode/
-_node_modules/
 node_modules/
 package_lock.json
