@@ -46,8 +46,9 @@ module.exports.run = async (client, servers, fs, con) => {
 
             if (rows[0].timeLeft <= 0) {
               channel.setParent(RPChannelArchive);
-              // remove channel rights, only readable (bot needs writeing rights!)
-              channel.send(`The time has run out and this channel got now archived! It will be open for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.`);
+              // remove channel rights, only readable (bot needs writing rights!)
+              channel.send(`The time has run out and this channel got now archived! It will be open for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.`)
+                .then(message => message.react('❌'));
               // add reaction for team to activate channel again
               // log archived
             }
