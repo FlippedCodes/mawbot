@@ -30,10 +30,6 @@ module.exports.run = async (client, servers, fs, con) => {
         con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}'`, (err, rows) => {
           if (err) throw err;
           if (rows[0]) {
-            const carc = rows[0].timeLeft - 300000;
-            channel.setTopic(`active: ${toTime(carc)} left, before this channel gets archived!`);
-            con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
-
             if (rows[0].timeLeft <= servers.RPChannelTimeWarn && rows[0].warned === 'f') {
               con.query(`UPDATE rp_timer SET warned = 't' WHERE id = '${channel.id}' AND warned = 'f'`);
               con.query(`SELECT * FROM rp_owner WHERE channelID = '${channel.id}'`, async (suberr, user) => {
@@ -45,16 +41,23 @@ module.exports.run = async (client, servers, fs, con) => {
             }
 
             if (rows[0].timeLeft <= 0) {
+              con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
               channel.setParent(RPChannelArchive);
               // remove channel rights, only readable (bot needs writing rights!)
-              channel.send(`The time has run out and this channel got moved to     because it is inactive! It will be open for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.`)
-                .then(message => message.react('❌'));
-              // add reaction for team to activate channel again
-              // log archived
+              channel.send(`The time has run out and this channel got moved to ${channel.parent.name} because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reactivate this channel.`)
+                .then(message => message.react('🔓'));
+              client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
+              // trying deletion
+              // con.query(`UPDATE rp_timer SET timeLeft = '${RPChannelArchive}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
+              channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
             }
+
+            const carc = rows[0].timeLeft - 300000;
+            channel.setTopic(`🔓 active: ${toTime(carc)} left, before this channel gets archived!`);
+            con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
           } else {
             con.query(`INSERT INTO rp_timer (id, timeLeft, warned) VALUES ('${channel.id}', '${servers.RPChannelTime}', 'f')`);
-            channel.setTopic(`active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
+            channel.setTopic(`🔓 active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
           }
         });
       });
@@ -65,13 +68,13 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) {
           const carc = rows[0].timeLeft - 300000;
-          channel.setTopic(`archived: ${toTime(carc)} left, before deletion!`);
+          channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`);
           con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
 
           if (rows[0].timeLeft <= 0) {
-            client.guilds.get(server).channels.get(RPChannelLog).send(`${channel.id} (${channel.name}) got deleted, because tis older than a month!`);
             con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
-            channel.delete();
+            client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got deleted, because it is older than a month!`)
+              .then(() => channel.delete());
           }
         } else {
           con.query(`INSERT INTO rp_timer (id, timeLeft, warned) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't')`);
