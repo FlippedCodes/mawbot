@@ -102,29 +102,30 @@ module.exports.run = async (client, message, args, con, config) => {
         .catch(console.error);
       return;
 
-    case 'help':
-      message.channel.send({
-        embed: {
-          color: message.member.displayColor,
-          title: 'Help for the RP command',
-          description: `Usage: \`${config.prefix}rp SUBCMD TYPE NAME\``,
-          fields: [{
-            name: 'SUBCMD',
-            value: 'add: ',
-          },
-          {
-            name: 'NAME',
-            value: 'Tell me what your room should be called and I\'ll make it happen.',
-          },
-          ],
-          timestamp: new Date(),
-          footer: {
-            icon_url: message.client.user.displayAvatarURL,
-            text: message.client.user.tag,
-          },
-        },
-      });
-      return;
+    // case 'help':
+    // // wip
+    //   message.channel.send({
+    //     embed: {
+    //       color: message.member.displayColor,
+    //       title: 'Help for the RP command',
+    //       description: `Usage: \`${config.prefix}rp SUBCMD TYPE NAME\``,
+    //       fields: [{
+    //         name: 'SUBCMD',
+    //         value: 'add: ',
+    //       },
+    //       {
+    //         name: 'NAME',
+    //         value: 'Tell me what your room should be called and I\'ll make it happen.',
+    //       },
+    //       ],
+    //       timestamp: new Date(),
+    //       footer: {
+    //         icon_url: message.client.user.displayAvatarURL,
+    //         text: message.client.user.tag,
+    //       },
+      //   },
+      // });
+      // return;
 
     default:
       const confusResponses = [
