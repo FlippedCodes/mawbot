@@ -1,5 +1,3 @@
-/* eslint-disable no-else-return */
-
 const toTime = require('pretty-ms');
 
 module.exports.run = async (client, servers, fs, con) => {
@@ -47,8 +45,6 @@ module.exports.run = async (client, servers, fs, con) => {
               channel.send(`The time has run out and this channel got moved to ${channel.parent.name} because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reactivate this channel.`)
                 .then(message => message.react('🔓'));
               client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
-              // trying deletion
-              // con.query(`UPDATE rp_timer SET timeLeft = '${RPChannelArchive}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
               channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
             }
 
