@@ -24,24 +24,18 @@ module.exports.run = async (client, message, args, con, config) => {
           deny: ['SEND_MESSAGES'],
         }])
           .then(channel => channel.setParent(config.parentRP))
-          .then(channel => channel.overwritePermissions(
-            message.author,
-            {
+          .then(channel => channel.overwritePermissions(message.author, {
               SEND_MESSAGES: true,
-            },
-            config.clientID,
-            {
+          }))
+          .then(channel => channel.overwritePermissions(config.clientID, {
               SEND_MESSAGES: true,
-            },
-            config.team,
-            {
+          }))
+          .then(channel => channel.overwritePermissions(config.team, {
               SEND_MESSAGES: true,
-            },
-            config.mutedRole,
-            {
+          }))
+          .then(channel => channel.overwritePermissions(config.mutedRole, {
               VIEW_CHANNEL: false,
-            },
-          ).catch(console.log));
+          }).catch(console.log));
 
         con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
 
