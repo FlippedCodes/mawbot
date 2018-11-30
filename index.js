@@ -206,7 +206,7 @@ client.on('message', async (message) => {
 
   if (!command.startsWith(config.prefix)) return;
 
-  let cmd = client.commands.get(command.slice(config.prefix.length));
+  let cmd = client.commands.get(command.slice(config.prefix.length).toLowerCase());
 
   if (cmd) {
     cmd.run(client, message, args, con, config)
