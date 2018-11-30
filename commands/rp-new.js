@@ -34,13 +34,10 @@ module.exports.run = async (client, message, args, con, config) => {
           .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
           .catch(console.log);
 
-        con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
+        client.functions.get('usersetup_rp_channel').run(channel, message)
+          .catch(console.log);
 
-        // code for setting roomtype
-
-        await channel.send(`<@${message.author.id}> \nYour rp channel is ready! Have fun!`);
-        // explain what cmds there are
-        // add explain timer in description
+        // explain what cmds there are + timer
       });
       // somewhere we need a description setter for the inactive timer
       // should read "Channel created by OWNER and gets deleted in DD:HH:MM"
