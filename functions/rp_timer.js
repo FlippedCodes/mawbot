@@ -69,7 +69,7 @@ module.exports.run = async (client, servers, fs, con) => {
     });
 
     client.guilds.get(server).channels.get(RPChannelArchive).children.forEach((channel) => {
-      con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}'`, (err, rows) => {
+      con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 't'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) {
           const carc = rows[0].timeLeft - 300000;
