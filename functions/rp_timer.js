@@ -60,9 +60,9 @@ module.exports.run = async (client, servers, fs, con) => {
                 con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${channel.id}' AND warned = 't'`);
               } else {
                 con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.RPChannelTime}', 'f', 'f')`);
-            channel.setTopic(`🔓 active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
-          }
-        });
+                channel.setTopic(`🔓 active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
+              }
+            });
           }
         });
       });
@@ -90,7 +90,7 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`UPDATE rp_timer SET warned = 't' WHERE id = '${channel.id}' AND warned = 'f'`);
             } else {
               con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't', 't')`);
-          channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
+              channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
               channel.lockpermissions();
             }
           });
