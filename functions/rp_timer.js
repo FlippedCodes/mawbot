@@ -52,8 +52,17 @@ module.exports.run = async (client, servers, fs, con) => {
             channel.setTopic(`🔓 active: ${toTime(carc)} left, before this channel gets archived!`);
             con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
           } else {
-            con.query(`INSERT INTO rp_timer (id, timeLeft, warned) VALUES ('${channel.id}', '${servers.RPChannelTime}', 'f')`);
+            con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 't'`, (err, rows) => {
+              if (err) throw err;
+              if (rows[0]) {
+                con.query(`UPDATE rp_timer SET archived = 'f' WHERE id = '${channel.id}' AND archived = 't'`);
+                con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${channel.id}'`);
+                con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${channel.id}' AND warned = 't'`);
+              } else {
+                con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.RPChannelTime}', 'f', 'f')`);
             channel.setTopic(`🔓 active: ${toTime(servers.RPChannelTime)} left, before this channel gets archived!`);
+          }
+        });
           }
         });
       });
