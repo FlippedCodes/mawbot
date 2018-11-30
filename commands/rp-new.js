@@ -90,8 +90,8 @@ module.exports.run = async (client, message, args, con, config) => {
       // save channel to archive
       return;
 
+    // needs propper introductions
     // case 'help':
-    // // wip
     //   message.channel.send({
     //     embed: {
     //       color: message.member.displayColor,
