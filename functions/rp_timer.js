@@ -25,7 +25,7 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) return channel.setTopic('This channel is blacklisted and won\'t be effacted from the timeout.');
 
-        con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}'`, (err, rows) => {
+        con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, (err, rows) => {
           if (err) throw err;
           if (rows[0]) {
             if (rows[0].timeLeft <= servers.RPChannelTimeWarn && rows[0].warned === 'f') {
