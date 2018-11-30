@@ -25,6 +25,9 @@ module.exports.run = async (client, message, args, con, config) => {
           return;
         }
 
+        // disabled for testing
+        // con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
+
         const channel = await message.guild.createChannel(name, 'text', [{
           id: message.guild.id,
           deny: ['SEND_MESSAGES'],
