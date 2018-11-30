@@ -86,11 +86,8 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'end':
-      // test if the channel is in the category because of not using it in general for example
-      // also maybe saving it up for 24hrs. it should extand the timer to that
-      message.channel.delete()
-        .then(console.log)
-        .catch(console.error);
+      // checking if user is owner of channel
+      // save channel to archive
       return;
 
     // case 'help':
