@@ -163,6 +163,11 @@ client.on('message', async (message) => {
     return;
   }
 
+  con.query(`SELECT * FROM rp_timer WHERE id = '${message.channel.id}'`, async (err, rows) => {
+    if (err) throw err;
+    if (rows[0]) con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${message.channel.id}'`);
+  });
+
   let config;
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
