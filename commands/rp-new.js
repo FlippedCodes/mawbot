@@ -80,7 +80,7 @@ module.exports.run = async (client, message, args, con, config) => {
             },
           );
         } else {
-          message.channel.send('Sorry, you are not allowed to remove someone from this room!');
+          message.channel.send('Sorry, you are not allowed to remove users from this room!');
         }
       });
       return;
