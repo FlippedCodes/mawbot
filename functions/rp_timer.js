@@ -25,7 +25,7 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) return channel.setTopic('This channel is blacklisted and won\'t be effacted from the timeout.');
 
-        con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, (err, rows) => {
+        con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, async (err, rows) => {
           if (err) throw err;
           if (rows[0]) {
             if (rows[0].timeLeft <= servers.RPChannelTimeWarn && rows[0].warned === 'f') {
@@ -41,9 +41,9 @@ module.exports.run = async (client, servers, fs, con) => {
             if (rows[0].timeLeft <= 0) {
               con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
               channel.setParent(RPChannelArchive);
-              // remove channel rights, only readable (bot needs writing rights!)
-              channel.send(`The time has run out and this channel got moved to ${channel.parent.name} because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reactivate this channel.`)
+              await channel.send(`The time has run out and this channel got moved to **archived rooms** because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reactivate this channel.`)
                 .then(message => message.react('🔓'));
+              // remove channel rights, only readable (bot needs writing rights!)
               client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
               channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
             }
@@ -91,7 +91,7 @@ module.exports.run = async (client, servers, fs, con) => {
             } else {
               con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't', 't')`);
               channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
-              channel.lockpermissions();
+              channel.lockPermissions();
             }
           });
         }
