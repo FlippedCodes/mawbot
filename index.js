@@ -135,6 +135,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
     config = require('./config/testing/config.json');
   }
 
+  let RPChannelArchive;
+  let RPChannelLog;
+
+  if (fs.existsSync('./config/test_token.json')) {
+    RPChannelArchive = servers.RPChannelArchive_testing;
+    RPChannelLog = servers.RPChannelLog_testing;
+    // return;
+  } else {
+    RPChannelArchive = servers.RPChannelArchive_main;
+    RPChannelLog = servers.RPChannelLog_main;
+  }
+
   if (reaction.message.channel.id === servers.sharedChannel_night_dragon) return;
   if (reaction.message.channel.id === servers.sharedChannel_voretv) return;
   if (reaction.message.channel.id === servers.sharedChannel_NSFWnight_dragon) return;
@@ -150,6 +162,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   // check if reaction is from keep me
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
+
+  // check if reaction is from arcived rooms
+  if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_saveme').run(client, requester, RPChannelLog);
 });
 
 client.on('disconnected', () => { client.user.setStatus('offline'); });
