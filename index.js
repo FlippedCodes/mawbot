@@ -137,14 +137,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   let RPChannelArchive;
   let RPChannelLog;
+  let RPChannelCategory;
 
   if (fs.existsSync('./config/test_token.json')) {
     RPChannelArchive = servers.RPChannelArchive_testing;
     RPChannelLog = servers.RPChannelLog_testing;
-    // return;
+    RPChannelCategory = servers.RPChannelCategory_testing;
   } else {
     RPChannelArchive = servers.RPChannelArchive_main;
     RPChannelLog = servers.RPChannelLog_main;
+    RPChannelCategory = servers.RPChannelCategory_main;
   }
 
   if (reaction.message.channel.id === servers.sharedChannel_night_dragon) return;
@@ -164,7 +166,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
 
   // check if reaction is from arcived rooms
-  if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_saveme').run(client, requester, RPChannelLog);
+  if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(client, reaction, RPChannelLog, RPChannelCategory);
 });
 
 client.on('disconnected', () => { client.user.setStatus('offline'); });
