@@ -169,8 +169,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(client, reaction, RPChannelLog, RPChannelCategory);
 });
 
-client.on('disconnected', () => { client.user.setStatus('offline'); });
-
 client.on('message', async (message) => {
   // conditions
   if (message.author.bot) return;
