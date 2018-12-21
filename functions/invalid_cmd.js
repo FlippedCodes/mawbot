@@ -7,10 +7,10 @@ module.exports.run = async (message, subcmd) => {
     'Come again?',
     'Maybe you should try something else there, buddy.',
     `I tried to understand \`${subcmd}\`, trust me, but I just cannot.`,
-    `💩 Invalid comamnd: \`${subcmd}\``,
+    `Invalid comamnd: \`${subcmd}\` 💩`,
     `Sorry, I don't know this command -  \`${subcmd}\``,
     `Eh? Do you speak my language? Because I don't know \`${subcmd}\`...`,
-    'UwU I don\'t know what to do...',
+    'I don\'t know what to do... UwU',
   ];
 
   const randomChoice = Math.floor(Math.random() * confusResponses.length);
