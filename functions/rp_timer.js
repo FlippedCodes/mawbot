@@ -40,9 +40,9 @@ module.exports.run = async (client, servers, fs, con) => {
 
             if (rows[0].timeLeft <= 0) {
               con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
+              con.query(`DELETE FROM rp_owner WHERE channelID = '${channel.id}'`);
               channel.setParent(RPChannelArchive);
-              await channel.send(`The time has run out and this channel got moved to **archived rooms** because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reactivate this channel.`)
-                .then(message => message.react('🔓'));
+              await channel.send(`The time has run out and this channel got moved to **archived rooms** because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reopen this channel within that time with \`=rp reopen\`.`);
               // remove channel rights, only readable (bot needs writing rights!)
               client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
               channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
@@ -98,8 +98,8 @@ module.exports.run = async (client, servers, fs, con) => {
       });
     });
   // keep 5 sec intervall for testing
-  }, 1 * 5000);
-  // }, 1 * 300000);
+  // }, 1 * 5000);
+  }, 1 * 300000);
 };
 
 module.exports.help = {
