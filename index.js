@@ -34,7 +34,7 @@ con.connect((err) => {
   console.log('Connected to database!');
 });
 
-// loadin serverIDs
+// loading serverIDs
 const servers = require('./config/servers.json');
 
 const blacklist = require('./config/blacklist.json');
@@ -166,7 +166,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
 
   // check if reaction is from arcived rooms
-  if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(client, reaction, RPChannelLog, RPChannelCategory);
+  // got moved to cmd because of botrestarting problems
+  // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
 });
 
 client.on('message', async (message) => {
