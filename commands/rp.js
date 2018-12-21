@@ -1,4 +1,20 @@
-const client = module.require('discord.js');
+const servers = require('../config/servers.json');
+
+const fs = require('fs');
+
+let RPChannelArchive;
+let RPChannelLog;
+let RPChannelCategory;
+
+if (fs.existsSync('./config/test_token.json')) {
+  RPChannelArchive = servers.RPChannelArchive_testing;
+  RPChannelLog = servers.RPChannelLog_testing;
+  RPChannelCategory = servers.RPChannelCategory_testing;
+} else {
+  RPChannelArchive = servers.RPChannelArchive_main;
+  RPChannelLog = servers.RPChannelLog_main;
+  RPChannelCategory = servers.RPChannelCategory_main;
+}
 
 module.exports.run = async (client, message, args, con, config) => {
   let [subcmd, name] = args;
@@ -86,8 +102,15 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'end':
-      // checking if user is owner of channel
-      // save channel to archive
+      con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
+        if (err) throw err;
+
+        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+          message.channel.setParent(RPChannelArchive);
+        } else {
+          message.channel.send('Sorry, you are not allowed to end the RP in this room!');
+        }
+      });
       return;
 
     // needs propper introductions
@@ -114,6 +137,72 @@ module.exports.run = async (client, message, args, con, config) => {
       //   },
       // });
       // return;
+
+    case 'info':
+      con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
+        if (err) throw err;
+        let owner;
+        if (rows[0]) {
+          owner = rows[0].ownerID;
+        } else {
+          owner = 'no one specified';
+        }
+        message.channel.send({
+          embed: {
+            color: message.member.displayColor,
+            title: 'Channel information',
+            fields: [
+              {
+                name: 'Channelname',
+                value: message.channel.name,
+                inline: true,
+              },
+              {
+                name: 'Channel ID',
+                value: message.channel.id,
+                inline: true,
+              },
+              {
+                name: 'Owner',
+                value: `<@${owner}>`,
+                inline: true,
+              },
+              // cant, needs to be in DB first
+              // {
+              //   name: 'Channeltype',
+              //   value: message.channel.id,
+              //   inline: true,
+              // },
+              // {
+              //   name: 'Channel open?',
+              //   value: message.channel.id,
+              //   inline: true,
+              // },
+              // {
+              //   name: 'Access to channel',
+              //   value: message.channel.id,
+              //   inline: true,
+              // },
+            ],
+            timestamp: new Date(),
+            footer: {
+              icon_url: message.client.user.displayAvatarURL,
+              text: message.client.user.tag,
+            },
+          },
+        });
+      });
+      return;
+
+    case 'reopen':
+      if (!message.member.roles.get(config.team)) {
+        message.channel.send('Sorry, but you can\'t reopen a channel. Please contact the team if you wish this channel reopened.');
+        return;
+      }
+      message.channel.setParent(RPChannelCategory);
+      message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back.');
+      client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
+      return;
 
     default:
       client.functions.get('invalid_cmd').run(message, subcmd)
