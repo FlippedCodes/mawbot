@@ -88,6 +88,7 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`UPDATE rp_timer SET archived = 't' WHERE id = '${channel.id}' AND archived = 'f'`);
               con.query(`UPDATE rp_timer SET timeLeft = '${servers.PRChannelArchivedTime}' WHERE id = '${channel.id}'`);
               con.query(`UPDATE rp_timer SET warned = 't' WHERE id = '${channel.id}' AND warned = 'f'`);
+              con.query(`DELETE FROM rp_owner WHERE channelID = '${channel.id}'`);
             } else {
               con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't', 't')`);
               channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
