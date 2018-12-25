@@ -50,6 +50,8 @@ module.exports.run = async (client, message, args, con, config) => {
           .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
           .catch(console.log);
 
+        message.channel.send(`Your RP channel (<#${channel.id}) got created! Have fun :3`);
+
         con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
         client.functions.get('usersetup_rp_channel').run('Intro', channel, message);
 
