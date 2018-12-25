@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
         if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           message.channel.setParent(RPChannelArchive);
-          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.');
+          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additinal minutes before you can create a new channel.');
         } else {
           message.channel.send('Sorry, you are not allowed to end the RP in this room!');
         }
