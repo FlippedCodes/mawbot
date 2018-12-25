@@ -1,7 +1,7 @@
 module.exports.run = async (intro, channel, message) => {
   if (intro === 'Intro') {
     channel.send(`<@${message.author.id}> \nYour rp channel is now created! Please use \`=rp info\` for more information and the currenty status of your chatroom`);
-    channel.send('This is the setup guide for your channel, please click the reactions to the questions.');
+    channel.send('This is the setup guide for your channel, please click the reactions to the questions.\nUse `=rp settings` if you want to change them later.\n\nHave fun with your room ^^');
   }
   channel.send('Do you want a private room or a public room where everyone can **write** in?\n🚪  Private\n🔓  Open')
     .then(async (msg) => {
