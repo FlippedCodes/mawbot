@@ -134,12 +134,12 @@ module.exports.run = async (client, message, args, con, config) => {
             inline: true,
           },
           {
-            name: `\`${config.prefix}rp add USERNAME\``,
+            name: `\`${config.prefix}rp add USERMENTION\``,
             value: 'Adds writing permissions for a user in your room; owner only',
             inline: true,
           },
           {
-            name: `\`${config.prefix}rp remove USERNAME\``,
+            name: `\`${config.prefix}rp remove USERMENTION\``,
             value: 'Removes writing permissions of a user in your room; owner only',
             inline: true,
           },
