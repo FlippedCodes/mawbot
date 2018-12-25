@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
         if (!name) return message.channel.send('Please provide a channelname.');
 
-        if (message.guild.channels.find('name', name)) {
+        if (message.guild.channels.find(channel => channel.name === name)) {
           message.channel.send('Sorry, this channel exists already with the same name.');
           message.react('❌');
           return;
@@ -63,7 +63,7 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
@@ -81,7 +81,7 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,

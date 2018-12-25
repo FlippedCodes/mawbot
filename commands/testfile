@@ -266,7 +266,7 @@ exports.commands = {
             }
 
             let user = msg.guild.members.get(options[1].replace(/[^\w\s]/gi, ''));
-            let role = msg.guild.roles.find('name', roleString.trim());
+            let role = msg.guild.roles.find(role => role.name === roleString.trim());
             if (user != null) {
               if (role !== null) {
                 if (options[0] == 'give') {
@@ -339,7 +339,7 @@ exports.commands = {
                 		return;
                 	}
                 	let serversInfo = JSON.parse(fs.readFileSync('./data/servers.json', 'utf8'));
-          if (msg.member.roles.find('name', '>> Bot Privs <<')) {
+          if (msg.member.roles.find(role => role.name === '>> Bot Privs <<')) {
             params += ' ';
             let firstOption = params.substring(0, params.indexOf(' '));
             if (firstOption == 'help') {
@@ -634,8 +634,8 @@ exports.commands = {
         description: 'Returns the avatar image of the specified user. If no user is specified, returns the avatar image of the author.',
         process(bot, msg, params, choice){
                     if (params) {
-                        if (bot.users.find("username", params) != null) {
-                            msg.channel.send(bot.users.find("username", params).avatarURL);
+                        if (bot.users.find(user => user.username === params) != null) {
+                            msg.channel.send(bot.users.find(user => user.username === params).avatarURL);
                         }
                         else {
                             var regst = /^[^\s]+/;

@@ -4,7 +4,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
 
   switch (reaction.emoji.name) {
     case '1⃣':
-      if (requester.roles.find('id', config.prey)) {
+      if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you!')
           .then(message => message.delete(6000));
         requester.removeRole(config.prey);
@@ -12,13 +12,13 @@ module.exports.run = async (reaction, requester, config, user, con) => {
         return;
       }
 
-      if (requester.roles.find('id', config.switch)) {
+      if (requester.roles.find(role => role.id === config.switch)) {
         reaction.message.channel.send('I have removed `Prey/Pred` from you, so you can have `Prey`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.switch);
       }
 
-      if (requester.roles.find('id', config.pred)) {
+      if (requester.roles.find(role => role.id === config.pred)) {
         reaction.message.channel.send('I have removed `Pred` from you, so you can have `Prey`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.pred);
@@ -31,13 +31,13 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       return;
 
     case '2⃣':
-      if (requester.roles.find('id', config.prey)) {
+      if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you, so you can have `Prey/Pred`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.prey);
       }
 
-      if (requester.roles.find('id', config.switch)) {
+      if (requester.roles.find(role => role.id === config.switch)) {
         reaction.message.channel.send('I have removed `Prey/Pred` from you!')
           .then(message => message.delete(6000));
         requester.removeRole(config.switch);
@@ -45,7 +45,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
         return;
       }
 
-      if (requester.roles.find('id', config.pred)) {
+      if (requester.roles.find(role => role.id === config.pred)) {
         reaction.message.channel.send('I have removed `Pred` from you, so you can have `Prey/Pred`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.pred);
@@ -58,19 +58,19 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       return;
 
     case '3⃣':
-      if (requester.roles.find('id', config.prey)) {
+      if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you, so you can have `Pred`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.prey);
       }
 
-      if (requester.roles.find('id', config.switch)) {
+      if (requester.roles.find(role => role.id === config.switch)) {
         reaction.message.channel.send('I have removed `Prey/Pred` from you, so you can have `Pred`!')
           .then(message => message.delete(6000));
         requester.removeRole(config.switch);
       }
 
-      if (requester.roles.find('id', config.pred)) {
+      if (requester.roles.find(role => role.id === config.pred)) {
         reaction.message.channel.send('I have removed `Pred` from you!')
           .then(message => message.delete(6000));
         requester.removeRole(config.pred);
@@ -89,7 +89,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
         if (err) throw err;
 
         if (rows.length < 1) {
-          if (requester.roles.find('id', config.noNSFW)) {
+          if (requester.roles.find(role => role.id === config.noNSFW)) {
             reaction.message.channel.send('The NSFW channels are shown now!')
               .then(message => message.delete(6000));
             requester.removeRole(config.noNSFW);
@@ -113,7 +113,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
         if (err) throw err;
         if (rows.length < 1) {
         // if (!rows[0]) {
-          if (requester.roles.find('id', config.NSFL)) {
+          if (requester.roles.find(role => role.id === config.NSFL)) {
             reaction.message.channel.send('The NSFL channels are hidden now!')
               .then(message => message.delete(6000));
             requester.removeRole(config.NSFL);

@@ -7,7 +7,7 @@ const fs = require('fs');
 let token;
 
 module.exports.run = async (client, message, args, con, config) => {
-  if (!message.member.roles.find('name', config.adminRole)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
+  if (!message.member.roles.find(role => role.name === config.adminRole)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
   if (fs.existsSync('../config/test_token.json')) {
     token = require('../config/test_token.json');
     message.channel.send('Relogging...')
