@@ -207,7 +207,8 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'settings':
-      client.functions.get('usersetup_rp_channel').run('noIntro', message, subcmd)
+      // const channel = message.channel;
+      client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
         .catch(console.log);
       return;
 
