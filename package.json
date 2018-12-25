@@ -1,6 +1,6 @@
 {
   "name": "mawbot",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "description": "This bot belongs to the TDM-Network",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.4.2",
+    "discord.js": "github:discordjs/discord.js#11.4-dev",
     "mysql": "github:mysqljs/mysql",
     "pretty-ms": "^4.0.0",
     "snekfetch": "^4.0.4"
