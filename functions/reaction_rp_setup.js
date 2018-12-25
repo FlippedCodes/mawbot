@@ -8,12 +8,14 @@ module.exports.run = async (setting, config, client, reaction, RPChannelLog, con
           case 'RPPrivate':
             reaction.message.channel.overwritePermissions(config.checkinRole, { SEND_MESSAGES: false });
             reaction.message.channel.send('This channel is now marked as a private rp channel!');
+            client.channels.get(RPChannelLog).send(`The channel <#${reaction.message.channel.id}> (${reaction.message.channel.id}) is now marked as Private.`);
             reaction.remove(user);
             return;
 
           case 'RPPublic':
             reaction.message.channel.overwritePermissions(config.checkinRole, { SEND_MESSAGES: true });
             reaction.message.channel.send('This channel is now marked as a public rp channel!');
+            client.channels.get(RPChannelLog).send(`The channel <#${reaction.message.channel.id}> (${reaction.message.channel.id}) is now marked as Public.`);
             reaction.remove(user);
             return;
 
