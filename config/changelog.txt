@@ -1,6 +1,4 @@
 **Changelog:**
 
-+ nsfw_forbidden AND nsfw_access
-Adds or removes Selected user to a blacklist for no assignmaent of `no_nsfw` and `nsfl_access`
-Usage: `=nsfw_forbidden ID OR PING`
-Usage: `=nsfw_allow ID OR PING`
++ custom rp channels. more istructions in the future
+
