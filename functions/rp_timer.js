@@ -32,7 +32,7 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`UPDATE rp_timer SET warned = 't' WHERE id = '${channel.id}' AND warned = 'f'`);
               con.query(`SELECT * FROM rp_owner WHERE channelID = '${channel.id}'`, async (suberr, user) => {
                 if (suberr) throw suberr;
-                // NEEDS FIX: user is undefined
+                // NEEDS FIX: user is undefined?
                 // await channel.send(`<@${user.ownerID}>, Your Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
                 await channel.send(`This Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
               });

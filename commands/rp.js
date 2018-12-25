@@ -106,8 +106,9 @@ module.exports.run = async (client, message, args, con, config) => {
         if (err) throw err;
 
         if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
-          message.channel.setParent(RPChannelArchive);
-          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
+          message.channel.setParent(RPChannelArchive)
+            .then(channel => channel.lockPermissions());
+          message.channel.send('This channel got moved to **archived rooms** because it got ended by the owner of the room!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
         } else {
           message.channel.send('Sorry, you are not allowed to end the RP in this room!');
         }
@@ -197,15 +198,16 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'reopen':
-      if (!message.member.roles.get(config.team)) {
+      if (message.member.roles.get(config.team)) {
+        message.channel.setParent(RPChannelCategory)
+          .then(channel => channel.lockPermissions());
+        message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
+        client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
+        client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
+          .catch(console.log);
+      } else {
         message.channel.send('Sorry, but you can\'t reopen a channel. Please contact the team if you wish this channel reopened.');
-        return;
       }
-      message.channel.setParent(RPChannelCategory);
-      message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
-      client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
-      client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
-        .catch(console.log);
       return;
 
     case 'settings':
