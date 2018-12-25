@@ -8,7 +8,7 @@ module.exports.run = async (intro, channel, message) => {
       await msg.react('🚪');
       await msg.react('🔓');
     });
-  channel.send('What type of room would you prefer? Make sure you have the propper roles form \n🔅  SFW\n🔞  NSFW\n☠  NSFL')
+  channel.send('What type of room would you prefer? Make sure you have the propper roles from <#496961294721875969> \n🔅  SFW\n🔞  NSFW\n☠  NSFL')
     .then(async (msg) => {
       await msg.react('🔅');
       await msg.react('🔞');

@@ -23,7 +23,7 @@ module.exports.run = async (client, servers, fs, con) => {
     client.guilds.get(server).channels.get(RPChannelCategory).children.forEach((channel) => {
       con.query(`SELECT * FROM rp_timerBlacklist WHERE id = '${channel.id}'`, (err, rows) => {
         if (err) throw err;
-        if (rows[0]) return channel.setTopic('This channel is blacklisted and won\'t be effacted from the timeout.');
+        if (rows[0]) return channel.setTopic('This channel won\'t be effacted from the timeout.');
 
         con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, async (err, rows) => {
           if (err) throw err;
