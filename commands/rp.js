@@ -121,28 +121,59 @@ module.exports.run = async (client, message, args, con, config) => {
 
     // needs propper introductions
     case 'help':
-      message.channel.send('This wasn\'t done on time... It will be done in the near future.');
-      //   message.channel.send({
-      //     embed: {
-      //       color: message.member.displayColor,
-      //       title: 'Help for the RP command',
-      //       description: `Usage: \`${config.prefix}rp SUBCMD TYPE NAME\``,
-      //       fields: [{
-      //         name: 'SUBCMD',
-      //         value: 'add: ',
-      //       },
-      //       {
-      //         name: 'NAME',
-      //         value: 'Tell me what your room should be called and I\'ll make it happen.',
-      //       },
-      //       ],
-      //       timestamp: new Date(),
-      //       footer: {
-      //         icon_url: message.client.user.displayAvatarURL,
-      //         text: message.client.user.tag,
-      //       },
-      //   },
-      // });
+      message.channel.send({
+        embed: {
+          color: message.member.displayColor,
+          title: 'Help for the RP command',
+          description: `Usage: \`${config.prefix}rp SUBCMD ARGUMENT\``,
+          fields: [{
+            name: `\`${config.prefix}rp create NAME\``,
+            value: 'Adds a room; One active room per user.',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp add USERNAME\``,
+            value: 'Adds writing permissions for a user in your room; owner only',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp remove USERNAME\``,
+            value: 'Removes writing permissions of a user in your room; owner only',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp help\``,
+            value: 'Gues what it does...',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp info\``,
+            value: 'Shows information from the current channel.',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp settings\``,
+            value: 'Repost the settings; owner only',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp end\``,
+            value: 'Ends the RP and archives the room; owner only',
+            inline: true,
+          },
+          {
+            name: `\`${config.prefix}rp reopen\``,
+            value: 'Reopens an archived channel; team only',
+            inline: true,
+          },
+          ],
+          timestamp: new Date(),
+          footer: {
+            icon_url: message.client.user.displayAvatarURL,
+            text: message.client.user.tag,
+          },
+        },
+      });
       return;
 
     case 'info':
