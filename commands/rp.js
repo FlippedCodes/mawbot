@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
         if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           message.channel.setParent(RPChannelArchive);
-          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additinal minutes before you can create a new channel.');
+          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
         } else {
           message.channel.send('Sorry, you are not allowed to end the RP in this room!');
         }
@@ -116,7 +116,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
     // needs propper introductions
     case 'help':
-      message.channel.send('This wasnt done on thime... It will be done in the near future.');
+      message.channel.send('This wasn\'t done on time... It will be done in the near future.');
       //   message.channel.send({
       //     embed: {
       //       color: message.member.displayColor,
@@ -204,6 +204,8 @@ module.exports.run = async (client, message, args, con, config) => {
       message.channel.setParent(RPChannelCategory);
       message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
       client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
+      client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
+        .catch(console.log);
       return;
 
     case 'settings':
