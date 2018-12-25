@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args, con, config) => {
           .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
           .catch(console.log);
 
-        message.channel.send(`Your RP channel (<#${channel.id}) got created! Have fun :3`);
+        message.channel.send(`Your RP channel (<#${channel.id}>) got created! Have fun :3`);
 
         con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
         client.functions.get('usersetup_rp_channel').run('Intro', channel, message);
@@ -98,7 +98,7 @@ module.exports.run = async (client, message, args, con, config) => {
           );
           message.channel.send(`The user <@${user.id}> got removed from this RP room.`);
         } else {
-          message.channel.send('Sorry, you are not allowed to remove users from this room!');
+          message.reply('you are not allowed to remove users from this room!');
         }
       });
       return;
@@ -113,10 +113,10 @@ module.exports.run = async (client, message, args, con, config) => {
               .then(channel => channel.lockPermissions());
             message.channel.send('This channel got moved to **archived rooms** because it got ended by the owner of the room!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
           } else {
-            message.channel.send('Sorry, you are not allowed to end the RP in this room!');
+            message.reply('you are not allowed to end the RP in this room!');
           }
         } else {
-          message.channel.send('Sorry, you are not allowed to end the RP in this room!');
+          message.reply('you are not allowed to end the RP in this room!');
         }
       });
       return;
@@ -145,7 +145,7 @@ module.exports.run = async (client, message, args, con, config) => {
           },
           {
             name: `\`${config.prefix}rp help\``,
-            value: 'Gues what it does...',
+            value: 'Guess what it does...',
             inline: true,
           },
           {
@@ -244,10 +244,10 @@ module.exports.run = async (client, message, args, con, config) => {
           client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
             .catch(console.log);
         } else {
-          message.channel.send('Sorry, but it doesn\'t seem like it that this channel is archived.');
+          message.reply('it doesn\'t seem like it that this channel is archived.');
         }
       } else {
-        message.channel.send('Sorry, but you can\'t reopen a channel. Please contact the team if you wish this channel reopened.');
+        message.reply('you can\'t reopen a channel. Please contact the team if you wish this channel reopened.');
       }
       return;
 
