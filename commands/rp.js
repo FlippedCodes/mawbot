@@ -227,7 +227,7 @@ module.exports.run = async (client, message, args, con, config) => {
     case 'delete':
       if (message.member.roles.find(role => role.name === config.adminRole)) {
         if (message.channel.parentID === RPChannelArchive) {
-          con.query(`DELETE FROM rp_timer WHERE id = '${message.channel.id}'`)
+          con.query(`DELETE FROM rp_timer WHERE id = '${message.channel.id}'`);
           await message.channel.delete();
         } else {
           message.channel.send('This channel hasn\'t been archived yet.');
