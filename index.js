@@ -125,12 +125,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
-  if (reaction.message.guild.id === servers.night_dragon) {
-    config = require('./config/night_dragon/config.json');
-  }
-  if (reaction.message.guild.id === servers.voretv) {
-    config = require('./config/voretv/config.json');
-  }
+  // if (reaction.message.guild.id === servers.night_dragon) {
+  //   config = require('./config/night_dragon/config.json');
+  // }
+  // if (reaction.message.guild.id === servers.voretv) {
+  //   config = require('./config/voretv/config.json');
+  // }
   if (reaction.message.guild.id === servers.testing) {
     config = require('./config/testing/config.json');
   }
@@ -168,6 +168,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // check if reaction is from arcived rooms
   // got moved to cmd because of botrestarting problems
   // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
+
+  // reactions for own-rp-channels
+  if (reaction.message.channel.parent.id === RPChannelCategory) {
+    if (reaction.emoji.name === '🚪') client.functions.get('reaction_rp_setup').run('RPPrivate', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔓') client.functions.get('reaction_rp_setup').run('RPPublic', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔅') client.functions.get('reaction_rp_setup').run('TypeSFW', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔞') client.functions.get('reaction_rp_setup').run('TypeNSFW', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '☠') client.functions.get('reaction_rp_setup').run('TypeNSFL', config, client, reaction, RPChannelLog, con, user);
+  }
 });
 
 client.on('message', async (message) => {
@@ -188,12 +197,12 @@ client.on('message', async (message) => {
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
-  if (message.channel.guild.id === servers.night_dragon) {
-    config = require('./config/night_dragon/config.json');
-  }
-  if (message.channel.guild.id === servers.voretv) {
-    config = require('./config/voretv/config.json');
-  }
+  // if (message.channel.guild.id === servers.night_dragon) {
+  //   config = require('./config/night_dragon/config.json');
+  // }
+  // if (message.channel.guild.id === servers.voretv) {
+  //   config = require('./config/voretv/config.json');
+  // }
   if (message.channel.guild.id === servers.testing) {
     config = require('./config/testing/config.json');
   }

@@ -35,8 +35,8 @@ module.exports.run = async (client, message, args, con, config) => {
           return;
         }
 
-        if (message.guild.channels.find('name', name)) {
-          message.channel.send('Sorry, this channel exists already with the same name.');
+        if (message.guild.channels.find(channel => channel.name === name)) {
+          message.channel.send('Sorry, a channel with the same name exists already.');
           message.react('❌');
           return;
         }
@@ -44,19 +44,17 @@ module.exports.run = async (client, message, args, con, config) => {
         // disabled for testing
         // con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
 
-        const channel = await message.guild.createChannel(name, 'text', [{
-          id: message.guild.id,
-          deny: ['SEND_MESSAGES'],
-        }])
+        const channel = await message.guild.createChannel(name, 'text')
           .then(channel => channel.setParent(config.parentRP))
           .then(channel => channel.lockPermissions())
           .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
           .catch(console.log);
 
-        client.functions.get('usersetup_rp_channel').run(channel, message)
-          .catch(console.log);
+        con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
+        client.functions.get('usersetup_rp_channel').run('Intro', channel, message);
 
-        // explain what cmds there are + timer
+        // client.functions.get('usersetup_rp_channel').run(channel, message)
+        //   .catch(console.log);
       });
       // somewhere we need a description setter for the inactive timer
       // should read "Channel created by OWNER and gets deleted in DD:HH:MM"
@@ -69,7 +67,7 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
@@ -77,6 +75,7 @@ module.exports.run = async (client, message, args, con, config) => {
               SEND_MESSAGES: true,
             },
           );
+          message.channel.send(`The user <@${user.id}> got added to this RP room.`);
         } else {
           message.channel.send('Sorry you are not allowed to add someone to this room!');
         }
@@ -87,14 +86,15 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
             {
-              SEND_MESSAGES: false,
+              SEND_MESSAGES: null,
             },
           );
+          message.channel.send(`The user <@${user.id}> got removed from this RP room.`);
         } else {
           message.channel.send('Sorry, you are not allowed to remove users from this room!');
         }
@@ -105,8 +105,9 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find('name', config.adminRole)) {
+        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
           message.channel.setParent(RPChannelArchive);
+          message.channel.send('This channel got moved to **archived rooms** because it is inactive!\nIf needed the team can reopen this channel within that time with `=rp reopen`.');
         } else {
           message.channel.send('Sorry, you are not allowed to end the RP in this room!');
         }
@@ -114,29 +115,30 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     // needs propper introductions
-    // case 'help':
-    //   message.channel.send({
-    //     embed: {
-    //       color: message.member.displayColor,
-    //       title: 'Help for the RP command',
-    //       description: `Usage: \`${config.prefix}rp SUBCMD TYPE NAME\``,
-    //       fields: [{
-    //         name: 'SUBCMD',
-    //         value: 'add: ',
-    //       },
-    //       {
-    //         name: 'NAME',
-    //         value: 'Tell me what your room should be called and I\'ll make it happen.',
-    //       },
-    //       ],
-    //       timestamp: new Date(),
-    //       footer: {
-    //         icon_url: message.client.user.displayAvatarURL,
-    //         text: message.client.user.tag,
-    //       },
+    case 'help':
+      message.channel.send('This wasnt done on thime... It will be done in the near future.');
+      //   message.channel.send({
+      //     embed: {
+      //       color: message.member.displayColor,
+      //       title: 'Help for the RP command',
+      //       description: `Usage: \`${config.prefix}rp SUBCMD TYPE NAME\``,
+      //       fields: [{
+      //         name: 'SUBCMD',
+      //         value: 'add: ',
+      //       },
+      //       {
+      //         name: 'NAME',
+      //         value: 'Tell me what your room should be called and I\'ll make it happen.',
+      //       },
+      //       ],
+      //       timestamp: new Date(),
+      //       footer: {
+      //         icon_url: message.client.user.displayAvatarURL,
+      //         text: message.client.user.tag,
+      //       },
       //   },
       // });
-      // return;
+      return;
 
     case 'info':
       con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
@@ -200,8 +202,13 @@ module.exports.run = async (client, message, args, con, config) => {
         return;
       }
       message.channel.setParent(RPChannelCategory);
-      message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back.');
+      message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
       client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
+      return;
+
+    case 'settings':
+      client.functions.get('usersetup_rp_channel').run('noIntro', message, subcmd)
+        .catch(console.log);
       return;
 
     default:
