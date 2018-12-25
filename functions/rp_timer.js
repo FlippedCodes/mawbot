@@ -99,8 +99,8 @@ module.exports.run = async (client, servers, fs, con) => {
       });
     });
   // keep 5 sec intervall for testing
-  }, 1 * 5000);
-  // }, 1 * 300000);
+  // }, 1 * 5000);
+  }, 1 * 300000);
 };
 
 module.exports.help = {
