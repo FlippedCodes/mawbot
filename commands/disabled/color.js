@@ -1,5 +1,5 @@
 module.exports.run = async (client, message, args, con, config) => {
-  const pride = message.guild.roles.find('name', 'pride');
+  const pride = message.guild.roles.find(role => role.name === 'pride');
   setInterval(() => {
     pride.setColor('#FF0035')
       .catch(console.error);

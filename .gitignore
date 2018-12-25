@@ -2,4 +2,4 @@ credentials.json
 config/test_token.json
 .vscode/
 node_modules/
-package-lock.json
+package_lock.json

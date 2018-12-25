@@ -34,7 +34,7 @@ con.connect((err) => {
   console.log('Connected to database!');
 });
 
-// loadin serverIDs
+// loading serverIDs
 const servers = require('./config/servers.json');
 
 const blacklist = require('./config/blacklist.json');
@@ -91,18 +91,24 @@ if (fs.existsSync('./config/test_token.json')) {
 
 
 client.on('ready', async () => {
+  const config = require('./config/main/config.json');
+
   console.log(`Logged in as ${client.user.tag}!`);
   // set status
   client.functions.get('setup_status').run(client, fs)
     .then(() => console.log('Set status!'));
 
   // set rolerequest message
-  client.functions.get('setup_role_request').run(client, servers)
+  client.functions.get('setup_role_request').run(client, servers, config)
     .then(() => console.log('Resetted rolerequest!'));
 
   // set saveme message
   client.functions.get('setup_saveme').run(client, servers)
     .then(() => console.log('Resetted saveme!'));
+
+  // load an d start RP-room timers
+  console.log('Starting up RP timers!');
+  client.functions.get('rp_timer').run(client, servers, fs, con);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -119,14 +125,28 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
-  if (reaction.message.guild.id === servers.night_dragon) {
-    config = require('./config/night_dragon/config.json');
-  }
-  if (reaction.message.guild.id === servers.voretv) {
-    config = require('./config/voretv/config.json');
-  }
+  // if (reaction.message.guild.id === servers.night_dragon) {
+  //   config = require('./config/night_dragon/config.json');
+  // }
+  // if (reaction.message.guild.id === servers.voretv) {
+  //   config = require('./config/voretv/config.json');
+  // }
   if (reaction.message.guild.id === servers.testing) {
     config = require('./config/testing/config.json');
+  }
+
+  let RPChannelArchive;
+  let RPChannelLog;
+  let RPChannelCategory;
+
+  if (fs.existsSync('./config/test_token.json')) {
+    RPChannelArchive = servers.RPChannelArchive_testing;
+    RPChannelLog = servers.RPChannelLog_testing;
+    RPChannelCategory = servers.RPChannelCategory_testing;
+  } else {
+    RPChannelArchive = servers.RPChannelArchive_main;
+    RPChannelLog = servers.RPChannelLog_main;
+    RPChannelCategory = servers.RPChannelCategory_main;
   }
 
   if (reaction.message.channel.id === servers.sharedChannel_night_dragon) return;
@@ -137,16 +157,27 @@ client.on('messageReactionAdd', async (reaction, user) => {
   client.functions.get('reaction_add_log').run(user, config, client, reaction);
 
   // check if reaction is from rolerequest
-  if (reaction.message.channel.id === config.rolerequest) client.functions.get('reaction_role_request').run(reaction, requester, config, user, con);
+  if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(reaction, requester, config, user, con);
 
   // check if reaction is from check-in
   if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_add_check-in').run(user, reaction, config, client);
 
   // check if reaction is from keep me
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
-});
 
-client.on('disconnected', () => { client.user.setStatus('offline'); });
+  // check if reaction is from arcived rooms
+  // got moved to cmd because of botrestarting problems
+  // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
+
+  // reactions for own-rp-channels
+  if (reaction.message.channel.parent.id === RPChannelCategory) {
+    if (reaction.emoji.name === '🚪') client.functions.get('reaction_rp_setup').run('RPPrivate', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔓') client.functions.get('reaction_rp_setup').run('RPPublic', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔅') client.functions.get('reaction_rp_setup').run('TypeSFW', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '🔞') client.functions.get('reaction_rp_setup').run('TypeNSFW', config, client, reaction, RPChannelLog, con, user);
+    if (reaction.emoji.name === '☠') client.functions.get('reaction_rp_setup').run('TypeNSFL', config, client, reaction, RPChannelLog, con, user);
+  }
+});
 
 client.on('message', async (message) => {
   // conditions
@@ -157,16 +188,21 @@ client.on('message', async (message) => {
     return;
   }
 
+  con.query(`SELECT * FROM rp_timer WHERE id = '${message.channel.id}'`, async (err, rows) => {
+    if (err) throw err;
+    if (rows[0]) con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${message.channel.id}'`);
+  });
+
   let config;
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
-  if (message.channel.guild.id === servers.night_dragon) {
-    config = require('./config/night_dragon/config.json');
-  }
-  if (message.channel.guild.id === servers.voretv) {
-    config = require('./config/voretv/config.json');
-  }
+  // if (message.channel.guild.id === servers.night_dragon) {
+  //   config = require('./config/night_dragon/config.json');
+  // }
+  // if (message.channel.guild.id === servers.voretv) {
+  //   config = require('./config/voretv/config.json');
+  // }
   if (message.channel.guild.id === servers.testing) {
     config = require('./config/testing/config.json');
   }
@@ -200,52 +236,15 @@ client.on('message', async (message) => {
 
   if (!command.startsWith(config.prefix)) return;
 
-  con.query(`SELECT * FROM disabled_channels WHERE id = '${message.channel.id}'`, (err, rows) => {
-    if (err) throw err;
-    if (rows[0]) {
-      if (!message.member.roles.find('name', config.teamRole)) {
-        message.guild.channels.get(config.logMessageDelete).send(`[SYSTEM MESSAGE] ${message.author.id} (${message.author.tag} | ${message.author.username}) tried using a command in <#${rows[0].id}> and got blocked doing it!`);
-        message.author.send(`Sorry, but you can't use commands in <#${rows[0].id}>!`)
-          .then(message.delete());
-        return;
-      }
-    }
+  let cmd = client.commands.get(command.slice(config.prefix.length).toLowerCase());
 
-    let cmd = client.commands.get(command.slice(config.prefix.length));
-
-    if (cmd) {
-      cmd.run(client, message, args, con, config)
-        .catch(console.log);
-    } else {
-      message.react('❌')
-        .catch(console.log);
-    }
-  });
-});
-
-client.on('guildMemberAdd', (guildMember) => {
-  let config;
-  if (guildMember.guild.id === servers.main) {
-    config = require('./config/main/config.json');
+  if (cmd) {
+    cmd.run(client, message, args, con, config)
+      .catch(console.log);
+  } else {
+    message.react('❌')
+      .catch(console.log);
   }
-  if (guildMember.guild.id === servers.night_dragon) {
-    config = require('./config/night_dragon/config.json');
-  }
-  if (guildMember.guild.id === servers.voretv) {
-    config = require('./config/voretv/config.json');
-  }
-  if (guildMember.guild.id === servers.testing) {
-    config = require('./config/testing/config.json');
-  }
-
-  con.query(`SELECT * FROM muted_user WHERE id = '${guildMember.id}'`, (err, rows) => {
-    if (err) throw err;
-    if (rows[0]) {
-      guildMember.addRole(guildMember.guild.roles.find('id', config.mutedRole));
-      guildMember.send('Sorry, but you have been muted before on this server. Please don\'t try to rejoin to get rid of the mute!');
-      client.channels.get(config.muteChannel).send(`[SYSTEM MESSAGE] <@&${config.team}> >>${guildMember.id} (${guildMember.user.tag} | ${guildMember.user.username}) tried to relog while muted!<<`);
-    }
-  });
 });
 
 client.on('error', e => console.error(e));

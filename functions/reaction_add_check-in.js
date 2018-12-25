@@ -3,7 +3,7 @@ module.exports.run = async (user, reaction, config, client) => {
     .then(async (member) => {
       if (!member.roles.get(config.team)) {
         reaction.remove(user);
-        reaction.message.channel.send('Sorry, but you cant check-in yourself or other people!\nPlease wait for a Teammember to check you in.');
+        reaction.message.channel.send('Sorry, but you can\'t check-in yourself or other people!\nPlease wait for a Teammember to check you in.');
         return;
       }
       reaction.message.member.addRole(config.checkinRole);
