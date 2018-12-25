@@ -106,7 +106,7 @@ module.exports.run = async (client, message, args, con, config) => {
         if (err) throw err;
 
         if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
-          if (message.channel.parentID === config.RPChannelCategory) {
+          if (message.channel.parentID === RPChannelCategory) {
             message.channel.setParent(RPChannelArchive)
               .then(channel => channel.lockPermissions());
             message.channel.send('This channel got moved to **archived rooms** because it got ended by the owner of the room!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
@@ -203,7 +203,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
     case 'reopen':
       if (message.member.roles.get(config.team)) {
-        if (message.channel.parentID === config.RPChannelArchive) {
+        if (message.channel.parentID === RPChannelArchive) {
           message.channel.setParent(RPChannelCategory)
             .then(channel => channel.lockPermissions());
           message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
@@ -226,8 +226,9 @@ module.exports.run = async (client, message, args, con, config) => {
 
     case 'delete':
       if (message.member.roles.find(role => role.name === config.adminRole)) {
-        if (message.channel.parentID === config.RPChannelArchive) {
-          con.query(`DELETE FROM rp_timer WHERE id = '${message.channel.id}'`);
+        if (message.channel.parentID === RPChannelArchive) {
+          con.query(`DELETE FROM rp_timer WHERE id = '${message.channel.id}'`)
+            .then(() => message.channel.delete());
         } else {
           message.channel.send('This channel hasn\'t been archived yet.');
         }
