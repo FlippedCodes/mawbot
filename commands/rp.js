@@ -23,6 +23,7 @@ module.exports.run = async (client, message, args, con, config) => {
     case 'create':
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}'`, async (err, rows) => {
         if (err) throw err;
+
         if (rows[0]) {
           message.channel.send('You already own a RP-Room!');
           message.react('❌');
@@ -44,7 +45,7 @@ module.exports.run = async (client, message, args, con, config) => {
         // disabled for testing
         // con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
 
-        const channel = await message.guild.createChannel(name, 'text')
+        const channel = await message.guild.createChannel(args.join('_').slice(subcmd.length + 1), 'text')
           .then(channel => channel.setParent(config.parentRP))
           .then(channel => channel.lockPermissions())
           .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
