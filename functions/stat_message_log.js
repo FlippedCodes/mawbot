@@ -14,7 +14,7 @@ module.exports.run = async (client, config, con, fs) => {
       },
       {
         name: 'Time the Bot went offline',
-        value: `${toTime(rows[0].time * 1)}`,
+        value: `${(rows[0].time * 1).customFormat('#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#')}`,
       },
       ],
       color: 4296754,
