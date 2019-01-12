@@ -1,5 +1,7 @@
 const toTime = require('pretty-ms');
 
+const startupTime = +new Date();
+
 module.exports.run = async (client, config, con, fs) => {
   if (fs.existsSync('./config/test_token.json')) return;
   con.query('SELECT * FROM stat_offline WHERE entry = \'1\'', async (err, rows) => {
@@ -8,6 +10,10 @@ module.exports.run = async (client, config, con, fs) => {
       title: 'Bot back online!',
       fields: [{
         name: 'The time the bot was offline:',
+        value: `${toTime(startupTime - rows[0].time * 1)}`,
+      },
+      {
+        name: 'Time the Bot went offline',
         value: `${toTime(rows[0].time * 1)}`,
       },
       ],
@@ -22,7 +28,7 @@ module.exports.run = async (client, config, con, fs) => {
   });
 
   // create new entry db entry
-  con.query('UPDATE stat_offline SET time = \'0\' WHERE entry = \'1\'');
+  con.query(`UPDATE stat_offline SET time = '${startupTime}' WHERE entry = '1'`);
 
   setInterval(() => {
     // loop db update in 5 sec intervall
