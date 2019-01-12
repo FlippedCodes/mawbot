@@ -8,7 +8,7 @@ module.exports.run = async (client, config, con, fs) => {
       title: 'Bot back online!',
       fields: [{
         name: 'The time the bot was offline:',
-        value: `${toTime(rows[0].time)}`,
+        value: `${toTime(rows[0].time * 1)}`,
       },
       ],
       color: 4296754,
