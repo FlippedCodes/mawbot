@@ -18,7 +18,7 @@ module.exports.run = async (client, config, con, fs) => {
         text: client.user.tag,
       },
     };
-    client.channels.get(config.logReactions).send({ embed });
+    client.channels.get(config.logStatus).send({ embed });
   });
 
   // create new entry db entry
