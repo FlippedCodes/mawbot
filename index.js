@@ -109,6 +109,11 @@ client.on('ready', async () => {
   // load and start RP-room timers
   console.log('Starting up RP timers!');
   client.functions.get('rp_timer').run(client, servers, fs, con);
+
+  // Load and posting bot status
+  console.log('Posting bot status message!');
+  client.functions.get('stat_message_log').run(client, config, con, fs);
+  // logStatus
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
