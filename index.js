@@ -106,7 +106,7 @@ client.on('ready', async () => {
   client.functions.get('setup_saveme').run(client, servers)
     .then(() => console.log('Resetted saveme!'));
 
-  // load an d start RP-room timers
+  // load and start RP-room timers
   console.log('Starting up RP timers!');
   client.functions.get('rp_timer').run(client, servers, fs, con);
 });
