@@ -13,8 +13,8 @@ module.exports.run = async (client, config, con, fs) => {
         value: `${toTime(startupTime - rows[0].time * 1)}`,
       },
       {
-        name: 'Time the Bot went offline',
-        value: `${(rows[0].time * 1).customFormat('#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#')}`,
+        name: 'The bot went offline at:',
+        value: new Date(rows[0].time * 1),
       },
       ],
       color: 4296754,
