@@ -29,7 +29,7 @@ module.exports.run = async (client, config, con, fs) => {
     con.query('SELECT * FROM stat_offline WHERE entry = \'1\'', async (err, rows) => {
       if (err) throw err;
       if (rows[0]) {
-        const carc = rows[0].time - 5000;
+        const carc = rows[0].time + 5000;
         con.query(`UPDATE stat_offline SET time = '${carc}' WHERE entry = '1'`);
       } else {
         console.log('Something went wrong while sending statupdate: It wasn\'t found!');
