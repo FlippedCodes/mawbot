@@ -11,8 +11,7 @@ module.exports.run = async (client, message, args, con, config) => {
 
   await member.removeRoles(member.roles);
   await member.addRole(config.mutedRole);
-  const fetchchannel = await message.guild.channels.get(config.logChannel);
-  await fetchchannel.send(`<@${message.author.id}> Muted User ${message.mentions.members.first()}`);
+  await message.guild.channels.get(config.logChannel).send(`<@${message.author.id}> Muted User ${message.mentions.members.first()}`);
 };
 
 module.exports.help = {
