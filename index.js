@@ -39,8 +39,6 @@ const servers = require('./config/servers.json');
 
 const blacklist = require('./config/blacklist.json');
 
-const time = new Date(0);
-
 client.commands = new Discord.Collection();
 fs.readdir('./commands/', (err, files) => {
   if (err) console.error(err);
@@ -113,7 +111,10 @@ client.on('ready', async () => {
   // Load and posting bot status
   console.log('Posting bot status message!');
   client.functions.get('stat_message_log').run(client, config, con, fs);
-  // logStatus
+
+  // load second bot
+  console.log('Starting FurAffinity bot!');
+  client.functions.get('fa_api_bot').run(fs, config);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
