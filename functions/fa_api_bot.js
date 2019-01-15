@@ -54,6 +54,14 @@ module.exports.run = async (fs) => {
         furaffinity.search(keywords, limit).then((fa) => {
           // output
           if (fa[0]) {
+            let image;
+            let i;
+            for (i = 0; i < 8; i++) {
+              if (fa[0].src !== fa[0].src.replace(`@${i}00`, '@800')) {
+                image = fa[0].src.replace(`@${i}00`, '@800');
+                break;
+              }
+            }
             const embed = {
               title: fa[0].title,
               url: fa[0].url,
@@ -64,7 +72,7 @@ module.exports.run = async (fs) => {
                 text: client.user.username,
               },
               image: {
-                url: fa[0].src.replace('@200', '@800'),
+                url: image,
               },
               author: {
                 name: fa[0].author.name,
