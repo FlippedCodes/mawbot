@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args, con, config) => {
     if (!rows[0]) {
       message.channel.send(`\`${target.tag}\` is not on the blacklist!`);
     } else {
-      message.channel.send(`\`${target.tag}\` (\`rows[0].id\`) is  on the blacklist!`);
+      message.channel.send(`\`${target.tag}\` (\`${rows[0].id}\`) is  on the blacklist!`);
     }
   });
 };
