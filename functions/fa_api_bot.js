@@ -56,9 +56,9 @@ module.exports.run = async (fs) => {
           if (fa[0]) {
             let image;
             let i;
-            for (i = 0; i < 8; i++) {
-              if (fa[0].src !== fa[0].src.replace(`@${i}00`, '@800')) {
-                image = fa[0].src.replace(`@${i}00`, '@800');
+            for (i = 0; i < 16; i++) {
+              if (fa[0].src !== fa[0].src.replace(`@${i}00`, '@1600')) {
+                image = fa[0].src.replace(`@${i}00`, '@1600');
                 break;
               }
             }
