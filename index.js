@@ -29,6 +29,13 @@ if (fs.existsSync('./config/test_token.json')) {
   });
 }
 
+// login!
+if (fs.existsSync('./config/test_token.json')) {
+  client.login(token.token);
+} else {
+  client.login(process.env.BOT_TOKEN);
+}
+
 con.connect((err) => {
   if (err) throw err;
   console.log('Connected to database!');
@@ -80,18 +87,10 @@ fs.readdir('./functions/', (err, files) => {
   console.log(`Loaded ${jsfiles.length} function(s)!`);
 });
 
-// login!
-if (fs.existsSync('./config/test_token.json')) {
-  client.login(token.token);
-} else {
-  client.login(process.env.BOT_TOKEN);
-}
-
-
 client.on('ready', async () => {
   const config = require('./config/main/config.json');
 
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`[MawBot] Logged in as ${client.user.tag}!`);
   // set status
   client.functions.get('setup_status').run(client, fs)
     .then(() => console.log('Set status!'));
