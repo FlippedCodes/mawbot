@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 
-const furaffinity = require('furaffinity');
+const { Recent, Type, Login } = require('furaffinity');
+
+Login('5d5cb782-7766-40bc-8f47-53577e2f8712', '87e78d09-a884-42bf-8b47-58e396a14637');
 
 const client = new Discord.Client({ disableEveryone: true });
 
@@ -32,51 +34,51 @@ module.exports.run = async (fs) => {
     const command = args.shift().toLowerCase();
 
     switch (command) {
-      case 'fa':
-        // get user args
-        const keywords = args.join(' ');
+      // case 'fa':
+      //   // get user args
+      //   const keywords = args.join(' ');
 
-        // testcmd
-        // message.channel.send(keywords);
+      //   // testcmd
+      //   // message.channel.send(keywords);
 
-        // check args
-        // nothing here yet
+      //   // check args
+      //   // nothing here yet
 
-        // cap max pics
-        const limit = 1;
+      //   // cap max pics
+      //   const limit = 1;
 
-        // loop limit
-        // not done yet
+      //   // loop limit
+      //   // not done yet
 
-        // command get info
-        furaffinity.search(keywords, limit).then((fa) => {
-          // output
-          if (fa[0]) {
-            const embed = {
-              title: fa[0].title,
-              url: fa[0].url,
-              color: message.channel.guild.members.get(clientID).displayColor,
-              timestamp: new Date(),
-              footer: {
-                icon_url: client.user.displayAvatarURL,
-                text: client.user.username,
-              },
-              image: {
-                url: fa[0].src.replace('@200', '@800'),
-              },
-              author: {
-                name: fa[0].author.name,
-                url: fa[0].author.url,
-              },
-            };
-            message.channel.send({ embed });
-          } else {
-            message.channel.send('Sorry there are no pictures with these keywords.');
-          }
-        }).catch(err => console.log(err));
-        // loop end
-        // not here yet
-        return;
+      //   // command get info
+      //   furaffinity.search(keywords, limit).then((fa) => {
+      //     // output
+      //     if (fa[0]) {
+      //       const embed = {
+      //         title: fa[0].title,
+      //         url: fa[0].url,
+      //         color: message.channel.guild.members.get(clientID).displayColor,
+      //         timestamp: new Date(),
+      //         footer: {
+      //           icon_url: client.user.displayAvatarURL,
+      //           text: client.user.username,
+      //         },
+      //         image: {
+      //           url: fa[0].src.replace('@200', '@800'),
+      //         },
+      //         author: {
+      //           name: fa[0].author.name,
+      //           url: fa[0].author.url,
+      //         },
+      //       };
+      //       message.channel.send({ embed });
+      //     } else {
+      //       message.channel.send('Sorry there are no pictures with these keywords.');
+      //     }
+      //   }).catch(err => console.log(err));
+      //   // loop end
+      //   // not here yet
+      //   return;
       case 'about':
         fs.readFile('./config/furaffinity/about.txt', 'utf8', (err, data) => {
           if (err) {
@@ -85,6 +87,13 @@ module.exports.run = async (fs) => {
             return;
           }
           message.channel.send(data);
+        });
+        return;
+      case 'test':
+        Recent(Type.Artwork).then((res) => {
+          res[0].getSubmission().then((submission) => {
+            console.log('wok');
+          });
         });
         return;
       default:
