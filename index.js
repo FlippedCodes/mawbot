@@ -114,6 +114,9 @@ client.on('ready', async () => {
   // load second bot
   console.log('Starting FurAffinity bot!');
   client.functions.get('fa_api_bot').run(fs, config);
+
+  console.log('Starting CVL roleassignment bot!');
+  client.functions.get('cvl_roleassignment_bot').run(fs, client.functions);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
