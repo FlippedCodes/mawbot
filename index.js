@@ -1,3 +1,5 @@
+require('newrelic');
+
 const Discord = require('discord.js');
 
 const client = new Discord.Client({ disableEveryone: true });
