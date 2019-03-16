@@ -253,11 +253,6 @@ client.on('message', async (message) => {
     cmd.run(client, message, args, con, config)
       .catch(console.log);
   }
-  // disabled because no need to reaction
-  // else {
-  //   message.react('❌')
-  //     .catch(console.log);
-  // }
 });
 
 client.on('error', e => console.error(e));
