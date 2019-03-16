@@ -1,3 +1,46 @@
 {
-    
+    "mawbot": {
+        "name": "MawBot",
+        "messages": {
+            "dm": {
+                "shy": "Do not talk to me! I'm shy in DM 😖",
+                "shy_react": "❌"
+            },
+            "server": {
+                "checkin": {
+                    "no_teammember": "Sorry There are no team members currently online.\nPlease wait until someone is available!"
+                }
+            }
+        }
+    },
+    "log": {
+        "init": {
+            "cmd": "command",
+            "function": "function",
+            "success": {
+                "load": "Loaded %s %s(s)!",
+                "entry": "%s) \tLoaded: %s!"
+            },
+            "working": {
+                "load": "Loading %s %s(s)..."
+            },
+            "failed": {
+                "nothing_found": "No %s were found!"
+            }
+        },
+        "startup": {
+            "working": {
+                "rp_timers": "Starting up RP timers...",
+                "cvl_bot": "Starting CVL roleassignment bot...",
+                "status_message": "Posting bot status message..."
+            },
+            "success":{
+                "saveme": "Resetted saveme!",
+                "rolerequest": "Resetted rolerequest!",
+                "status": "Set status!",
+                "db": "Connected to database!",
+                "user_logged_in": "[%s] Logged in as %s!"
+            }
+        }
+    }
 }
