@@ -1,3 +1,5 @@
+require('newrelic');
+
 const Discord = require('discord.js');
 
 const client = new Discord.Client({ disableEveryone: true });
@@ -27,6 +29,13 @@ if (fs.existsSync('./config/test_token.json')) {
     password: process.env.DB_passw,
     database: process.env.DB_name,
   });
+}
+
+// login!
+if (fs.existsSync('./config/test_token.json')) {
+  client.login(token.token);
+} else {
+  client.login(process.env.BOT_TOKEN);
 }
 
 con.connect((err) => {
@@ -80,18 +89,10 @@ fs.readdir('./functions/', (err, files) => {
   console.log(`Loaded ${jsfiles.length} function(s)!`);
 });
 
-// login!
-if (fs.existsSync('./config/test_token.json')) {
-  client.login(token.token);
-} else {
-  client.login(process.env.BOT_TOKEN);
-}
-
-
 client.on('ready', async () => {
   const config = require('./config/main/config.json');
 
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`[MawBot] Logged in as ${client.user.tag}!`);
   // set status
   client.functions.get('setup_status').run(client, fs)
     .then(() => console.log('Set status!'));
@@ -115,6 +116,9 @@ client.on('ready', async () => {
   // load second bot
   console.log('Starting FurAffinity bot!');
   client.functions.get('fa_api_bot').run(fs, config);
+
+  console.log('Starting CVL roleassignment bot!');
+  client.functions.get('cvl_roleassignment_bot').run(fs, client.functions);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -196,7 +200,10 @@ client.on('message', async (message) => {
 
   con.query(`SELECT * FROM rp_timer WHERE id = '${message.channel.id}' AND archived = 'f'`, async (err, rows) => {
     if (err) throw err;
-    if (rows[0]) con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${message.channel.id}'`);
+    if (rows[0]) {
+      con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${message.channel.id}'`);
+      con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${message.channel.id}' AND warned = 't'`);
+    }
   });
 
   let config;
@@ -247,10 +254,12 @@ client.on('message', async (message) => {
   if (cmd) {
     cmd.run(client, message, args, con, config)
       .catch(console.log);
-  } else {
-    message.react('❌')
-      .catch(console.log);
   }
+  // disabled because no need to reaction
+  // else {
+  //   message.react('❌')
+  //     .catch(console.log);
+  // }
 });
 
 client.on('error', e => console.error(e));

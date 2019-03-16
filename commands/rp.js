@@ -42,9 +42,6 @@ module.exports.run = async (client, message, args, con, config) => {
           return;
         }
 
-        // disabled for testing
-        // con.query(`INSERT INTO rp_owner (ownerID, channelID) VALUES ('${message.author.id}', '${channel.id}')`);
-
         const channel = await message.guild.createChannel(args.join('_').slice(subcmd.length + 1), 'text')
           .then(channel => channel.setParent(config.parentRP))
           .then(channel => channel.lockPermissions())

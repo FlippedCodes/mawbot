@@ -23,6 +23,8 @@ module.exports.run = async (fs) => {
 
   client.on('ready', async () => {
     console.log(`[FurAffinity-API] Logged in as ${client.user.tag}!`);
+
+    client.user.setActivity('with \'?fa\' command');
   });
 
   client.on('message', async (message) => {
@@ -50,35 +52,43 @@ module.exports.run = async (fs) => {
       //   // loop limit
       //   // not done yet
 
-      //   // command get info
-      //   furaffinity.search(keywords, limit).then((fa) => {
-      //     // output
-      //     if (fa[0]) {
-      //       const embed = {
-      //         title: fa[0].title,
-      //         url: fa[0].url,
-      //         color: message.channel.guild.members.get(clientID).displayColor,
-      //         timestamp: new Date(),
-      //         footer: {
-      //           icon_url: client.user.displayAvatarURL,
-      //           text: client.user.username,
-      //         },
-      //         image: {
-      //           url: fa[0].src.replace('@200', '@800'),
-      //         },
-      //         author: {
-      //           name: fa[0].author.name,
-      //           url: fa[0].author.url,
-      //         },
-      //       };
-      //       message.channel.send({ embed });
-      //     } else {
-      //       message.channel.send('Sorry there are no pictures with these keywords.');
-      //     }
-      //   }).catch(err => console.log(err));
-      //   // loop end
-      //   // not here yet
-      //   return;
+        // command get info
+        furaffinity.search(keywords, limit).then((fa) => {
+          // output
+          if (fa[0]) {
+            let image;
+            let i;
+            for (i = 0; i < 16; i++) {
+              if (fa[0].src !== fa[0].src.replace(`@${i}00`, '@1600')) {
+                image = fa[0].src.replace(`@${i}00`, '@1600');
+                break;
+              }
+            }
+            const embed = {
+              title: fa[0].title,
+              url: fa[0].url,
+              color: message.channel.guild.members.get(clientID).displayColor,
+              timestamp: new Date(),
+              footer: {
+                icon_url: client.user.displayAvatarURL,
+                text: client.user.username,
+              },
+              image: {
+                url: image,
+              },
+              author: {
+                name: fa[0].author.name,
+                url: fa[0].author.url,
+              },
+            };
+            message.channel.send({ embed });
+          } else {
+            message.channel.send('Sorry there are no pictures with these keywords.');
+          }
+        }).catch(err => console.log(err));
+        // loop end
+        // not here yet
+        return;
       case 'about':
         fs.readFile('./config/furaffinity/about.txt', 'utf8', (err, data) => {
           if (err) {

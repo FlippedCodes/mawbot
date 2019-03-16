@@ -3,11 +3,13 @@
     "testing": "451833819910373406",
     "night_dragon": "378063566881685504",
     "voretv": "484842261515862017",
+    "cvl": "485755893787656193",
 
     "rolerequest_main": "496961294721875969",
     "rolerequest_testing": "469120653459456000",
     "rolerequest_night_dragon": "468121381972738068",
     "rolerequest_voretv": "367013023044590000",
+    "rolerequest_cvl": "547524805704810516",
 
     "saveme_main": "496961663661244416",
     "saveme_testing": "493510451234078730",
@@ -29,7 +31,7 @@
     "RPChannelArchive_testing": "514905580154912779",
     "RPChannelLog_main": "515184915361431608",
     "RPChannelLog_testing": "457144232625569806",
-    "RPChannelTime": 259200000,
+    "RPChannelTime": 432000000,
     "RPChannelTimeWarn": 43200000,
     "PRChannelArchivedTime": 2628000000,
 

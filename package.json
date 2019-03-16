@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "discord.js": "github:discordjs/discord.js#11.4-dev",
-    "furaffinity": "^3.0.0",
+    "flist-api": "^0.1.1",
+    "furaffinity": "^2.0.1",
+    "lodash": "^4.17.11",
     "mysql": "github:mysqljs/mysql",
     "pretty-ms": "^4.0.0",
     "snekfetch": "^4.0.4"
@@ -19,6 +22,6 @@
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.16.0"
   }
 }
