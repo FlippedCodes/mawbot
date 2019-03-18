@@ -1,4 +1,4 @@
 **Changelog:**
 
-+ custom rp channels. more istructions in the future
+* Bugfixes
 
