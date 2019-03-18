@@ -127,26 +127,92 @@ module.exports.run = async (fs, functions) => {
     const command = args.shift().toLowerCase();
 
     switch (command) {
-      case 'eval':
-        const clean = (text) => {
-          if (typeof (text) === 'string') { return text.replace(/`/g, `\`${String.fromCharCode(8203)}`).replace(/@/g, `@${String.fromCharCode(8203)}`); }
-          return text;
+      case 'serverinfo':
+        let pic = 'https://pbs.twimg.com/profile_images/715852271389655041/s-VdeDI5_400x400.jpg';
+        if (message.guild.iconURL) pic = message.guild.iconURL;
+
+        const embed = {
+          color: message.member.displayColor,
+          timestamp: new Date(),
+          author: {
+            name: message.guild.name,
+          },
+          footer: {
+            icon_url: message.client.user.displayAvatarURL,
+            text: message.client.user.tag,
+          },
+          fields: [
+            {
+              name: 'Server created on',
+              value: `${message.guild.createdAt.toLocaleDateString()} ${message.guild.createdAt.toLocaleTimeString()}`,
+              inline: true,
+            },
+            {
+              name: 'Acronym',
+              value: message.guild.nameAcronym,
+              inline: true,
+            },
+            {
+              name: 'Name',
+              value: message.guild.name,
+              inline: true,
+            },
+            {
+              name: 'Owner',
+              value: message.guild.owner.user.tag,
+              inline: true,
+            },
+            {
+              name: 'ID',
+              value: message.guild.id,
+              inline: true,
+            },
+            {
+              name: 'Channels',
+              value: message.guild.channels.size,
+              inline: true,
+            },
+            {
+              name: 'Emojis',
+              value: message.guild.emojis.size,
+              inline: true,
+            },
+            {
+              name: 'Membercount',
+              value: message.guild.memberCount,
+              inline: true,
+            },
+            {
+              name: 'Member online',
+              value: message.guild.presences.size,
+              inline: true,
+            },
+            {
+              name: 'Verification level',
+              value: message.guild.verificationLevel,
+              inline: true,
+            },
+            {
+              name: 'Content filter',
+              value: message.guild.explicitContentFilter,
+              inline: true,
+            },
+            {
+              name: 'Region',
+              value: message.guild.region,
+              inline: true,
+            },
+            {
+              name: 'Server Icon',
+              value: pic,
+            },
+          ],
+          image: {
+            url: pic,
+          },
         };
 
-        const args_eval = message.content.split(' ').slice(1);
-        if (!message.author.id === config.admin) return message.channel.send(`Do I know you **${message.author.tag}**? Only the Devs can use this~`).then(message.react('❌'));
-        if (message.content.indexOf('token.token' || 'process.env.BOT_TOKEN' || 'token') !== -1) return message.channel.send('Do you think its that easy?\nSry, but cant give you my key...');
-        try {
-          const code = args_eval.join(' ');
-          let evaled = eval(code);
-
-          if (typeof evaled !== 'string') { evaled = require('util').inspect(evaled); }
-
-          message.channel.send(clean(evaled), { code: 'xl' });
-        } catch (err) {
-          message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``)
-            .then(message.react('❌'));
-        }
+        message.channel.send({ embed });
         return;
       case 'about':
         fs.readFile('./config/furaffinity/about.txt', 'utf8', (err, data) => {
