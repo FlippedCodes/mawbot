@@ -1,6 +1,6 @@
-const servers = require('../config/servers.json');
-
 const fs = require('fs');
+
+const servers = require('../config/servers.json');
 
 let RPChannelArchive;
 let RPChannelLog;
