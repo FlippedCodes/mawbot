@@ -2,8 +2,6 @@ const Discord = require('discord.js');
 
 const client = new Discord.Client({ disableEveryone: true });
 
-const text = require('./config/messages.json');
-
 const mysql = require('mysql');
 
 const fs = require('fs');
