@@ -21,7 +21,6 @@ module.exports.run = async (client, servers, fs, con) => {
 
   setInterval(() => {
     client.guilds.get(server).channels.get(RPChannelCategory).children.forEach((channel) => {
-      console.log(`Editing: ${channel} (open)`);
       con.query(`SELECT * FROM rp_timerBlacklist WHERE id = '${channel.id}'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) return channel.setTopic('This channel won\'t be effacted from the timeout.');
@@ -69,8 +68,7 @@ module.exports.run = async (client, servers, fs, con) => {
       });
     });
 
-    client.guilds.get(server).channels.get(RPChannelArchive).children.forEach((channel) => {
-      console.log(`Editing: ${channel} (closed)`);
+    client.guilds.get(server).channels.get(RPChannelArchive).children.forEach(async (channel) => {
       con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 't'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) {
@@ -93,7 +91,8 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`DELETE FROM rp_owner WHERE channelID = '${channel.id}'`);
             } else {
               con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't', 't')`);
-              channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
+              channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`)
+                .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
               channel.lockPermissions();
             }
           });
