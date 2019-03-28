@@ -45,7 +45,8 @@ module.exports.run = async (client, servers, fs, con) => {
               await channel.send(`The time has run out and this channel got moved to **archived rooms** because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reopen this channel within that time with \`=rp reopen\`.`);
               // remove channel rights, only readable (bot needs writing rights!)
               client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
-              channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
+              channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`)
+                .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
             }
 
             const carc = rows[0].timeLeft - 300000;
@@ -73,7 +74,8 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) {
           const carc = rows[0].timeLeft - 300000;
-          channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`);
+          channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`)
+            .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
           con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
 
           if (rows[0].timeLeft <= 0) {
