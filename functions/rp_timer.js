@@ -81,7 +81,7 @@ module.exports.run = async (client, servers, fs, con) => {
           if (rows[0].timeLeft <= 0) {
             con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
             client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got deleted, because it is older than a month!`)
-              .then(() => channel.delete());
+              .then(() => channel.delete().catch(console.error).then(console.log(`try delete: ${channel} (closed)`)));
           }
         } else {
           con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, (err, rows) => {
