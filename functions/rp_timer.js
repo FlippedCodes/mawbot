@@ -21,6 +21,7 @@ module.exports.run = async (client, servers, fs, con) => {
 
   setInterval(() => {
     client.guilds.get(server).channels.get(RPChannelCategory).children.forEach((channel) => {
+      console.log(`Editing: ${channel} (open)`);
       con.query(`SELECT * FROM rp_timerBlacklist WHERE id = '${channel.id}'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) return channel.setTopic('This channel won\'t be effacted from the timeout.');
@@ -32,7 +33,7 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`UPDATE rp_timer SET warned = 't' WHERE id = '${channel.id}' AND warned = 'f'`);
               con.query(`SELECT * FROM rp_owner WHERE channelID = '${channel.id}'`, async (suberr, user) => {
                 if (suberr) throw suberr;
-                // NEEDS FIX: user is undefined?
+                // FIXME: user is undefined?
                 // await channel.send(`<@${user.ownerID}>, Your Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
                 await channel.send(`This Channel gets deactivated in the next ${toTime(parseInt(rows[0].timeLeft, 10))}!`);
               });
@@ -69,6 +70,7 @@ module.exports.run = async (client, servers, fs, con) => {
     });
 
     client.guilds.get(server).channels.get(RPChannelArchive).children.forEach((channel) => {
+      console.log(`Editing: ${channel} (closed)`);
       con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 't'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) {
@@ -106,4 +108,3 @@ module.exports.run = async (client, servers, fs, con) => {
 module.exports.help = {
   name: 'rp_timer',
 };
-
