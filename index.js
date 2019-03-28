@@ -38,7 +38,7 @@ if (fs.existsSync('./config/test_token.json')) {
 
 con.connect((err) => {
   if (err) throw err;
-  console.log(text.log.startup.success.db);
+  console.log('Connected to database!');
 });
 
 // loading serverIDs
@@ -52,17 +52,17 @@ fs.readdir('./commands/', (err, files) => {
 
   let jsfiles = files.filter(f => f.split('.').pop() === 'js');
   if (jsfiles.length <= 0) {
-    console.log(text.log.init.failed.nothing_found);
+    console.log('No CMD(s) to load!');
     return;
   }
 
-  console.log(text.log.init.working.load, jsfiles.length, text.log.init.cmd);
+  console.log(`Loading ${jsfiles.length} command(s)...`);
   jsfiles.forEach((f, i) => {
     let probs = require(`./commands/${f}`);
-    console.log(text.log.init.success.entry, i + 1, f);
+    console.log(`   ${i + 1}) Loaded: ${f}!`);
     client.commands.set(probs.help.name, probs);
   });
-  console.log(text.log.init.success.load, jsfiles.length, text.log.init.cmd);
+  console.log(`Loaded ${jsfiles.length} command(s)!`);
 });
 
 // ---------------------
@@ -73,48 +73,49 @@ fs.readdir('./functions/', (err, files) => {
 
   let jsfiles = files.filter(f => f.split('.').pop() === 'js');
   if (jsfiles.length <= 0) {
-    console.log(text.log.init.failed.nothing_found);
+    console.log('No function(s) to load!');
     return;
   }
 
-  console.log(text.log.init.working.load, jsfiles.length, text.log.init.function);
+  console.log(`Loading ${jsfiles.length} function(s)...`);
+
   jsfiles.forEach((f, i) => {
     let probs = require(`./functions/${f}`);
-    console.log(text.log.init.success.entry, i + 1, f);
+    console.log(`   ${i + 1}) Loaded: ${f}!`);
     client.functions.set(probs.help.name, probs);
   });
-  console.log(text.log.init.success.load, jsfiles.length, text.log.init.function);
+  console.log(`Loaded ${jsfiles.length} function(s)!`);
 });
 
 client.on('ready', async () => {
   const config = require('./config/main/config.json');
 
-  console.log(text.log.startup.success.user_logged_in, text.mawbot.name, client.user.tag);
+  console.log(`[MawBot] Logged in as ${client.user.tag}!`);
   // set status
   client.functions.get('setup_status').run(client, fs)
-    .then(() => console.log(text.log.startup.success.status));
+    .then(() => console.log('Set status!'));
 
   // set rolerequest message
   client.functions.get('setup_role_request').run(client, servers, config)
-    .then(() => console.log(text.log.startup.success.rolerequest));
+    .then(() => console.log('Resetted rolerequest!'));
 
   // set saveme message
   client.functions.get('setup_saveme').run(client, servers)
-    .then(() => console.log(text.log.startup.success.saveme));
+    .then(() => console.log('Resetted saveme!'));
 
   // load and start RP-room timers
-  console.log(text.log.startup.working.rp_timers);
+  console.log('Starting up RP timers!');
   client.functions.get('rp_timer').run(client, servers, fs, con);
 
   // Load and posting bot status
-  console.log(text.log.startup.working.status_message);
+  console.log('Posting bot status message!');
   client.functions.get('stat_message_log').run(client, config, con, fs);
 
   // load second bot
-  // console.log('Starting FurAffinity bot!');
-  // client.functions.get('fa_api_bot').run(fs, config);
+  console.log('Starting FurAffinity bot!');
+  client.functions.get('fa_api_bot').run(fs, config);
 
-  console.log(text.log.startup.working.cvl_bot);
+  console.log('Starting CVL roleassignment bot!');
   client.functions.get('cvl_roleassignment_bot').run(fs, client.functions);
 });
 
@@ -190,8 +191,8 @@ client.on('message', async (message) => {
   // conditions
   if (message.author.bot) return;
   if (message.channel.type === 'dm') {
-    message.reply(text.mawbot.messages.dm.shy);
-    message.react(text.mawbot.messages.dm.shy_react);
+    message.reply('Do not talk to me! I\'m shy in DM 😖');
+    message.react('❌');
     return;
   }
 
@@ -235,7 +236,7 @@ client.on('message', async (message) => {
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
     message.react('👌');
     if (teamlist.indexOf('online' || 'dnd') === -1) {
-      message.channel.send(text.mawbot.messages.server.checkin.no_teammember);
+      message.channel.send('Sorry There are no team members currently online.\nPlease wait until someone is available!');
     }
     return;
   }
