@@ -100,8 +100,9 @@ client.on('ready', async () => {
     .then(() => console.log('Resetted rolerequest!'));
 
   // set saveme message
-  client.functions.get('setup_saveme').run(client, servers)
-    .then(() => console.log('Resetted saveme!'));
+  // disabled, because currently not in use
+  // client.functions.get('setup_saveme').run(client, servers)
+  //   .then(() => console.log('Resetted saveme!'));
 
   // load and start RP-room timers
   console.log('Starting up RP timers!');
