@@ -187,10 +187,10 @@ module.exports.run = async (client, message, args, con, config) => {
         } else {
           owner = 'no one specified';
         }
-        con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
+        con.query(`SELECT * FROM rp_timer WHERE channelID = '${message.channel.id}'`, (err, rows) => {
           let time;
           if (rows[0]) {
-            time = `${toTime(rows[0].timeLeft, 10)}`;
+            time = toTime(rows[0].timeLeft, 10);
           } else {
             time = 'no time specified';
           }
