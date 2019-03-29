@@ -190,7 +190,7 @@ module.exports.run = async (client, message, args, con, config) => {
         con.query(`SELECT * FROM rp_timer WHERE id = '${message.channel.id}'`, (err, rows) => {
           let time;
           if (rows[0]) {
-            time = toTime(rows[0].timeLeft);
+            time = toTime(parseInt(rows[0].timeLeft, 10));
           } else {
             time = 'no time specified';
           }
