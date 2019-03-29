@@ -1,6 +1,8 @@
-const servers = require('../config/servers.json');
-
 const fs = require('fs');
+
+const toTime = require('pretty-ms');
+
+const servers = require('../config/servers.json');
 
 let RPChannelArchive;
 let RPChannelLog;
@@ -179,55 +181,68 @@ module.exports.run = async (client, message, args, con, config) => {
     case 'info':
       con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
         if (err) throw err;
-        let owner;
-        if (rows[0]) {
-          owner = rows[0].ownerID;
-        } else {
-          owner = 'no one specified';
-        }
-        message.channel.send({
-          embed: {
-            color: message.member.displayColor,
-            title: 'Channel information',
-            fields: [
-              {
-                name: 'Channelname',
-                value: message.channel.name,
-                inline: true,
+        con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, row) => {
+          let owner;
+          if (rows[0]) {
+            owner = rows[0].ownerID;
+          } else {
+            owner = 'no one specified';
+          }
+          let time;
+          if (row[0]) {
+            time = toTime(parseInt(row[0].timeLeft, 10));
+          } else {
+            time = 'no time specified';
+          }
+          message.channel.send({
+            embed: {
+              color: message.member.displayColor,
+              title: 'Channel information',
+              fields: [
+                {
+                  name: 'Channelname',
+                  value: message.channel.name,
+                  inline: true,
+                },
+                {
+                  name: 'Channel ID',
+                  value: message.channel.id,
+                  inline: true,
+                },
+                {
+                  name: 'Owner',
+                  value: `<@${owner}>`,
+                  inline: true,
+                },
+                {
+                  name: 'Time Left',
+                  value: time,
+                  inline: true,
+                },
+                // cant, needs to be in DB first
+                // {
+                //   name: 'Channeltype',
+                //   value: message.channel.id,
+                //   inline: true,
+                // },
+                // {
+                //   name: 'Channel open?',
+                //   value: message.channel.id,
+                //   inline: true,
+                // },
+                // {
+                //   name: 'Access to channel',
+                //   value: message.channel.id,
+                //   inline: true,
+                // },
+              ],
+              timestamp: new Date(),
+              footer: {
+                icon_url: message.client.user.displayAvatarURL,
+                text: message.client.user.tag,
               },
-              {
-                name: 'Channel ID',
-                value: message.channel.id,
-                inline: true,
-              },
-              {
-                name: 'Owner',
-                value: `<@${owner}>`,
-                inline: true,
-              },
-              // cant, needs to be in DB first
-              // {
-              //   name: 'Channeltype',
-              //   value: message.channel.id,
-              //   inline: true,
-              // },
-              // {
-              //   name: 'Channel open?',
-              //   value: message.channel.id,
-              //   inline: true,
-              // },
-              // {
-              //   name: 'Access to channel',
-              //   value: message.channel.id,
-              //   inline: true,
-              // },
-            ],
-            timestamp: new Date(),
-            footer: {
-              icon_url: message.client.user.displayAvatarURL,
-              text: message.client.user.tag,
             },
-          },
+          });
         });
       });
       return;

@@ -24,7 +24,6 @@ module.exports.run = async (client, servers, fs, con) => {
       con.query(`SELECT * FROM rp_timerBlacklist WHERE id = '${channel.id}'`, (err, rows) => {
         if (err) throw err;
         if (rows[0]) return channel.setTopic('This channel won\'t be effacted from the timeout.');
-
         con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, async (err, rows) => {
           if (err) throw err;
           if (rows[0]) {
@@ -77,7 +76,6 @@ module.exports.run = async (client, servers, fs, con) => {
           channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`)
             .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
           con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
-
           if (rows[0].timeLeft <= 0) {
             con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
             client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got deleted, because it is older than a month!`)
