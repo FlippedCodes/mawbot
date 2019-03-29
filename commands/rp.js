@@ -181,16 +181,16 @@ module.exports.run = async (client, message, args, con, config) => {
     case 'info':
       con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
         if (err) throw err;
-        con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, row) => {
-          let owner;
-          if (rows[0]) {
-            owner = rows[0].ownerID;
-          } else {
-            owner = 'no one specified';
-          }
+        let owner;
+        if (rows[0]) {
+          owner = rows[0].ownerID;
+        } else {
+          owner = 'no one specified';
+        }
+        con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
           let time;
-          if (row[0]) {
-            time = toTime(parseInt(row[0].timeLeft, 10));
+          if (rows[0]) {
+            time = toTime(parseInt(rows[0].timeLeft, 10));
           } else {
             time = 'no time specified';
           }
