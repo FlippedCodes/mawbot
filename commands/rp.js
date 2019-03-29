@@ -179,6 +179,7 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'info':
+    // FIXME: Remove cmd from adding time
       con.query(`SELECT * FROM rp_owner WHERE channelID = '${message.channel.id}'`, (err, rows) => {
         if (err) throw err;
         let owner;
