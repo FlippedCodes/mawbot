@@ -44,8 +44,7 @@ module.exports.run = async (client, servers, fs, con) => {
               await channel.send(`The time has run out and this channel got moved to **archived rooms** because it is inactive! It will be archived for the next ${toTime(servers.PRChannelArchivedTime)} before complete deletion.\nIf needed the team can reopen this channel within that time with \`=rp reopen\`.`);
               // remove channel rights, only readable (bot needs writing rights!)
               client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got archived!`);
-              channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`)
-                .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
+              channel.setTopic(`🔒 archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
             }
 
             const carc = rows[0].timeLeft - 300000;
@@ -73,13 +72,12 @@ module.exports.run = async (client, servers, fs, con) => {
         if (err) throw err;
         if (rows[0]) {
           const carc = rows[0].timeLeft - 300000;
-          channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`)
-            .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
+          channel.setTopic(`🔒 archived: ${toTime(carc)} left, before deletion!`);
           con.query(`UPDATE rp_timer SET timeLeft = '${carc}' WHERE id = '${channel.id}' AND timeLeft = '${rows[0].timeLeft}'`);
           if (rows[0].timeLeft <= 0) {
             con.query(`DELETE FROM rp_timer WHERE id = '${channel.id}'`);
             client.channels.get(RPChannelLog).send(`The channel <#${channel.id}> (${channel.id}) got deleted, because it is older than a month!`)
-              .then(() => channel.delete().catch(console.error).then(console.log(`try delete: ${channel} (closed)`)));
+              .then(() => channel.delete());
           }
         } else {
           con.query(`SELECT * FROM rp_timer WHERE id = '${channel.id}' AND archived = 'f'`, (err, rows) => {
@@ -91,8 +89,7 @@ module.exports.run = async (client, servers, fs, con) => {
               con.query(`DELETE FROM rp_owner WHERE channelID = '${channel.id}'`);
             } else {
               con.query(`INSERT INTO rp_timer (id, timeLeft, warned, archived) VALUES ('${channel.id}', '${servers.PRChannelArchivedTime}', 't', 't')`);
-              channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`)
-                .catch(console.error).then(console.log(`Editing: ${channel} (closed)`));
+              channel.setTopic(`archived: ${toTime(servers.RPChannelTime)} left, before deletion!`);
               channel.lockPermissions();
             }
           });
