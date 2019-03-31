@@ -14,7 +14,7 @@ module.exports.run = async (client, message, con) => {
             .then((webhook) => {
               const hook = webhook.find(hook => hook.name === rows[0].webhookName);
               hook.send(message.content, {
-                username: message.author.username,
+                username: `${message.author.username} [${message.channel.guild.name}]`,
                 avatarURL: pic,
               })
                 .catch((error) => {
