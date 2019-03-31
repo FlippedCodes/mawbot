@@ -224,9 +224,18 @@ client.on('message', async (message) => {
   let teamlist;
   if (message.guild.id === servers.main || message.guild.id === servers.testing) teamlist = message.guild.roles.get(config.team).members.map(s => s.presence.status).sort().join('\n');
 
-  if (message.channel.id === config.sharedChannel) client.functions.get('channel_shared_sfw').run(client, message, blacklist, servers);
+  con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
+    let channel_shared = 'channel_shared_sfw';
+    if (rows[0]) {
+      if (rows[0].nsfw === 't') {
+        channel_shared = 'channel_shared_nsfw';
+      }
+      client.functions.get(channel_shared).run(client, message, con);
+      return;
+    }
+  });
 
-  if (message.channel.id === config.NSFWsharedChannel) client.functions.get('channel_shared_nsfw').run(client, message, blacklist, servers);
+  // if (message.channel.id === config.NSFWsharedChannel) client.functions.get('channel_shared_nsfw').run(client, message, blacklist, servers);
 
   if (message.channel.id === servers.sharedChannel_night_dragon) return;
   if (message.channel.id === servers.sharedChannel_voretv) return;
