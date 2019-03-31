@@ -8,7 +8,7 @@ module.exports.run = async (client, message, con) => {
   con.query('SELECT * FROM shared_channels', async (err, rows) => {
     rows.forEach((ID) => {
       const vorenetwork_channel = client.channels.find(channel => channel.id === ID.channelID);
-      if (!(vorenetwork_channel === message.channel.id)) {
+      if (vorenetwork_channel.id !== message.channel.id) {
         con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
           vorenetwork_channel.fetchWebhooks()
             .then((webhook) => {
