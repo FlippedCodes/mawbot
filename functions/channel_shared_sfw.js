@@ -14,7 +14,9 @@ module.exports.run = async (client, message, con) => {
             .then((webhook) => {
               const hook = webhook.find(hook => hook.name === rows[0].webhookName);
               hook.send(message.content, {
-                username: `${message.author.username} [${message.channel.guild.name}]`,
+                // FIXME: name too long for discord api; move servname to end of message
+                // username: `${message.author.username} [${message.channel.guild.name}]`,
+                username: message.author.username,
                 avatarURL: pic,
               })
                 .catch((error) => {
