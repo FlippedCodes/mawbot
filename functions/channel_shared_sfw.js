@@ -4,6 +4,7 @@ module.exports.run = async (client, message, con) => {
   // no pic fallback
   let pic = 'https://cdn.discordapp.com/embed/avatars/0.png';
   if (message.author.avatarURL) pic = message.author.avatarURL;
+  console.log('pic correction');
 
   con.query('SELECT * FROM shared_channels', async (err, rows) => {
     rows.forEach((ID) => {
@@ -13,11 +14,13 @@ module.exports.run = async (client, message, con) => {
           vorenetwork_channel.fetchWebhooks()
             .then((webhook) => {
               const hook = webhook.find(hook => hook.name === rows[0].webhookName);
+              console.log('sending webhook');
               hook.send(message.content, {
                 username: `${message.author.username} [${message.channel.guild.name}]`,
                 avatarURL: pic,
               })
                 .catch((error) => {
+                  console.log('error catch');
                   console.log(error);
                   message.channel.send('Something went wrong sending the message to one of the other servers. Please report this to the Team.');
                   return;
