@@ -167,17 +167,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // check if reaction is from rolerequest
   if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(reaction, requester, config, user, con);
 
-  // check if reaction is from check-in - accepted
-  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_add_check-in').run('accepted', user, reaction, config, client);
-
-  // // check if reaction is from check-in - rejected
-  // if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '✋') client.functions.get('reaction_add_check-in').run('rejected', user, reaction, config, client);
-
-  // // check if reaction is from check-in - blocked
-  // if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '⛔') client.functions.get('reaction_add_check-in').run('blocked', user, reaction, config, client);
+  // check if reaction is from check-in
+  if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client);
 
   // check if reaction is from keep me
-  if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
+  if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') return client.functions.get('reaction_saveme').run(reaction, requester, user, con);
 
   // check if reaction is from arcived rooms
   // got moved to cmd because of botrestarting problems

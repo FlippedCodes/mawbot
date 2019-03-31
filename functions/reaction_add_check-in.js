@@ -1,4 +1,4 @@
-module.exports.run = async (block, user, reaction, config, client) => {
+module.exports.run = async (emoji, user, reaction, config, client) => {
   reaction.message.guild.fetchMember(user)
     .then(async (member) => {
       if (!member.roles.get(config.team)) {
@@ -6,8 +6,8 @@ module.exports.run = async (block, user, reaction, config, client) => {
         reaction.message.channel.send('Sorry, but you can\'t check-in yourself or other people!\nPlease wait for a Teammember to check you in.');
         return;
       }
-      switch (block) {
-        case 'accepted':
+      switch (emoji) {
+        case '👌':
           reaction.message.member.addRole(config.checkinRole);
           await reaction.message.channel.bulkDelete(100);
           await client.channels.get(config.checkin_channelID).send('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
@@ -16,7 +16,7 @@ module.exports.run = async (block, user, reaction, config, client) => {
             .then(msg2 => msg2.delete(4000));
           return;
 
-        case 'rejected':
+        case '✋':
           await reaction.message.author.send('It seems like your check-in got declined. Please get in touch with the team.');
           await reaction.message.channel.bulkDelete(100);
           await client.channels.get(config.checkin_channelID).send('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
@@ -24,7 +24,7 @@ module.exports.run = async (block, user, reaction, config, client) => {
             .then(msg2 => msg2.delete(4000));
           return;
 
-          // case 'blocked':
+          // case '⛔':
           //   reaction.message.member.addRole(config.checkinRole);
           //   await reaction.message.channel.bulkDelete(100);
           //   await client.channels.get(config.checkin_channelID).send('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
