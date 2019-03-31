@@ -204,7 +204,7 @@ client.on('message', async (message) => {
     }
   });
 
-  let config;
+  let config = require('./config/main/config.json');
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
