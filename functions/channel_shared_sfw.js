@@ -18,7 +18,6 @@ module.exports.run = async (client, message, con) => {
                 avatarURL: pic,
               })
                 .catch((error) => {
-                  console.log('error catch');
                   console.log(error);
                   message.channel.send('Something went wrong sending the message to one of the other servers. Please report this to the Team.');
                   return;
