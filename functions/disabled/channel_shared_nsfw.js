@@ -1,3 +1,4 @@
+// TODO: remove blacklsit -> going to get moved to db
 module.exports.run = async (client, message, blacklist, servers) => {
   let content = `\n${message.content}`;
   let blacklisted = false;
