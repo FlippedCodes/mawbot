@@ -237,10 +237,8 @@ client.on('message', async (message) => {
 
   // if (message.channel.id === config.NSFWsharedChannel) client.functions.get('channel_shared_nsfw').run(client, message, blacklist, servers);
 
-  if (message.channel.id === servers.sharedChannel_night_dragon) return;
-  if (message.channel.id === servers.sharedChannel_voretv) return;
-  if (message.channel.id === servers.sharedChannel_NSFWnight_dragon) return;
-  if (message.channel.id === servers.sharedChannel_NSFWvoretv) return;
+  // other server fallthough
+  if (message.channel.guild.id === !config.serverID) return;
 
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
     message.react('✋')
