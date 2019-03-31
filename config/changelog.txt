@@ -1,4 +1,3 @@
 **Changelog:**
 
-* Bugfixes
-
++ brought back the VoreNetwork
