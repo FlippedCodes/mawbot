@@ -225,15 +225,11 @@ client.on('message', async (message) => {
   if (message.guild.id === servers.main || message.guild.id === servers.testing) teamlist = message.guild.roles.get(config.team).members.map(s => s.presence.status).sort().join('\n');
 
   con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
-    console.log('select db table');
     let channel_shared = 'channel_shared_sfw';
     if (rows[0]) {
-      console.log('checked if room is valid');
       if (rows[0].nsfw === 't') {
-        console.log('checking nsfw');
         channel_shared = 'channel_shared_nsfw';
       }
-      console.log('parsing function');
       client.functions.get(channel_shared).run(client, message, con);
       return;
     }

@@ -4,21 +4,15 @@ module.exports.run = async (client, message, con) => {
   // no pic fallback
   let pic = 'https://cdn.discordapp.com/embed/avatars/0.png';
   if (message.author.avatarURL) pic = message.author.avatarURL;
-  console.log('pic correction');
 
   con.query('SELECT * FROM shared_channels', async (err, rows) => {
-    console.log('selection shared channel');
     rows.forEach((ID) => {
-      console.log('rerun: rows seletion');
       const vorenetwork_channel = client.channels.find(channel => channel.id === ID.channelID);
-      console.log('get channel id');
       if (vorenetwork_channel !== message.channel.id) {
-        console.log('tested if same channel');
         con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
           vorenetwork_channel.fetchWebhooks()
             .then((webhook) => {
               const hook = webhook.find(hook => hook.name === rows[0].webhookName);
-              console.log('sending webhook');
               hook.send(message.content, {
                 username: `${message.author.username} [${message.channel.guild.name}]`,
                 avatarURL: pic,
