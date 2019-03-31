@@ -170,11 +170,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // check if reaction is from check-in - accepted
   if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_add_check-in').run('accepted', user, reaction, config, client);
 
-  // check if reaction is from check-in - rejected
-  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '✋') client.functions.get('reaction_add_check-in').run('rejected', user, reaction, config, client);
+  // // check if reaction is from check-in - rejected
+  // if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '✋') client.functions.get('reaction_add_check-in').run('rejected', user, reaction, config, client);
 
-  // check if reaction is from check-in - blocked
-  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '⛔') client.functions.get('reaction_add_check-in').run('blocked', user, reaction, config, client);
+  // // check if reaction is from check-in - blocked
+  // if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '⛔') client.functions.get('reaction_add_check-in').run('blocked', user, reaction, config, client);
 
   // check if reaction is from keep me
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
