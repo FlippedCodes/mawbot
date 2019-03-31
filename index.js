@@ -167,8 +167,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // check if reaction is from rolerequest
   if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(reaction, requester, config, user, con);
 
-  // check if reaction is from check-in
-  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_add_check-in').run(user, reaction, config, client);
+  // check if reaction is from check-in - accepted
+  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_add_check-in').run('accepted', user, reaction, config, client);
+
+  // check if reaction is from check-in - rejected
+  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '✋') client.functions.get('reaction_add_check-in').run('rejected', user, reaction, config, client);
+
+  // check if reaction is from check-in - blocked
+  if (reaction.message.channel.id === config.checkin_channelID && reaction.emoji.name === '⛔') client.functions.get('reaction_add_check-in').run('blocked', user, reaction, config, client);
 
   // check if reaction is from keep me
   if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') client.functions.get('reaction_saveme').run(reaction, requester, user, con);
@@ -234,9 +240,10 @@ client.on('message', async (message) => {
   if (message.channel.id === servers.sharedChannel_NSFWvoretv) return;
 
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
-    message.react('👌');
+    message.react('👌')
+      .then(message.react('✋'));
     if (teamlist.indexOf('online' || 'dnd') === -1) {
-      message.channel.send('Sorry There are no team members currently online.\nPlease wait until someone is available!');
+      message.channel.send('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
     }
     return;
   }
