@@ -20,8 +20,7 @@ module.exports.run = async (client, message, con) => {
             .setColor(message.member.displayColor)
             .setDescription(message.content)
             .setTimestamp()
-            .setFooter(message.channel.guild.name, message.guild.iconURL)
-            .proxyIconUrl('https://www.google.com/');
+            .setFooter(message.channel.guild.name, message.guild.iconURL);
           vorenetwork_channel.send({ embed })
             .catch((error) => {
               console.log(error);
