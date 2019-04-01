@@ -13,7 +13,7 @@ module.exports.run = async (client, message, con) => {
           vorenetwork_channel.fetchWebhooks()
             .then((webhook) => {
               const hook = webhook.find(hook => hook.name === rows[0].webhookName);
-              hook.send(`[${message.channel.guild.name}] ${message.content}`, {
+              hook.send(`[${message.channel.guild.name}]\n${message.content}`, {
                 // FIXME: name too long for discord api; move servname to end of message
                 // username: `${message.author.username} [${message.channel.guild.name}]`,
                 username: message.author.username,
