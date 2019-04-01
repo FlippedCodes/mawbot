@@ -13,11 +13,11 @@ module.exports.run = async (client, message, con) => {
       if (vorenetwork_channel.id !== message.channel.id) {
         con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
           const embed = new Discord.RichEmbed()
-            .setAuthor(message.author.username)
+            .setAuthor(message.author.username, pic)
             .setColor(message.member.displayColor)
             .setDescription(message.content)
-            .setThumbnail(pic)
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter(message.channel.guild.name, message.guild.iconURL);
           vorenetwork_channel.send({ embed })
             .catch((error) => {
               console.log(error);
