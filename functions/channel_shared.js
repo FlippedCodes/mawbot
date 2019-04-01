@@ -5,7 +5,7 @@ module.exports.run = async (client, message, con) => {
   con.query(`SELECT * FROM shared_channels_banned WHERE userID = '${message.author.id}'`, async (err, rows) => {
     if (rows[0]) {
       message.react('❌');
-      return message.channel.send('\nSorry, because of your recent behavior you are not allowed to use the vore-network anymore!');
+      return message.channel.send('Sorry, because of your recent behavior you are not allowed to use the vore-network anymore!');
     }
 
     // no userpic fallback
