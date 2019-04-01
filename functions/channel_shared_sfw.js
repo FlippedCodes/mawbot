@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports.run = async (client, message, con) => {
+  // banned user filter
   con.query(`SELECT * FROM shared_channels_banned WHERE userID = '${message.author.id}'`, async (err, rows) => {
     if (rows[0]) {
       message.react('❌');
@@ -47,14 +48,6 @@ module.exports.run = async (client, message, con) => {
       });
     });
   });
-
-  // TODO: need redo with db
-  // Object.entries(blacklist).forEach(([key, value]) => {
-  //   if (message.author.id === value) {
-  //     content = '\nSorry, because of your recent behavior you are not allowed to use the vore-network anymore!';
-  //     blacklisted = true;
-  //   }
-  // });
 };
 
 module.exports.help = {
