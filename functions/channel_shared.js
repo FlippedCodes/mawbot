@@ -51,5 +51,5 @@ module.exports.run = async (client, message, con) => {
 };
 
 module.exports.help = {
-  name: 'channel_shared_sfw',
+  name: 'channel_shared',
 };

@@ -225,7 +225,7 @@ client.on('message', async (message) => {
   if (message.guild.id === servers.main || message.guild.id === servers.testing) teamlist = message.guild.roles.get(config.team).members.map(s => s.presence.status).sort().join('\n');
 
   con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
-    if (rows[0]) return client.functions.get('channel_shared_sfw').run(client, message, con);
+    if (rows[0]) return client.functions.get('channel_shared').run(client, message, con);
   });
 
   // if (message.channel.id === config.NSFWsharedChannel) client.functions.get('channel_shared_nsfw').run(client, message, blacklist, servers);
