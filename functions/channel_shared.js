@@ -1,4 +1,4 @@
-const RichEmbed = require('discord.js');
+const Discord = require('discord.js');
 
 module.exports.run = async (client, message, con) => {
   // banned user filter
@@ -19,7 +19,7 @@ module.exports.run = async (client, message, con) => {
         if (!message.channel.nsfw && vorenetwork_channel.nsfw) return;
 
         if (vorenetwork_channel.id !== message.channel.id) {
-          const embed = new RichEmbed()
+          const embed = new Discord.RichEmbed()
             .setAuthor(message.author.username, pic)
             .setColor(message.member.displayColor)
             .setDescription(message.content)
