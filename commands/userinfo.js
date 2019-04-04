@@ -23,6 +23,7 @@ module.exports.run = async (client, message, args, con, config) => {
         .addField('Is Bot?', member.user.bot, true)
         .addField('Kickable?', member.kickable, true)
         .addField('Bannable?', member.bannable, true)
+        .addField('Playing', game, true)
 
         .addField(
           'Joined this server',
@@ -36,8 +37,6 @@ module.exports.run = async (client, message, args, con, config) => {
           at ${target.user.createdAt.toLocaleTimeString()}`,
           true,
         )
-
-        .addField('Playing', game, true)
 
         .addField('VC - muted', member.mute, true)
         .addField('VC - deafened', member.deaf, true)
