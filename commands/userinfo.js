@@ -12,11 +12,11 @@ module.exports.run = async (client, message, args, con, config) => {
   message.guild.fetchMember(target)
     .then((member) => {
       let embed = new RichEmbed()
-        .setAuthor(`User: ${member.user.tag}`)
+        .setAuthor(`Usertag: ${member.user.tag}`)
         .setColor(member.displayColor)
         .setThumbnail(member.user.displayAvatarURL)
 
-        .addField('Tag', member.user.tag, true)
+        .addField('Usermention', member.toString(), true)
         .addField('Nickname', member.displayName, true)
         .addField('ID', member.id, true)
         .addField('Status', member.user.presence.status, true)
