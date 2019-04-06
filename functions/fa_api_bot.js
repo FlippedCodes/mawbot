@@ -28,7 +28,8 @@ module.exports.run = async (fs) => {
   client.on('message', async (message) => {
     if (message.author.bot) return;
     if (message.content.indexOf(config.prefix) !== 0) return;
-    // fix and implement own prefix || message.mentions.members.first().id !== config.clientID || message.mentions.members.first().id !== config.clientIDTesting
+    // TODO: implement own prefix
+    // FIXME: message.mentions.members.first().id !== config.clientID || message.mentions.members.first().id !== config.clientIDTesting
 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
