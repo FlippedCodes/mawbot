@@ -35,6 +35,8 @@ module.exports.run = async (fs) => {
 
     switch (command) {
       case 'fa':
+        if (args.length <= 0) return message.channel.send('Sorry, I couldn\'t find anything, because you din\'t provide any tags. :(');
+
         // get user args
         const keywords = args.join(' ');
 
