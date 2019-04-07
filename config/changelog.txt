@@ -1,3 +1,3 @@
 **Changelog:**
 
-+ redone userinfo cmd with fetchMembers instad of lastMessage to get memberinformation
++ added image reverse search
