@@ -178,6 +178,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // got moved to cmd because of botrestarting problems
   // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
 
+  // TODO: filesize fallback
+  if (reaction.emoji.name === '🔍') client.functions.get('imagefinder').run(client, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
+
   // reactions for own-rp-channels
   if (reaction.message.channel.parent.id === RPChannelCategory) {
     if (reaction.emoji.name === '🚪') client.functions.get('reaction_rp_setup').run('RPPrivate', config, client, reaction, RPChannelLog, con, user);
@@ -204,6 +207,11 @@ client.on('message', async (message) => {
       con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${message.channel.id}' AND warned = 't'`);
     }
   });
+
+  // TODO: limit with db to some channels
+  if (message.attachments.size > 0) {
+    message.react('🔍');
+  }
 
   let config;
   if (message.channel.guild.id === servers.main) {
@@ -259,5 +267,3 @@ client.on('message', async (message) => {
 client.on('error', e => console.error(e));
 
 client.on('warn', e => console.warn(e));
-
-client.on('debug', (e) => { if (fs.existsSync('./config/test_token.json')) console.info(e); });
