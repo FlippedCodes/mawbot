@@ -13,7 +13,7 @@
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "github:discordjs/discord.js#11.4-dev",
     "e621": "0.0.2",
-    "furaffinity": "^3.0.0",
+    "furaffinity": "^2.0.1",
     "heroku-client": "^3.0.7",
     "mysql": "github:mysqljs/mysql",
     "pretty-ms": "^4.0.0",

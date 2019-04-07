@@ -11,7 +11,8 @@ module.exports.run = async (fs, functions) => {
   let token;
   if (fs.existsSync('./config/test_token.json')) {
     token = require('../config/test_token.json');
-    client.login(token.test_token_cvl);
+    console.log('[CVL] The Bot is run in a test envirement and gets shutdown now.');
+    client.destroy();
   } else {
     client.login(process.env.BOT_TOKEN_CVL);
   }

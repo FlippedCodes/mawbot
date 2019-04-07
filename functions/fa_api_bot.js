@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+const { Recent, Type, Login } = require('furaffinity');
 
-const furaffinity = require('furaffinity');
+const Discord = require('discord.js');
 
 const client = new Discord.Client({ disableEveryone: true });
 
@@ -14,9 +14,11 @@ module.exports.run = async (fs) => {
     token = require('../config/test_token.json');
     client.login(token.test_token_fa);
     clientID = config.clientIDTesting;
+    Login(token.fa_cookie_a, token.fa_cookie_b);
   } else {
     client.login(process.env.BOT_TOKEN_FA);
     clientID = config.clientID;
+    Login(process.env.FA_COOKIE_A, process.env.FA_COOKIE_B);
   }
 
   client.on('ready', async () => {
@@ -36,22 +38,22 @@ module.exports.run = async (fs) => {
 
     switch (command) {
       case 'fa':
-        if (args.length <= 0) return message.channel.send('Sorry, I couldn\'t find anything, because you din\'t provide any tags. :(');
+        if (args.length <= 0) return message.channel.send('Sorry, I couldn\'t find anything, because you didn\'t provide any tags. :(');
 
         // get user args
         const keywords = args.join(' ');
 
-        // testcmd
-        // message.channel.send(keywords);
+          // testcmd
+          // message.channel.send(keywords);
 
-        // check args
-        // nothing here yet
+          // check args
+          // nothing here yet
 
-        // cap max pics
-        const limit = 1;
+          // cap max pics
+          const limit = 1;
 
-        // loop limit
-        // not done yet
+          // loop limit
+          // not done yet
 
         // command get info
         furaffinity.search(keywords, limit).then((fa) => {
@@ -98,6 +100,13 @@ module.exports.run = async (fs) => {
             return;
           }
           message.channel.send(data);
+        });
+        return;
+      case 'test':
+        Recent(Type.Artwork).then((res) => {
+          res[0].getSubmission().then((submission) => {
+            console.log('wok');
+          });
         });
         return;
       default:

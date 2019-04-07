@@ -96,7 +96,7 @@ module.exports.run = async (client, servers, fs, con) => {
         }
       });
     });
-  // keep 5 sec intervall for testing
+  // 5 sec intervall for testing; only use if needed
   // }, 1 * 5000);
   }, 1 * 300000);
 };

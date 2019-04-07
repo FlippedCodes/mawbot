@@ -100,8 +100,9 @@ client.on('ready', async () => {
     .then(() => console.log('Resetted rolerequest!'));
 
   // set saveme message
-  client.functions.get('setup_saveme').run(client, servers)
-    .then(() => console.log('Resetted saveme!'));
+  // disabled, because currently not in use
+  // client.functions.get('setup_saveme').run(client, servers)
+  //   .then(() => console.log('Resetted saveme!'));
 
   // load and start RP-room timers
   console.log('Starting up RP timers!');
@@ -177,6 +178,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // got moved to cmd because of botrestarting problems
   // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
 
+  // TODO: filesize fallback
+  if (reaction.emoji.name === '🔍') client.functions.get('imagefinder').run(client, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
+
   // reactions for own-rp-channels
   if (reaction.message.channel.parent.id === RPChannelCategory) {
     if (reaction.emoji.name === '🚪') client.functions.get('reaction_rp_setup').run('RPPrivate', config, client, reaction, RPChannelLog, con, user);
@@ -203,8 +207,13 @@ client.on('message', async (message) => {
       con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${message.channel.id}' AND warned = 't'`);
     }
   });
+  
+  // TODO: limit with db to some channels
+  if (message.attachments.size > 0) {
+    message.react('🔍');
+  }
 
-  let config = require('./config/main/config.json');
+  let config;
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
   }
@@ -254,15 +263,8 @@ client.on('message', async (message) => {
     cmd.run(client, message, args, con, config)
       .catch(console.log);
   }
-  // disabled because no need to reaction
-  // else {
-  //   message.react('❌')
-  //     .catch(console.log);
-  // }
 });
 
 client.on('error', e => console.error(e));
 
 client.on('warn', e => console.warn(e));
-
-client.on('debug', (e) => { if (fs.existsSync('./config/test_token.json')) console.info(e); });

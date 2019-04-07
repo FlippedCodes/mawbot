@@ -1,6 +1,6 @@
-const version = require('../package.json');
-
 const fs = require('fs');
+
+const version = require('../package.json');
 
 module.exports.run = async (client, message, args, con, config) => {
   if (!message.member.roles.find(role => role.name === config.teamRole)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the Devs can use this~`).then(message.react('❌'));
@@ -19,4 +19,3 @@ module.exports.run = async (client, message, args, con, config) => {
 module.exports.help = {
   name: 'changelog',
 };
-
