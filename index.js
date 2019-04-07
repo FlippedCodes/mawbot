@@ -179,7 +179,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
 
   // TODO: filesize fallback
-  if (reaction.emoji.name === '🔍') client.functions.get('imagefinder').run(client, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
+  if (reaction.emoji.name === '🔍') client.functions.get('imagefinder').run(client, con, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
 
   // reactions for own-rp-channels
   if (reaction.message.channel.parent.id === RPChannelCategory) {
@@ -208,9 +208,10 @@ client.on('message', async (message) => {
     }
   });
   
-  // TODO: limit with db to some channels
   if (message.attachments.size > 0) {
-    message.react('🔍');
+    con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
+      if (rows[0]) message.react('🔍');
+    });
   }
 
   let config = require('./config/main/config.json');
