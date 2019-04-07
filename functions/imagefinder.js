@@ -8,7 +8,7 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
   reaction.remove(user);
   con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
     if (rows[0]) {
-      if (reaction.author.id !== message.author.id) {
+      if (user.id !== message.author.id) {
         reaction.remove(user);
         return message.channel.send('Sorry, you are not the publisher of this picture.');
       }
