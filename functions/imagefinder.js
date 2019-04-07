@@ -6,7 +6,7 @@ const { RichEmbed } = require('discord.js');
 
 module.exports.run = async (client, reaction, user, message, image) => {
   reaction.remove(user);
-  message.react(message.guild.emojis.get('564375243662163968')).then((reaction_loading) => {
+  message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
     const url = `http://iqdb.harry.lu/?url=${image}`;
 
     rp(url)
