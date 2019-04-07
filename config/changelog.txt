@@ -1,3 +1,3 @@
 **Changelog:**
 
-+ added image reverse search
++ added image reverse search for e621 pics (other services are comming)
