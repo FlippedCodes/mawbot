@@ -1,6 +1,6 @@
 {
   "name": "mawbot",
-  "version": "3.9.5",
+  "version": "3.8.1",
   "description": "This bot belongs to the TDM-Network",
   "main": "index.js",
   "scripts": {
@@ -10,18 +10,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.5.3",
+    "cheerio": "^1.0.0-rc.3",
     "discord.js": "github:discordjs/discord.js#11.4-dev",
-    "flist-api": "^0.1.1",
-    "furaffinity": "^2.0.1",
-    "lodash": "^4.17.11",
+    "e621": "0.0.2",
+    "furaffinity": "^3.0.0",
+    "heroku-client": "^3.0.7",
     "mysql": "github:mysqljs/mysql",
     "pretty-ms": "^4.0.0",
-    "snekfetch": "^4.0.4"
+    "puppeteer": "^1.14.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0"
   }
 }
