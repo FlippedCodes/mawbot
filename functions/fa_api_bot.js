@@ -1,4 +1,4 @@
-const { Recent, Type, Login } = require('furaffinity');
+const furaffinity = require('furaffinity');
 
 const Discord = require('discord.js');
 
@@ -14,11 +14,11 @@ module.exports.run = async (fs) => {
     token = require('../config/test_token.json');
     client.login(token.test_token_fa);
     clientID = config.clientIDTesting;
-    Login(token.fa_cookie_a, token.fa_cookie_b);
+    // Login(token.fa_cookie_a, token.fa_cookie_b);
   } else {
     client.login(process.env.BOT_TOKEN_FA);
     clientID = config.clientID;
-    Login(process.env.FA_COOKIE_A, process.env.FA_COOKIE_B);
+    // Login(process.env.FA_COOKIE_A, process.env.FA_COOKIE_B);
   }
 
   client.on('ready', async () => {
