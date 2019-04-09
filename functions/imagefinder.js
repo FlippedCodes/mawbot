@@ -10,7 +10,9 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
     if (rows[0]) {
       if (user.id !== message.author.id) {
         reaction.remove(user);
-        return message.channel.send('Sorry, you are not the publisher of this picture.');
+        message.channel.send('Sorry, you are not the publisher of this picture.')
+          .then(msg => msg.delete(10000));
+        return;
       }
       message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
         const url = `http://iqdb.harry.lu/?url=${image}`;
@@ -22,7 +24,9 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
               // FIXME: jpg pictures not working
               if (raiting !== '[Safe]') {
                 if (message.channel.nsfw === false) {
-                  return message.channel.send('Sorry, but the piture I found is NSFW and can not be posted here.');
+                  message.channel.send('Sorry, but the piture I found is rated NSFW on E621 and can not be posted here.')
+                    .then(msg => msg.delete(10000));
+                  return;
                 }
               }
               const link = $('tr > td > a', html)[0].attribs.href;
