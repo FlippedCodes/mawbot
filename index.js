@@ -207,7 +207,7 @@ client.on('message', async (message) => {
       con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${message.channel.id}' AND warned = 't'`);
     }
   });
-  
+
   if (message.attachments.size > 0) {
     con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
       if (rows[0]) message.react('🔍');
