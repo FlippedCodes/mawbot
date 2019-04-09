@@ -48,8 +48,9 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
         reaction_loading.remove(client.user);
       });
     } else {
-      message.react('❌');
-      return message.channel.send('Sorry, but I am not allowed to give you the source in this channel.');
+      message.reply('Sorry, but I am not allowed to give you the source in this channel.')
+        .then(msg => msg.delete(10000));
+      return;
     }
   });
 };
