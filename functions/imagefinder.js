@@ -4,10 +4,10 @@ const $ = require('cheerio');
 
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (client, con, reaction, user, message, image) => {
+module.exports.run = async (client, config, con, reaction, user, message, image) => {
   reaction.remove(user);
   con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
-    if (rows[0]) {
+    if (rows[0] || message.member.roles.find(role => role.name === config.teamRole)) {
       if (user.id !== message.author.id) {
         reaction.remove(user);
         message.channel.send('Sorry, you are not the publisher of this picture.')
