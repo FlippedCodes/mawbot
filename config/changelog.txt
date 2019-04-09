@@ -1,3 +1,5 @@
 **Changelog:**
 
-+ added image reverse search for e621 pics (other services are comming)
++ added image source provided from e621 api
++ added permissions denied message removal
++ added permissions, to team for search usage from not owned posts
