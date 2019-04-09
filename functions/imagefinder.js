@@ -15,12 +15,12 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
         return;
       }
       message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
-        const url = `http://iqdb.harry.lu/?url=${image}`;
+        const url_imagefinder = `http://iqdb.harry.lu/?url=${image}`;
 
-        rp(url)
-          .then((html) => {
-            if ($('tbody > tr > th', html)[1].firstChild.data === 'Probable match:') {
-              const raiting = $('tbody > tr', html)[6].firstChild.firstChild.data;
+        rp(url_imagefinder)
+          .then((html_imagefinder) => {
+            if ($('tbody > tr > th', html_imagefinder)[1].firstChild.data === 'Probable match:') {
+              const raiting = $('tbody > tr', html_imagefinder)[6].firstChild.firstChild.data;
               // FIXME: jpg pictures not working
               if (raiting !== '[Safe]') {
                 if (message.channel.nsfw === false) {
@@ -29,27 +29,44 @@ module.exports.run = async (client, con, reaction, user, message, image) => {
                   return;
                 }
               }
-              const link = $('tr > td > a', html)[0].attribs.href;
-              // const img_id = $('tr > td > a > img', html)[0].attribs.src;
+              const url_e621 = $('tr > td > a', html_imagefinder)[0].attribs.href;
+              const e621_postID = url_e621.replace('https://e621.net/post/show/', '');
+              // const img_id = $('tr > td > a > img', html_imagefinder)[0].attribs.src;
               // const pic = img_id.replace('e621/', 'https://static1.e621.net/data/');
-              const similarity = $('tbody > tr', html)[7].firstChild.firstChild.data;
-              let embed = new RichEmbed()
-                .setAuthor(raiting)
-                .setTitle(`Probable match: ${similarity}`)
-                .setColor(message.member.displayColor)
-                .addField('e621 link:', link)
-                // .setImage(pic)
-                .setFooter(client.user.tag, client.user.displayAvatarURL)
-                .setTimestamp();
-              message.channel.send({ embed });
+              const similarity = $('tbody > tr', html_imagefinder)[7].firstChild.firstChild.data;
+              let e621_json = {
+                method: 'POST',
+                uri: 'https://e621.net/post/show.json',
+                body: {
+                  id: e621_postID,
+                },
+                headers: {
+                  'User-Agent': 'Mawbot',
+                },
+                json: true,
+              };
+              rp(e621_json)
+                .then((json) => {
+                  let embed = new RichEmbed()
+                    .setAuthor(raiting)
+                    .setTitle(`Probable match: ${similarity}`)
+                    .setColor(message.member.displayColor)
+                    .setThumbnail(image)
+                    .addField('Source link:', json.source)
+                    .addField('E621 link:', url_e621)
+                    .setFooter(client.user.tag, client.user.displayAvatarURL)
+                    .setTimestamp();
+                  message.channel.send({ embed });
+                })
+                .catch(() => message.react('❌'));
             } else {
               message.react('❌');
             }
           })
+          .then(() => reaction_loading.remove(client.user))
           .catch((err) => {
             console.error(err);
           });
-        reaction_loading.remove(client.user);
       });
     } else {
       message.reply('Sorry, but I am not allowed to give you the source in this channel.')
