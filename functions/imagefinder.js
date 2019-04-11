@@ -58,6 +58,7 @@ module.exports.run = async (client, config, con, reaction, user, message, image)
                     .setTimestamp();
                   message.channel.send({ embed });
                 })
+                // FIXME: test, if already reacted with X
                 .catch(() => message.react('❌'));
             } else {
               message.react('❌');
