@@ -249,6 +249,9 @@ module.exports.run = async (fs, functions) => {
             let artists = json.artist.join(', ');
             let typeArtists = 'All artists';
             if (json.artist.length === 1) typeArtists = 'Artist';
+            let arrow = '🔽';
+            const extantion = json.file_ext;
+            if (extantion === 'webm' || extantion === 'swf') arrow = json.file_url;
             let embed = new RichEmbed()
               .setAuthor(`${typeArtists}: ${json.artist[0]}`)
               .setColor(color)
@@ -260,7 +263,7 @@ module.exports.run = async (fs, functions) => {
               .addField('ID', json.id, true)
               .addField(typeSources, source)
               .addField('Full Picture link', json.file_url)
-              .addField('Full Picture', '🔽')
+              .addField('Full Picture', arrow)
               .setImage(json.file_url)
               .setFooter(client.user.tag, client.user.displayAvatarURL)
               .setTimestamp();
