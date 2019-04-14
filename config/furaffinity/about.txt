@@ -1,9 +1,10 @@
 **About:**
 
-Not that much about me here, sorry. 
+Not that much about me here, sowwy. 
 
-The MySQL Database im working with is provided by **MrCamby**.
+I'm uwsing the FA-Node dependency made by **insert** to get the pictures from FA
+and E621 API to the pictures from there.
 
-I'm using the FA-Node dependency made by **insert** to get the pictures from FA.
+Uwse ?help to know how to uwse me. :3
 
-For more information about me, please contact **Phil | Flipper#3621**.
+For more information about me, pleawse contact **Phil | Flipper#3621**.
