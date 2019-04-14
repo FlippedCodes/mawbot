@@ -92,10 +92,10 @@ module.exports.run = async (fs, functions) => {
                 let picURL = json[randomChoice].sample_url;
                 let arrow = '🔽';
                 const extantion = json[randomChoice].file_ext;
-                if (extantion === 'gif' || extantion === 'webm') {
+                if (extantion === 'gif' || extantion === 'webm' || extantion === 'swf') {
                   typePic = 'Full Picture';
                   picURL = json[randomChoice].file_url;
-                  if (extantion === 'webm') arrow = json[randomChoice].file_url;
+                  if (extantion === 'webm' || extantion === 'swf') arrow = json[randomChoice].file_url;
                 }
                 let embed = new RichEmbed()
                   .setAuthor(`Main Artist: ${json[randomChoice].artist[0]}`)
