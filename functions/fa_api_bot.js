@@ -191,6 +191,28 @@ module.exports.run = async (fs, functions) => {
         // timeout(message.author.id);
         timeout(message.author.id);
         return;
+      case 'help':
+        let embed = new RichEmbed()
+          .setAuthor('How to use me:')
+          .setColor(message.member.displayColor)
+          .addField('E621', `
+            ${config.prefix}e6 AMMOUNT TAGS
+            You can requwest up to 10 pictures at the twime.
+            `)
+          .addField('FurAffinity', `
+          ${config.prefix}fa SEARCH
+          You can currently only requwest SFW pictures. NSFW is in the making.
+          `)
+          .addField('About', `
+          ${config.prefix}about
+          Learn mowre about me.
+          `)
+          .setFooter(client.user.tag, client.user.displayAvatarURL)
+          .setTimestamp();
+        message.channel.send({ embed });
+        // timeout(message.author.id);
+        timeout(message.author.id);
+        return;
       default:
         return;
     }
