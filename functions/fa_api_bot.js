@@ -115,7 +115,6 @@ module.exports.run = async (fs, functions) => {
             })
             .then(() => {
               reaction_loading.remove(client.user);
-              message.react('✅');
             });
         })
           .catch((err) => {
