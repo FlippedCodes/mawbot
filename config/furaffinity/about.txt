@@ -2,8 +2,8 @@
 
 Not that much about me here, sowwy. 
 
-I'm uwsing the FA-Node dependency made by **insert** to get the pictures from FA
-and E621 API to the pictures from there.
+I'm uwsing the FA-Node dependency made by **insert** to get the pictures from FA.
+The E621 pictures are pulled from their API.
 
 Uwse ?help to know how to uwse me. :3
 
