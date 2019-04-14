@@ -118,7 +118,8 @@ module.exports.run = async (fs, functions) => {
             });
         })
           .catch((err) => {
-            message.channel.send('Sowwy, but it seems like something went wrong... Pleawse report this to my creator. uwu');
+            message.channel.send('Sowwy, but it seems like something went wrong... Pleawse report this to my creator. uwu')
+              .then(() => message.react('❌'));
             console.error(err);
           });
         return;
