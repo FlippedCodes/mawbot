@@ -2,8 +2,6 @@ const furaffinity = require('furaffinity');
 
 const rp = require('request-promise');
 
-const $ = require('cheerio');
-
 const Discord = require('discord.js');
 
 const { RichEmbed } = require('discord.js');
