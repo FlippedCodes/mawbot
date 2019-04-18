@@ -121,6 +121,8 @@ client.on('ready', async () => {
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
+  if (reaction.message.guild.id !== servers.main) return;
+
   client.functions.get('reaction_remove').run(reaction, servers, user, client);
 });
 
@@ -165,6 +167,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   client.functions.get('reaction_add_log').run(user, config, client, reaction);
 
+  if (reaction.message.guild.id !== servers.main) return;
+
+  client.functions.get('reaction_add_log').run(servers, user, config, client, reaction);
+
   // check if reaction is from rolerequest
   if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(reaction, requester, config, user, con);
 
@@ -172,14 +178,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client);
 
   // check if reaction is from keep me
-  if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') return client.functions.get('reaction_saveme').run(reaction, requester, user, con);
+  // if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') return client.functions.get('reaction_saveme').run(reaction, requester, user, con);
 
   // check if reaction is from arcived rooms
   // got moved to cmd because of botrestarting problems
   // if (reaction.message.channel.parent.id === RPChannelArchive && reaction.emoji.name === '🔓') client.functions.get('reaction_reactivate').run(config, client, reaction, RPChannelLog, user, RPChannelCategory);
-
-  // TODO: filesize fallback
-  if (reaction.emoji.name === '🔍') client.functions.get('imagefinder').run(client, config, con, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
 
   // reactions for own-rp-channels
   if (reaction.message.channel.parent.id === RPChannelCategory) {

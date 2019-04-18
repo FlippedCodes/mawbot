@@ -1,4 +1,4 @@
-module.exports.run = async (user, config, client, reaction) => {
+module.exports.run = async (servers, user, config, client, reaction) => {
   const embed = {
     title: `added by: ${user.tag}`,
     url: user.avatarURL,
