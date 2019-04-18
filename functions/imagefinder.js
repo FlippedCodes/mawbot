@@ -35,33 +35,34 @@ module.exports.run = async (find, client, config, con, reaction, user, message, 
 
                   case 'get':
                     if (reaction.users.find(bot => bot.id === client.user.id)) {
-                      if (user.id !== message.author.id || message.member.roles.find(role => role.name !== config.teamRole)) {
+                      if (user.id === message.author.id || message.member.roles.find(role => role.name === config.teamRole)) {
+                        if (raiting !== '[Safe]' && message.channel.nsfw === false) {
+                          reaction.remove(user);
+                          message.channel.send('Sorry, but the picture I found is rated NSFW on E621 and can not be posted here.')
+                            .then(msg => msg.delete(10000));
+                          return;
+                        }
+                        message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
+                          reaction.remove(user);
+                          reaction.remove(client.user);
+                          let embed = new RichEmbed()
+                            .setAuthor(raiting)
+                            .setTitle(`Probable match: ${similarity}`)
+                            .setColor(message.member.displayColor)
+                            .setThumbnail(image)
+                            .addField('Source link:', json.source)
+                            .addField('E621 link:', url_e621)
+                            .setFooter(client.user.tag, client.user.displayAvatarURL)
+                            .setTimestamp();
+                          message.channel.send({ embed })
+                            .then(() => reaction_loading.remove(client.user));
+                        });
+                      } else {
                         reaction.remove(user);
                         message.channel.send('Sorry, you are not the publisher of this picture.')
                           .then(msg => msg.delete(10000));
                         return;
                       }
-                      if (raiting !== '[Safe]' && message.channel.nsfw === false) {
-                        reaction.remove(user);
-                        message.channel.send('Sorry, but the picture I found is rated NSFW on E621 and can not be posted here.')
-                          .then(msg => msg.delete(10000));
-                        return;
-                      }
-                      message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
-                        reaction.remove(user);
-                        reaction.remove(client.user);
-                        let embed = new RichEmbed()
-                          .setAuthor(raiting)
-                          .setTitle(`Probable match: ${similarity}`)
-                          .setColor(message.member.displayColor)
-                          .setThumbnail(image)
-                          .addField('Source link:', json.source)
-                          .addField('E621 link:', url_e621)
-                          .setFooter(client.user.tag, client.user.displayAvatarURL)
-                          .setTimestamp();
-                        message.channel.send({ embed })
-                          .then(() => reaction_loading.remove(client.user));
-                      });
                     }
                     return;
 
