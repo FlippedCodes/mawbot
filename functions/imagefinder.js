@@ -48,6 +48,8 @@ module.exports.run = async (find, client, config, con, reaction, user, message, 
                         return;
                       }
                       message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
+                        reaction.remove(user);
+                        reaction.remove(client.user);
                         let embed = new RichEmbed()
                           .setAuthor(raiting)
                           .setTitle(`Probable match: ${similarity}`)
@@ -59,8 +61,6 @@ module.exports.run = async (find, client, config, con, reaction, user, message, 
                           .setTimestamp();
                         message.channel.send({ embed })
                           .then(() => reaction_loading.remove(client.user));
-                        reaction.remove(user);
-                        reaction.remove(client.user);
                       });
                     }
                     return;
