@@ -165,7 +165,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === servers.sharedChannel_NSFWnight_dragon) return;
   if (reaction.message.channel.id === servers.sharedChannel_NSFWvoretv) return;
 
-  client.functions.get('reaction_add_log').run(user, config, client, reaction);
+  if (reaction.emoji.name === 'ℹ') client.functions.get('imagefinder').run('get', client, config, con, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
 
   if (reaction.message.guild.id !== servers.main) return;
 
@@ -211,12 +211,6 @@ client.on('message', async (message) => {
     }
   });
 
-  if (message.attachments.size > 0) {
-    con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
-      if (rows[0]) message.react('🔍');
-    });
-  }
-
   let config = require('./config/main/config.json');
   if (message.channel.guild.id === servers.main) {
     config = require('./config/main/config.json');
@@ -229,6 +223,26 @@ client.on('message', async (message) => {
   // }
   if (message.channel.guild.id === servers.testing) {
     config = require('./config/testing/config.json');
+  }
+
+  if (message.attachments.size > 0) {
+    con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
+      // const emoji = message.reactions.find(reaction => reaction.emoji.name === 'ℹ');
+      if (rows[0]) {
+        client.functions.get('imagefinder').run(
+          'search',
+          client,
+          config,
+          con,
+          '',
+          '',
+          // 'emoji.reaction',
+          // emoji.users.find(user => user.bot === false),
+          message,
+          message.attachments.array()[0].url,
+        );
+      }
+    });
   }
 
   // let config = client.functions.get('config').run(servers, message);
