@@ -35,12 +35,12 @@ module.exports.run = async (find, client, config, con, reaction, user, message, 
 
                   case 'get':
                     if (reaction.users.find(bot => bot.id === client.user.id)) {
-                      // if (user.id !== message.author.id || message.member.roles.find(role => role.name !== config.teamRole)) {
-                      //   reaction.remove(user);
-                      //   message.channel.send('Sorry, you are not the publisher of this picture.')
-                      //     .then(msg => msg.delete(10000));
-                      //   return;
-                      // }
+                      if (user.id !== message.author.id || message.member.roles.find(role => role.name !== config.teamRole)) {
+                        reaction.remove(user);
+                        message.channel.send('Sorry, you are not the publisher of this picture.')
+                          .then(msg => msg.delete(10000));
+                        return;
+                      }
                       if (raiting !== '[Safe]' && message.channel.nsfw === false) {
                         reaction.remove(user);
                         message.channel.send('Sorry, but the picture I found is rated NSFW on E621 and can not be posted here.')
