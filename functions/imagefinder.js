@@ -45,6 +45,7 @@ module.exports.run = async (find, client, config, con, reaction, user, message, 
                         message.react(client.guilds.get('451833819910373406').emojis.get('564375243662163968')).then((reaction_loading) => {
                           reaction.remove(user);
                           reaction.remove(client.user);
+                          // TODO: add artist
                           let embed = new RichEmbed()
                             .setAuthor(raiting)
                             .setTitle(`Probable match: ${similarity}`)
