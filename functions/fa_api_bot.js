@@ -38,7 +38,7 @@ module.exports.run = async (fs, functions) => {
   client.on('ready', async () => {
     console.log(`[FurAffinity-API] Logged in as ${client.user.tag}!`);
 
-    client.user.setActivity('with \'?fa\' command');
+    client.user.setActivity('with \'+help\' command');
   });
 
   client.on('message', async (message) => {
