@@ -205,6 +205,10 @@ module.exports.run = async (fs, functions) => {
           ${config.prefix}about
           Learn mowre about me.
           `)
+          .addField('Need Help?', `
+          I've got you covered.
+          Join the help server here: https://discord.gg/fMYD6XR
+          `)
           .setFooter(client.user.tag, client.user.displayAvatarURL)
           .setTimestamp();
         message.channel.send({ embed });
