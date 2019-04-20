@@ -17,7 +17,7 @@ function timeout(id) {
   setTimeout(() => {
     usedRecently.delete(id);
   }, 5000);
-  // 5sey timeout
+  // 5sec timeout
 }
 
 module.exports.run = async (fs, functions) => {
