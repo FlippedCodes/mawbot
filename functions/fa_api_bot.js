@@ -84,6 +84,7 @@ module.exports.run = async (fs, functions) => {
           };
           rp(request)
             .then((json) => {
+              if (json.length === 0) return message.channel.send('Sowwy, I found no pictures with your tags');
               for (let i = 0; i < limit; i++) {
                 const randomChoice = Math.floor(Math.random() * json.length);
                 let typePic = 'Preview';
