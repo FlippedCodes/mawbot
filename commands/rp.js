@@ -21,6 +21,8 @@ if (fs.existsSync('./config/test_token.json')) {
 }
 
 module.exports.run = async (client, message, args, con, config) => {
+  const teamCheck = message.member.roles.find(role => role.name === config.adminRole);
+
   let [subcmd, name] = args;
 
   switch (subcmd) {
@@ -71,7 +73,7 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
+        if (rows[0] || teamCheck) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
@@ -88,7 +90,7 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find(role => role.name === config.adminRole)) {
+        if (rows[0] || teamCheck) {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
@@ -257,7 +259,7 @@ module.exports.run = async (client, message, args, con, config) => {
       return;
 
     case 'delete':
-      if (message.member.roles.find(role => role.name === config.adminRole)) {
+      if (teamCheck) {
         if (message.channel.parentID === RPChannelArchive) {
           con.query(`DELETE FROM rp_timer WHERE id = '${message.channel.id}'`);
           await message.channel.delete();
