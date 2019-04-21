@@ -2,6 +2,8 @@ const fs = require('fs');
 
 const toTime = require('pretty-ms');
 
+const { RichEmbed } = require('discord.js');
+
 const servers = require('../config/servers.json');
 
 let RPChannelArchive;
