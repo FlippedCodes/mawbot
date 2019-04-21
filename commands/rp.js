@@ -73,9 +73,7 @@ module.exports.run = async (client, message, args, con, config) => {
           let user = message.mentions.users.first() || message.guild.members.get(args[1]);
           await message.channel.overwritePermissions(
             user.id,
-            {
-              SEND_MESSAGES: true,
-            },
+            { SEND_MESSAGES: true },
           );
           message.channel.send(`The user <@${user.id}> got added to this RP room.`);
         } else {
