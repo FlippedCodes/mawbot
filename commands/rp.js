@@ -119,61 +119,46 @@ module.exports.run = async (client, message, args, con, config) => {
       });
       return;
 
-    // needs propper introductions
     case 'help':
-      message.channel.send({
-        embed: {
-          color: message.member.displayColor,
-          title: 'Help for the RP command',
-          description: `Usage: \`${config.prefix}rp SUBCMD ARGUMENT\``,
-          fields: [{
-            name: `\`${config.prefix}rp create NAME\``,
-            value: 'Adds a room; One active room per user.',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp add USERMENTION\``,
-            value: 'Adds writing permissions for a user in your room; owner only',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp remove USERMENTION\``,
-            value: 'Removes writing permissions of a user in your room; owner only',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp help\``,
-            value: 'Guess what it does...',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp info\``,
-            value: 'Shows information from the current channel.',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp settings\``,
-            value: 'Repost the settings; owner only',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp end\``,
-            value: 'Ends the RP and archives the room; owner only',
-            inline: true,
-          },
-          {
-            name: `\`${config.prefix}rp reopen\``,
-            value: 'Reopens an archived channel; team only',
-            inline: true,
-          },
-          ],
-          timestamp: new Date(),
-          footer: {
-            icon_url: message.client.user.displayAvatarURL,
-            text: message.client.user.tag,
-          },
-        },
-      });
+      let embed = new RichEmbed()
+        .setTitle('Help for the RP command')
+        .setColor(message.member.displayColor)
+        .setDescription(`Usage: \`${config.prefix}rp SUBCMD ARGUMENT\``)
+        .addField(
+          `\`${config.prefix}rp create NAME\``,
+          'A\'dds a room; One active room per user.', true,
+        )
+        .addField(
+          `\`${config.prefix}rp add USERMENTION\``,
+          'Adds writing permissions for a user in your room; owner only', true,
+        )
+        .addField(
+          `\`${config.prefix}rp remove USERMENTION\``,
+          'Removes writing permissions of a user in your room; owner only', true,
+        )
+        .addField(
+          `\`${config.prefix}rp help\``,
+          'Guess what it does...', true,
+        )
+        .addField(
+          `\`${config.prefix}rp info\``,
+          'Shows information from the current channel', true,
+        )
+        .addField(
+          `\`${config.prefix}rp settings\``,
+          'Reposts the settings; owner only', true,
+        )
+        .addField(
+          `\`${config.prefix}rp end\``,
+          'Ends the RP and archives the room; owner only', true,
+        )
+        .addField(
+          `\`${config.prefix}rp reopen\``,
+          'Reopens an archived channel; team only', true,
+        )
+        .setFooter(message.client.user.tag, message.client.user.displayAvatarURL)
+        .setTimestamp();
+      message.channel.send({ embed });
       return;
 
     case 'info':
