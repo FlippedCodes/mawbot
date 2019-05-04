@@ -3,7 +3,12 @@ const { RichEmbed } = require('discord.js');
 module.exports.run = async (client, message, args, con, config) => {
   if (!message.member.roles.find(role => role.id === config.team)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
   // TODO: give error, if id is used; get args instad of or statements tro create errormessage
-  const target = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
+  let target;
+  if (args[0]) {
+    if (message.mentions.members.first() || message.guild.members.get(args[0])) {
+      target = message.mentions.members.first() || message.guild.members.get(args[0]);
+    } else { return message.channel.send('Sorry, but there is no user on this server with the information provided.'); }
+  } else { target = message.member; }
 
   // no-game fallback
   let game = '-';
