@@ -1,6 +1,11 @@
 module.exports.run = async (client, message, args, con, config) => {
-  // id not working
-  const target = message.mentions.users.first() || message.guild.members.get(args[0]) || message.author;
+  if (!message.member.roles.find(role => role.id === config.team)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
+  let target;
+  if (args[0]) {
+    if (message.mentions.members.first() || message.guild.members.get(args[0])) {
+      target = message.mentions.members.first() || message.guild.members.get(args[0]);
+    } else { return message.channel.send('Sorry, but there is no user on this server with the information provided.'); }
+  } else { target = message.member; }
 
   let user_color = 6447714;
   if (target.lastMessage) user_color = target.lastMessage.member.displayColor;
