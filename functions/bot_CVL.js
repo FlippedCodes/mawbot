@@ -244,5 +244,5 @@ module.exports.run = async (fs, functions) => {
 };
 
 module.exports.help = {
-  name: 'cvl_roleassignment_bot',
+  name: 'bot_CVL',
 };

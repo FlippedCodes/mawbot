@@ -106,7 +106,7 @@ client.on('ready', async () => {
 
   // load and start RP-room timers
   console.log('Starting up RP timers!');
-  client.functions.get('rp_timer').run(client, servers, fs, con);
+  client.functions.get('own_rp_timer').run(client, servers, fs, con);
 
   // Load and posting bot status
   console.log('Posting bot status message!');
@@ -114,10 +114,10 @@ client.on('ready', async () => {
 
   // load second bot
   console.log('Starting FurAffinity bot!');
-  client.functions.get('fa_api_bot').run(fs, client.functions);
+  client.functions.get('bot_FurExplicitBot').run(fs, client.functions);
 
   console.log('Starting CVL roleassignment bot!');
-  client.functions.get('cvl_roleassignment_bot').run(fs, client.functions);
+  client.functions.get('bot_CVL').run(fs, client.functions);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -203,13 +203,7 @@ client.on('message', async (message) => {
     return;
   }
 
-  con.query(`SELECT * FROM rp_timer WHERE id = '${message.channel.id}' AND archived = 'f'`, async (err, rows) => {
-    if (err) throw err;
-    if (rows[0]) {
-      con.query(`UPDATE rp_timer SET timeLeft = '${servers.RPChannelTime}' WHERE id = '${message.channel.id}'`);
-      con.query(`UPDATE rp_timer SET warned = 'f' WHERE id = '${message.channel.id}' AND warned = 't'`);
-    }
-  });
+  client.functions.get('own_rp_timemgr').run(message, con, servers);
 
   let config = require('./config/main/config.json');
   if (message.channel.guild.id === servers.main) {
