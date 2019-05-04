@@ -1,5 +1,7 @@
 **Changelog:**
 
-+ added image source provided from e621 api
-+ added permissions denied message removal
-+ added permissions, to team for search usage from not owned posts
++ added 
+* redone =userinfo
+* redone =avatar
+* splited e621 bot into own files
+- removed todos
