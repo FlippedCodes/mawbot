@@ -1,4 +1,4 @@
-module.exports.run = async (reaction, requester, config, user, con) => {
+module.exports.run = async (reaction, requester, config, user, con, functions) => {
   reaction.message.channel.send(`${user.tag},`)
     .then(message => message.delete(6000));
 
@@ -85,7 +85,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       return;
 
     case '4⃣':
-      con.query(`SELECT * FROM custom_roles_ban WHERE id = '${requester.id}'`, (err, rows) => {
+      con.query(`SELECT * FROM custom_roles_underage WHERE id = '${requester.id}'`, (err, rows) => {
         if (err) throw err;
 
         if (rows.length < 1) {
@@ -109,7 +109,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       return;
 
     case '5⃣':
-      con.query(`SELECT * FROM custom_roles_ban WHERE id = '${requester.id}'`, (err, rows) => {
+      con.query(`SELECT * FROM custom_roles_underage WHERE id = '${requester.id}'`, (err, rows) => {
         if (err) throw err;
         if (rows.length < 1) {
         // if (!rows[0]) {
