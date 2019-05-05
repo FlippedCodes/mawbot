@@ -17,6 +17,7 @@ module.exports.run = async (client, reaction, requester, config, user, con) => {
               message.channel.send('Sorry that is not a valid entry. Please try again by assigning an adult role.');
               return;
             }
+            if (msg > 99) return message.channel.send('It seems like you are in the right age... Hold on, thats a little too old dont you think? Please try again but not with your OCs age ^^');
             let embed = new RichEmbed()
               .setTitle('Entry created!')
               .setFooter(client.user.tag, client.user.displayAvatarURL)
