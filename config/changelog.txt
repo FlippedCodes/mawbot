@@ -38,4 +38,4 @@
 + add autoassign for rejoining user (except for muted users)
 + requested user removal in e621 requests
 + NSFW FurAffinity requests
-* code for own RP will be 
+* code for own RP will be redone
