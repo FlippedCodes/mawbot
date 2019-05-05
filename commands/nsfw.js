@@ -62,9 +62,9 @@ module.exports.run = async (client, message, args, con, config) => {
         return;
       case 'allow':
         if (!age) return message.channel.send('Please provide a bool at the end');
-        if (age.shift().toLowerCase() === 'true') {
+        if (age.toLowerCase() === 'true') {
           age = 1;
-        } else if (age.shift().toLowerCase() === 'false') {
+        } else if (age.toLowerCase() === 'false') {
           age = 0;
           roleremoval(target);
         } else return message.channel.send('The argument provided is not a boolean (true/false)');
