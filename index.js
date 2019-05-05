@@ -167,6 +167,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   if (reaction.emoji.name === 'ℹ') client.functions.get('imagefinder').run('get', client, config, con, reaction, user, reaction.message, reaction.message.attachments.array()[0].url);
 
+  // FIXME: disabled bc testing...
   if (reaction.message.guild.id !== servers.main) return;
 
   client.functions.get('reaction_add_log').run(servers, user, config, client, reaction);
