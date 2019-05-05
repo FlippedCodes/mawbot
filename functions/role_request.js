@@ -3,7 +3,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
     .then(message => message.delete(6000));
 
   switch (reaction.emoji.name) {
-    case '1⃣':
+      case '🦌':
       if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you!')
           .then(message => message.delete(6000));
@@ -30,7 +30,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       reaction.remove(user);
       return;
 
-    case '2⃣':
+      case '🔄':
       if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you, so you can have `Prey/Pred`!')
           .then(message => message.delete(6000));
@@ -57,7 +57,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       reaction.remove(user);
       return;
 
-    case '3⃣':
+      case '🐉':
       if (requester.roles.find(role => role.id === config.prey)) {
         reaction.message.channel.send('I have removed `Prey` from you, so you can have `Pred`!')
           .then(message => message.delete(6000));
@@ -84,20 +84,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       reaction.remove(user);
       return;
 
-    case '4⃣':
-      con.query(`SELECT * FROM custom_roles_underage WHERE id = '${requester.id}'`, (err, rows) => {
-        if (err) throw err;
-
-        if (rows.length < 1) {
-          if (requester.roles.find(role => role.id === config.noNSFW)) {
-            reaction.message.channel.send('The NSFW channels are shown now!')
-              .then(message => message.delete(6000));
-            requester.removeRole(config.noNSFW);
-            reaction.remove(user);
-            return;
-          }
-
-          requester.addRole(config.noNSFW);
+      case '🔞':
           reaction.message.channel.send('The NSFW channels are hidden now!')
             .then(message => message.delete(6000));
           reaction.remove(user);
@@ -108,11 +95,7 @@ module.exports.run = async (reaction, requester, config, user, con) => {
       });
       return;
 
-    case '5⃣':
-      con.query(`SELECT * FROM custom_roles_underage WHERE id = '${requester.id}'`, (err, rows) => {
-        if (err) throw err;
-        if (rows.length < 1) {
-        // if (!rows[0]) {
+      case '💩':
           if (requester.roles.find(role => role.id === config.NSFL)) {
             reaction.message.channel.send('The NSFL channels are hidden now!')
               .then(message => message.delete(6000));
