@@ -28,7 +28,7 @@ module.exports.run = async (client, reaction, requester, config, user, con) => {
             if (msg >= 18) {
               requester.addRole(role);
               con.query(`INSERT INTO custom_roles_userage (userID, userAge, submitted, changed, allowed) VALUE ('${requester.id}', '${msg}', '${Date.now()}', '${Date.now()}', '1')`);
-              message.channel.send('It seems like you are in the right age to view explicit matrial.\nI have assigned you your role you wanted.\nThis setup will no longer bother you and i wish you a great day :3');
+              message.channel.send('It seems like you are in the right age to view explicit matrial.\nI have assigned you your role you wanted.\nThis setup will no longer bother you and I wish you a great day :3');
               embed
                 .setColor(65339)
                 .addField('Allowed', 'true', true);
