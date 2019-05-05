@@ -199,8 +199,9 @@ client.on('message', async (message) => {
   // conditions
   if (message.author.bot) return;
   if (message.channel.type === 'dm') {
-    message.reply('Do not talk to me! I\'m shy in DM 😖');
-    message.react('❌');
+    // TODO: code cant be run in age setup
+    // message.reply('Do not talk to me! I\'m shy in DM 😖');
+    // message.react('❌');
     return;
   }
 
