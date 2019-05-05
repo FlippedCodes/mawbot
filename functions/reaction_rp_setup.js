@@ -22,7 +22,7 @@ module.exports.run = async (setting, config, client, reaction, RPChannelLog, con
           case 'TypeSFW':
             reaction.message.channel.setNSFW(false);
             reaction.message.channel.overwritePermissions(reaction.message.channel.guild.id, { VIEW_CHANNEL: null });
-            reaction.message.channel.overwritePermissions(config.noNSFW, { VIEW_CHANNEL: null });
+            reaction.message.channel.overwritePermissions(config.NSFW, { VIEW_CHANNEL: null });
             reaction.message.channel.overwritePermissions(config.NSFL, { VIEW_CHANNEL: null });
             reaction.message.channel.send('This channel is now marked as a SFW-channel!');
             client.channels.get(RPChannelLog).send(`The channel <#${reaction.message.channel.id}> (${reaction.message.channel.id}) is now marked as SFW.`);
@@ -31,8 +31,8 @@ module.exports.run = async (setting, config, client, reaction, RPChannelLog, con
 
           case 'TypeNSFW':
             reaction.message.channel.setNSFW(true);
-            reaction.message.channel.overwritePermissions(reaction.message.channel.guild.id, { VIEW_CHANNEL: null });
-            reaction.message.channel.overwritePermissions(config.noNSFW, { VIEW_CHANNEL: false });
+            reaction.message.channel.overwritePermissions(reaction.message.channel.guild.id, { VIEW_CHANNEL: false });
+            reaction.message.channel.overwritePermissions(config.NSFW, { VIEW_CHANNEL: true });
             reaction.message.channel.overwritePermissions(config.NSFL, { VIEW_CHANNEL: null });
             reaction.message.channel.send('This channel is now marked as a NSFW-channel!');
             client.channels.get(RPChannelLog).send(`The channel <#${reaction.message.channel.id}> (${reaction.message.channel.id}) is now marked as NSFW.`);
@@ -42,7 +42,7 @@ module.exports.run = async (setting, config, client, reaction, RPChannelLog, con
           case 'TypeNSFL':
             reaction.message.channel.setNSFW(true);
             reaction.message.channel.overwritePermissions(reaction.message.channel.guild.id, { VIEW_CHANNEL: false });
-            reaction.message.channel.overwritePermissions(config.noNSFW, { VIEW_CHANNEL: false });
+            reaction.message.channel.overwritePermissions(config.NSFW, { VIEW_CHANNEL: null });
             reaction.message.channel.overwritePermissions(config.NSFL, { VIEW_CHANNEL: true });
             reaction.message.channel.send('This channel is now marked as a NSFL-channel!');
             client.channels.get(RPChannelLog).send(`The channel <#${reaction.message.channel.id}> (${reaction.message.channel.id}) is now marked as NSFL.`);
