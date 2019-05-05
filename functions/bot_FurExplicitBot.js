@@ -83,8 +83,6 @@ module.exports.run = async (fs, functions) => {
     if (message.content.indexOf(config.prefix) !== 0) return;
     // TODO: implement own prefix
 
-    if (usedRecently.has(message.author.id)) return message.reply('sowwy, but you can\'t use me this often. Plewse wait 5 secounds between commands.');
-
     let messageArray = message.content.split(/\s+/g);
     let command = messageArray[0];
     let args = messageArray.slice(1);
@@ -94,8 +92,13 @@ module.exports.run = async (fs, functions) => {
     let cmd = client.commands.get(command.slice(config.prefix.length).toLowerCase());
 
     if (cmd) {
-      cmd.run(client, message, args, config, functions, RichEmbed)
-        .catch(console.log);
+      if (!usedRecently.has(message.author.id)) {
+        timeout(message.author.id);
+        cmd.run(client, message, args, config, functions, RichEmbed)
+          .catch(console.log);
+      } else {
+        message.reply('sowwy, but you can\'t use me that often. Plewse wait 5 secounds between commands.');
+      }
     }
   });
 
