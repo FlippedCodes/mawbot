@@ -257,8 +257,8 @@ client.on('message', async (message) => {
   if (message.channel.guild.id === !config.serverID) return;
 
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
-    message.react('✋')
-      .then(message.react('👌'));
+    await message.react('👌');
+    await message.react('✋');
     if (teamlist.indexOf('online' || 'dnd') === -1) {
       message.channel.send('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
     }
