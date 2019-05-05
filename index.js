@@ -173,7 +173,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   client.functions.get('reaction_add_log').run(servers, user, config, client, reaction);
 
   // check if reaction is from rolerequest
-  if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(reaction, requester, config, user, con);
+  if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(client, reaction, requester, config, user, con);
 
   // check if reaction is from check-in
   if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client);
