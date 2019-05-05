@@ -19,7 +19,10 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed)
       reaction_loading.remove(client.user);
       return;
     }
-    if (limit > 3) message.reply('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<');
+    if (limit > 3) {
+      message.reply('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<')
+        .then(msg => msg.delete(10000));
+    }
     let request = {
       method: 'POST',
       uri,
