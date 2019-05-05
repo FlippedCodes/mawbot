@@ -5,6 +5,10 @@ const toTime = require('pretty-ms');
 module.exports.run = async (client, message, args, con, config) => {
   function roleremoval(id) {
     if (message.guild.members.get(id)) {
+      client.guilds.get('300051375914483715').members.forEach((user) => {
+        user.removeRole('333646914757197824');
+        message.reply(user.user.tag);
+      });
       const userwithrole = message.guild.members.get(id);
       userwithrole.removeRoles(config.NSFL)
         .catch(console.log);
