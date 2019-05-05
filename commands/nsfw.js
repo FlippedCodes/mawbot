@@ -61,6 +61,7 @@ module.exports.run = async (client, message, args, con, config) => {
         message.channel.send(embed);
         return;
       case 'allow':
+        if (!age) return message.channel.send('Please provide a bool at the end');
         if (age.shift().toLowerCase() === 'true') {
           age = 1;
         } else if (age.shift().toLowerCase() === 'false') {
