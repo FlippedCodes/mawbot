@@ -1,5 +1,13 @@
 const rp = require('request-promise');
 
+function Timeout(msg, userID, messageOwner, config) {
+  messageOwner.set(msg.id, userID);
+  setTimeout(() => {
+    messageOwner.delete(msg.id);
+    msg.clearReactions();
+  }, config.reactionsTimeout);
+}
+
 function tagsReplace(tags, search, replace) {
   return tags.replace(new RegExp(search, 'g'), replace);
 }
