@@ -17,6 +17,10 @@ function messageDelete(message, messageOwner) {
   message.delete();
 }
 
+function tagsReplace(tags, search, replace) {
+  return tags.replace(new RegExp(search, 'g'), replace);
+}
+
   switch (reaction.emoji.name) {
     case '↔':
       const id = reaction.message.embeds[0].url.replace('https://e621.net/post/show/', '');
