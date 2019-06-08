@@ -10,6 +10,11 @@ function missingPermissions(message) {
     .then(msg => msg.delete(10000));
 }
 
+function messageDelete(message, messageOwner) {
+  if (messageOwner.has(message.id)) messageOwner.delete(message.id);
+  message.delete();
+}
+
   switch (reaction.emoji.name) {
     case '↔':
       const id = reaction.message.embeds[0].url.replace('https://e621.net/post/show/', '');
