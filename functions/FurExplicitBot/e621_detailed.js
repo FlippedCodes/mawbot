@@ -5,7 +5,11 @@ const rp = require('request-promise');
 // TODO: add pic resolution
 // TODO: remove triggered recations. like expantion (needs permission checking before removal)
 
-module.exports.run = async (client, reaction, user, config, RichEmbed, functions, fs) => {
+function missingPermissions(message) {
+  message.reply('you are nowt allowoed to delewt this message <.<')
+    .then(msg => msg.delete(10000));
+}
+
   switch (reaction.emoji.name) {
     case '↔':
       const id = reaction.message.embeds[0].url.replace('https://e621.net/post/show/', '');
