@@ -3,8 +3,9 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
     .setAuthor('How to use me:')
     .setColor(message.member.displayColor)
     .addField('E621', `
-      ${config.prefix}e6 AMMOUNT TAGS
+      ${config.prefix}e6 (AMMOUNT) TAGS
       You can requwest up to 10 pictures at the twime.
+      The ammount is alternatiwe and doewsn't need to be prowidewd.
       `)
     .addField('FurAffinity', `
       ${config.prefix}fa SEARCH
