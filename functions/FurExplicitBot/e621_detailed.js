@@ -6,8 +6,10 @@ const rp = require('request-promise');
 // TODO: remove triggered recations. like expantion (needs permission checking before removal)
 
 function missingPermissions(message) {
-  message.reply('you are nowt allowoed to delewt this message <.<')
+  message.channel.send('You are nowt allowoed to delewt this message <.<')
     .then(msg => msg.delete(10000));
+  // FIXME: Delete reaction by user
+  // TODO: make rich embed
 }
 
 function messageDelete(message, messageOwner) {
