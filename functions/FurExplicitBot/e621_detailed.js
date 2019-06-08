@@ -61,6 +61,7 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
             .setDescription(`**Tags:** \`\`\`${tagsReplace(json.tags, ' ', ', ')}\`\`\``)
             .addField('Score', json.score, true)
             .addField('ID', json.id, true)
+            .addField('Resolution', `${json.width}x${json.height}`, true)
             .addField(typeSources, source)
             .addField('Full Picture link', json.file_url)
             .addField('Full Picture', arrow)
