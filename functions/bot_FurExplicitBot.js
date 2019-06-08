@@ -8,6 +8,8 @@ const config = require('../config/furaffinity/config.json');
 
 const usedRecently = new Set();
 
+let messageOwner = new Map();
+
 function timeout(id) {
   usedRecently.add(id);
   setTimeout(() => {
