@@ -8,3 +8,7 @@
     * changed 3-Picture warning
     * changed rating displayment
     * put tags into codeblock
++ Furaffinity
+    + added NSFW support
+
+Comming soon: Inkbunny
