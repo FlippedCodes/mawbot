@@ -28,7 +28,8 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
       return;
     }
     if (limit > 3) {
-      message.reply('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<')
+      let embed = new RichEmbed().setDescription('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<');
+      message.channel.send({ embed })
         .then(msg => msg.delete(10000));
     }
     let request = {
