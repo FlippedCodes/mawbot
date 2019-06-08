@@ -43,24 +43,24 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
       json: true,
     };
     rp(request)
-      .then((json) => {
-        if (json.length === 0) return message.channel.send('Sowwy, I found no pictures with your tags. uwu');
+      .then((pool) => {
+        if (pool.length === 0) return message.channel.send('Sowwy, I found no pictures with your tags. uwu');
         for (let i = 0; i < limit; i++) {
-          const randomChoice = Math.floor(Math.random() * json.length);
+          const randomChoice = Math.floor(Math.random() * pool.length);
           let typePic = 'Preview';
-          let picURL = json[randomChoice].sample_url;
+          let picURL = pool[randomChoice].sample_url;
           let arrow = '🔽';
-          const extantion = json[randomChoice].file_ext;
+          const extantion = pool[randomChoice].file_ext;
           if (extantion === 'gif' || extantion === 'webm' || extantion === 'swf') {
             typePic = 'Full Picture';
-            picURL = json[randomChoice].file_url;
-            if (extantion === 'webm' || extantion === 'swf') arrow = json[randomChoice].file_url;
+            picURL = pool[randomChoice].file_url;
+            if (extantion === 'webm' || extantion === 'swf') arrow = pool[randomChoice].file_url;
           }
           let embed = new RichEmbed()
-            .setAuthor(`Main Artist: ${json[randomChoice].artist[0]}`)
+            .setAuthor(`Main Artist: ${pool[randomChoice].artist[0]}`)
             .setColor(config.color_e621)
             .setTitle('E621 Link')
-            .setURL(`https://e621.net/post/show/${json[randomChoice].id}`)
+            .setURL(`https://e621.net/post/show/${pool[randomChoice].id}`)
             .addField(typePic, arrow)
             .setImage(picURL)
             .setFooter('e621.net', config.logo_e621)

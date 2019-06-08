@@ -38,33 +38,33 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
         json: true,
       };
       rp(e621_id)
-        .then((json) => {
+        .then((post) => {
           let source = 'none';
           let typeSources = 'Sources';
-          if (json.sources) {
-            source = json.sources.join('\n');
-            if (json.sources.length === 1) typeSources = 'Source';
+          if (post.sources) {
+            source = post.sources.join('\n');
+            if (post.sources.length === 1) typeSources = 'Source';
           }
-          let artists = json.artist.join(', ');
+          let artists = post.artist.join(', ');
           let typeArtists = 'All artists';
-          if (json.artist.length === 1) typeArtists = 'Artist';
+          if (post.artist.length === 1) typeArtists = 'Artist';
           let arrow = '🔽';
-          const extantion = json.file_ext;
-          if (extantion === 'webm' || extantion === 'swf') arrow = json.file_url;
+          const extantion = post.file_ext;
+          if (extantion === 'webm' || extantion === 'swf') arrow = post.file_url;
           let embed = new RichEmbed()
-            .setAuthor(`${typeArtists}: ${json.artist[0]}`)
+            .setAuthor(`${typeArtists}: ${post.artist[0]}`)
             .setColor(color)
             .setTitle('E621 Link')
-            .setURL(`https://e621.net/post/show/${json.id}`)
-            .setDescription(`**Tags:** \`\`\`${tagsReplace(json.tags, ' ', ', ')}\`\`\``)
-            .addField('Rating', json.rating, true)
-            .addField('Score', json.score, true)
-            .addField('ID', json.id, true)
-            .addField('Resolution', `${json.width}x${json.height}`, true)
+            .setURL(`https://e621.net/post/show/${post.id}`)
+            .setDescription(`**Tags:** \`\`\`${tagsReplace(post.tags, ' ', ', ')}\`\`\``)
+            .addField('Rating', post.rating, true)
+            .addField('Score', post.score, true)
+            .addField('ID', post.id, true)
+            .addField('Resolution', `${post.width}x${post.height}`, true)
             .addField(typeSources, source)
-            .addField('Full Picture link', json.file_url)
+            .addField('Full Picture link', post.file_url)
             .addField('Full Picture', arrow)
-            .setImage(json.file_url)
+            .setImage(post.file_url)
             .setFooter(client.user.tag, client.user.displayAvatarURL)
             .setTimestamp();
           reaction.message.edit({ embed });
