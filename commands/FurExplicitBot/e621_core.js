@@ -15,15 +15,11 @@ function tagsReplace(tags, search, replace) {
 module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
   message.react(client.guilds.get(config.emojiServer).emojis.get(config.loadingEmoji)).then((reaction_loading) => {
     let [limit] = args;
-    let tags = args
-      .join(' ')
-      .slice(limit.length + 1)
-      .replace(', ', ' ');
-    if (isNaN(limit) || limit === 0) {
-      functions.get('invalid_cmd').run(message, limit);
-      reaction_loading.remove(client.user);
-      return;
-    }
+    let tags = args.join(' ');
+    tags = tagsReplace(tags, ', ', ' ');
+    if (isNaN(limit) || limit === 0) limit = 1;
+    else tags = tags.slice(limit.length + 1);
+
     let uri = 'https://e621.net/post/index.json';
     if (message.channel.nsfw === false) uri = 'https://e926.net/post/index.json';
     if (limit > 10) {
