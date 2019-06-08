@@ -58,18 +58,18 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
           }
           let embed = new RichEmbed()
             .setAuthor(`Main Artist: ${json[randomChoice].artist[0]}`)
-            // .setColor(message.member.displayColor)
+            .setColor(config.color_e621)
             .setTitle('E621 Link')
             .setURL(`https://e621.net/post/show/${json[randomChoice].id}`)
             .addField(typePic, arrow)
             .setImage(picURL)
-            .setFooter(client.user.tag, client.user.displayAvatarURL)
+            .setFooter('e621.net', config.logo_e621)
             .setTimestamp();
-          if (message.channel.type === 'DEFAULT') embed.setColor(message.member.displayColor);
           message.channel.send({ embed })
             .then((msg) => {
               msg.react('↔')
                 .then(() => msg.react('❌'));
+              Timeout(msg, message.author.id, messageOwner, config);
             });
         }
       })
