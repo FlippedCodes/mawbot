@@ -83,7 +83,13 @@ module.exports.run = async (fs, functions) => {
   client.on('message', async (message) => {
     if (message.author.bot) return;
     if (message.content.indexOf(config.prefix) !== 0) return;
+    // {
+    // if (message.mentions.members.first()) {
+
+    // } else return;
+    // }
     // TODO: implement own prefix
+    // TODO: bot reacting on ping
 
     let messageArray = message.content.split(/\s+/g);
     let command = messageArray[0];
