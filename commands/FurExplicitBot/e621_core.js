@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 
-module.exports.run = async (client, message, args, config, functions, RichEmbed) => {
+module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
   message.react(client.guilds.get(config.emojiServer).emojis.get(config.loadingEmoji)).then((reaction_loading) => {
     let [limit] = args;
     let tags = args

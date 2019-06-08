@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports.run = async (client, message, args, config, functions, RichEmbed) => {
+module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
   fs.readFile('./config/furaffinity/about.txt', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
