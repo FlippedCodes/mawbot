@@ -113,7 +113,8 @@ module.exports.run = async (fs, functions) => {
   client.on('messageReactionAdd', async (reaction, user) => {
     // TODO: image deletion if inapropiete
     if (user.bot) return;
-    client.functions.get('e621_detailed').run(client, reaction, user, config, RichEmbed, functions, fs);
+    if (!reaction.me) return;
+    client.functions.get('e621_detailed').run(client, reaction, user, config, RichEmbed, functions, fs, messageOwner);
   });
 };
 
