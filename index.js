@@ -88,6 +88,8 @@ fs.readdir('./functions/', (err, files) => {
 });
 
 client.on('ready', async () => {
+  await console.log('[ROOT] Starting modules...');
+
   const config = require('./config/main/config.json');
 
   console.log(`[MawBot] Logged in as ${client.user.tag}!`);
@@ -118,6 +120,8 @@ client.on('ready', async () => {
 
   console.log('Starting CVL roleassignment bot!');
   client.functions.get('bot_CVL').run(fs, client.functions);
+
+  await console.log('[ROOT] Startup complete! All modules operational!');
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
