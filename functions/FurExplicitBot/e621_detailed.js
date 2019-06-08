@@ -45,8 +45,6 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
             source = json.sources.join('\n');
             if (json.sources.length === 1) typeSources = 'Source';
           }
-          let rating = 'NSFW';
-          if (json.rating === 's') rating = 'NSFW';
           let artists = json.artist.join(', ');
           let typeArtists = 'All artists';
           if (json.artist.length === 1) typeArtists = 'Artist';
@@ -59,6 +57,7 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
             .setTitle('E621 Link')
             .setURL(`https://e621.net/post/show/${json.id}`)
             .setDescription(`**Tags:** \`\`\`${tagsReplace(json.tags, ' ', ', ')}\`\`\``)
+            .addField('Rating', json.rating, true)
             .addField('Score', json.score, true)
             .addField('ID', json.id, true)
             .addField('Resolution', `${json.width}x${json.height}`, true)
