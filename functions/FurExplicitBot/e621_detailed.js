@@ -71,8 +71,14 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
         });
       return;
     case '❌':
-      if (!reaction.me) return;
-      reaction.message.delete();
+      // FIXME: removal of reaction (refferes to missingPermissions function)
+      if (reaction.message.guild.member(user).hasPermission('MANAGE_MESSAGES')) {
+        messageDelete(reaction.message, messageOwner);
+      } else if (messageOwner.has(reaction.message.id)) {
+        if (messageOwner.get(reaction.message.id) === user.id) {
+          messageDelete(reaction.message, messageOwner);
+        } else missingPermissions(reaction.message);
+      } else missingPermissions(reaction.message);
       return;
     default:
       return;
