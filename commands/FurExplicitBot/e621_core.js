@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
         limit: '300',
         tags,
       },
-      headers: { 'User-Agent': 'Discordbot - Mawbot' },
+      headers: { 'User-Agent': 'DiscordBot - FurExplicitBot' },
       json: true,
     };
     rp(request)
