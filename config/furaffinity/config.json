@@ -6,5 +6,7 @@
     "loadingEmoji": "564375243662163968",
     "reactionsTimeout": "7200000",
     "logo_e621": "http://i.imgur.com/RrHrSOi.png",
-    "color_e621": "012E57"
+    "color_e621": "012E57",
+    "logo_fa": "http://i.imgur.com/RrHrSOi.png",
+    "color_fa": "FAAF3A"
 }
