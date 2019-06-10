@@ -59,7 +59,7 @@ fs.readdir('./commands/', (err, files) => {
   console.log(`Loading ${jsfiles.length} command(s)...`);
   jsfiles.forEach((f, i) => {
     let probs = require(`./commands/${f}`);
-    console.log(`   ${i + 1}) Loaded: ${f}!`);
+    console.log(`    ${i + 1}) Loaded: ${f}!`);
     client.commands.set(probs.help.name, probs);
   });
   console.log(`Loaded ${jsfiles.length} command(s)!`);
@@ -81,7 +81,7 @@ fs.readdir('./functions/', (err, files) => {
 
   jsfiles.forEach((f, i) => {
     let probs = require(`./functions/${f}`);
-    console.log(`   ${i + 1}) Loaded: ${f}!`);
+    console.log(`    ${i + 1}) Loaded: ${f}!`);
     client.functions.set(probs.help.name, probs);
   });
   console.log(`Loaded ${jsfiles.length} function(s)!`);
