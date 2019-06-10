@@ -7,7 +7,7 @@ const { RichEmbed } = require('discord.js');
 module.exports.run = async (find, client, config, con, reaction, user, message, image) => {
   con.query(`SELECT * FROM image_channel WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
     if (rows[0]) {
-      const url_imagefinder = `http://iqdb.harry.lu/?url=${image}`;
+      const url_imagefinder = `https://iqdb.harry.lu/?url=${image}`;
 
       rp(url_imagefinder)
         .then((html_imagefinder) => {
