@@ -1,6 +1,6 @@
 const furaffinity = require('furaffinity');
 
-module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
+module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner, fa_token_A, fa_token_B) => {
   if (args.length <= 0) return message.channel.send('Sorry, I couldn\'t find anything, because you didn\'t provide any tags. :(');
 
   // get user args
