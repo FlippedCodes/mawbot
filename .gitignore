@@ -1,5 +1,5 @@
 config/test_token.json
 .vscode/
 node_modules/*
-package-lock.json
+# package-lock.json
 !node_modules/furaffinity
