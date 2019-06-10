@@ -8,8 +8,8 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
       The ammount is alternatiwe and doewsn't need to be prowidewd.
       `)
     .addField('FurAffinity', `
-      ${config.prefix}fa SEARCH
-      You can currently only requwest SFW pictures. NSFW is in the making.
+      ${config.prefix}fa help
+      Get additional hewlp for furaffinity.
       `)
     .addField('About', `
       ${config.prefix}about
