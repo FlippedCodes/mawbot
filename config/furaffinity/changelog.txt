@@ -10,6 +10,12 @@
     * put tags into codeblock
     * fixed more then 2 tags proviting
 + Furaffinity
-    + added NSFW support
+    + added NSFW support for nsfw rooms
+    + added help
+    + added providening of recent submitted pictures
+    + added message deletion like in e621
+    * changed layout to match e621
 
-Comming soon: Inkbunny API
+Comming soon: 
+Inkbunny API
+Furaffinity submission details
