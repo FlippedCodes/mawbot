@@ -68,7 +68,7 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
             .setTimestamp();
           message.channel.send({ embed })
             .then((msg) => {
-              msg.react('↔')
+              msg.react('↗')
                 .then(() => msg.react('❌'));
               Timeout(msg, message.author.id, messageOwner, config);
             });

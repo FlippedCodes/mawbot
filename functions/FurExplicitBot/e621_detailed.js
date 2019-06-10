@@ -23,7 +23,7 @@ function tagsReplace(tags, search, replace) {
 
 module.exports.run = async (client, reaction, user, config, RichEmbed, functions, fs, messageOwner) => {
   switch (reaction.emoji.name) {
-    case '↔':
+    case '↗':
       const id = reaction.message.embeds[0].url.replace('https://e621.net/post/show/', '');
       const color = reaction.message.embeds[0].color;
       let e621_id = {
@@ -65,7 +65,7 @@ module.exports.run = async (client, reaction, user, config, RichEmbed, functions
             .addField('Full Picture link', post.file_url)
             .addField('Full Picture', arrow)
             .setImage(post.file_url)
-            .setFooter(client.user.tag, client.user.displayAvatarURL)
+            .setFooter('e621.net', config.logo_e621)
             .setTimestamp();
           reaction.message.edit({ embed });
         });
