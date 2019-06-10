@@ -1,4 +1,4 @@
-module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
+module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner, fa_token_A, fa_token_B) => {
   let embed = new RichEmbed()
     .setAuthor('How to use me:')
     .setColor(message.member.displayColor)

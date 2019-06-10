@@ -12,7 +12,7 @@ function tagsReplace(tags, search, replace) {
   return tags.replace(new RegExp(search, 'g'), replace);
 }
 
-module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner) => {
+module.exports.run = async (client, message, args, config, functions, RichEmbed, messageOwner, fa_token_A, fa_token_B) => {
   message.react(client.guilds.get(config.emojiServer).emojis.get(config.loadingEmoji)).then((reaction_loading) => {
     let [limit] = args;
     let tags = args.join(' ');

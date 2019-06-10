@@ -104,7 +104,7 @@ module.exports.run = async (fs, functions) => {
     if (cmd) {
       if (!usedRecently.has(message.author.id)) {
         timeout(message.author.id);
-        cmd.run(client, message, args, config, functions, RichEmbed, messageOwner)
+        cmd.run(client, message, args, config, functions, RichEmbed, messageOwner, fa_token_A, fa_token_B)
           .catch(console.log);
       } else {
         message.reply('sowwy, but you can\'t use me that often. Plewse wait 5 secounds between commands.');
