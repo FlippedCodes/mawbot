@@ -26,11 +26,13 @@ module.exports.run = async (fs, functions) => {
     token = require('../config/test_token.json');
     client.login(token.test_token_fa);
     clientID = config.clientIDTesting;
-    // Login(token.fa_cookie_a, token.fa_cookie_b);
+    config.set('cookieA', token.fa_cookie_a);
+    config.set('cookieB', token.fa_cookie_a);
   } else {
     client.login(process.env.BOT_TOKEN_FA);
     clientID = config.clientID;
-    // Login(process.env.FA_COOKIE_A, process.env.FA_COOKIE_B);
+    config.set('cookieA', process.env.FA_COOKIE_A);
+    config.set('cookieB', process.env.FA_COOKIE_B);
   }
 
   client.commands = new Discord.Collection();
