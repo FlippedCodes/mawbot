@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "discord.js": "github:discordjs/discord.js#11.4-dev",
+    "discord.js": "^11.5.1",
     "e621": "0.0.2",
     "furaffinity": "github:FlipperLP/furaffinity",
     "heroku-client": "^3.0.7",
