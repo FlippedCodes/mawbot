@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
 
     // FIXME: NSFW content is shown in sfw rooms, currently disabled in said rooms
     if (message.channel.nsfw === false) {
-      message.reply('Hey there, I\'m sorry but this feature was taken out in SFW rooms for the time being. I made a mistake with NSFW content being shown in there and haven\'t found time yet to fix it. I hope you understand and sorry for the inconvenience. You can use this command without problems in a NSFW marked room.')
+      message.reply('EDITOR NOTE: Hey there, I\'m sorry but this feature was taken out in SFW rooms for the time being. I made a mistake with NSFW content being shown in there and haven\'t found time yet to fix it. I hope you understand and sorry for the inconvenience. You can use this command without problems in a NSFW marked room.')
         .then(msg => msg.delete(30000));
       reaction_loading.remove(client.user);
       return;
