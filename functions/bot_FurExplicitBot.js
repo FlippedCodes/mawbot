@@ -84,7 +84,7 @@ module.exports.run = async (fs, functions) => {
     if (fs.existsSync('./config/test_token.json')) {
       client.user.setActivity('with the Testaccount from Flipper');
     } else {
-      client.user.setActivity(`over ${client.guilds.reduce((previousCount, currentGuild) => previousCount + currentGuild.memberCount, 0)} members to serve`, { type: 'WATCHING' });
+      client.user.setActivity(`ower ${client.guilds.reduce((previousCount, currentGuild) => previousCount + currentGuild.memberCount, 0)} members.`, { type: 'WATCHING' });
     }
   });
 
