@@ -69,7 +69,6 @@ module.exports.run = async (fs, functions) => {
     }
 
     console.log(`[FurAffinity-API] Loading ${jsfiles.length} function(s)...`);
-
     jsfiles.forEach((f, i) => {
       let probs = require(`../functions/FurExplicitBot/${f}`);
       console.log(`[FurAffinity-API]    ${i + 1}) Loaded: ${f}!`);
@@ -81,11 +80,9 @@ module.exports.run = async (fs, functions) => {
   client.on('ready', async () => {
     console.log(`[FurAffinity-API] Logged in as ${client.user.tag} serving ${client.guilds.size} Servers!`);
 
-    if (fs.existsSync('./config/test_token.json')) {
-      client.user.setActivity('with the Testaccount from Flipper');
-    } else {
-      client.user.setActivity(`ower ${client.guilds.reduce((previousCount, currentGuild) => previousCount + currentGuild.memberCount, 0)} members.`, { type: 'WATCHING' });
-    }
+    // set status
+    client.functions.get('setup_status').run(client, fs)
+      .then(() => console.log('[FurAffinity-API] Set status!'));
   });
 
   client.on('message', async (message) => {
