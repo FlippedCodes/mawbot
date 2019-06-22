@@ -51,11 +51,11 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
           let typePic = 'Preview';
           let picURL = pool[randomChoice].sample_url;
           let arrow = '🔽';
-          const extantion = pool[randomChoice].file_ext;
-          if (extantion === 'gif' || extantion === 'webm' || extantion === 'swf') {
+          const extention = pool[randomChoice].file_ext;
+          if (extention === 'gif' || extention === 'webm' || extention === 'swf') {
             typePic = 'Full Picture';
             picURL = pool[randomChoice].file_url;
-            if (extantion === 'webm' || extantion === 'swf') arrow = pool[randomChoice].file_url;
+            if (extention === 'webm' || extention === 'swf') arrow = pool[randomChoice].file_url;
           }
           let embed = new RichEmbed()
             .setAuthor(`Main Artist: ${pool[randomChoice].artist[0]}`)
