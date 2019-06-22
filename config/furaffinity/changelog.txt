@@ -1,21 +1,6 @@
 **Changelog:**
-+* e621
-    + added image deletion only for admins and imagerequester
-    + added alternative +e6 usage (without ammount)
-    + added comma-seperation in the tags in extended view
-    + added reactions timeout of currently 2 hours.
-    * changed embed color and logo
-    * changed 3-Picture warning
-    * changed rating displayment
-    * put tags into codeblock
-    * fixed more then 2 tags proviting
-+ Furaffinity
-    + added NSFW support for nsfw rooms
-    + added help
-    + added providening of recent submitted pictures
-    + added message deletion like in e621
-    * changed layout to match e621
++ added rule34
 
 Comming soon: 
 Inkbunny API
-Furaffinity submission details
+replacement of FA website parsing with unoffical Furaffinity API
