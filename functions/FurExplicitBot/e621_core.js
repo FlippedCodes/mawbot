@@ -86,5 +86,5 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
 };
 
 module.exports.help = {
-  name: 'e6',
+  name: 'e621_core',
 };

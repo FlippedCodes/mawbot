@@ -182,5 +182,5 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
 };
 
 module.exports.help = {
-  name: 'fa',
+  name: 'furaffinity_core',
 };

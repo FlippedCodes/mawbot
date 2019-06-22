@@ -21,9 +21,13 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
     if (isNaN(limit) || limit === 0) limit = 1;
     else tags = tags.slice(limit.length + 1);
 
-    let sfw = false;
-    if (message.channel.nsfw === false) sfw = true;
-    if (limit > 10) {
+    if (message.channel.nsfw === false) {
+      message.reply('sowwy, but rule34 is a complete nsfw siwte. So there are almowst no sfw post on there. >.<')
+        .then(msg => msg.delete(30000));
+      reaction_loading.remove(client.user);
+      return;
+    }
+    if (limit > 10 && message.author.id !== config.owner) {
       message.reply('you can only requwest a maximum of 10 images at the twime.')
         .then(msg => msg.delete(10000));
       reaction_loading.remove(client.user);
@@ -44,7 +48,6 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
         if (json.length === 0) return message.channel.send('Sowwy, I found no pictures with your tags. uwu');
         for (let i = 0; i < limit; i++) {
           const randomChoice = Math.floor(Math.random() * json.length);
-          if (sfw && json[randomChoice].rating === 'e') return i--;
           let typePic = 'Preview';
           let picURL = json[randomChoice].sample_url;
           let arrow = '🔽';
@@ -82,5 +85,5 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
 };
 
 module.exports.help = {
-  name: 'r34',
+  name: 'rule34_core',
 };
