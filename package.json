@@ -1,6 +1,6 @@
 {
   "name": "mawbot",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "description": "This bot belongs to the TDM-Network",
   "main": "index.js",
   "scripts": {
