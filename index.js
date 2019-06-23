@@ -101,9 +101,9 @@ client.on('ready', async () => {
   client.functions.get('setup_role_request').run(client, servers, config)
     .then(() => console.log('Resetted rolerequest!'));
 
-  // set saveme message
-  // disabled, because currently not in use
-  // client.functions.get('setup_saveme').run(client, servers)
+  // load and start FA notifications
+  // TODO: Create fa notifications ticker
+  // client.functions.get('fa_notifications').run(client, servers, fs)
   //   .then(() => console.log('Resetted saveme!'));
 
   // load and start RP-room timers
