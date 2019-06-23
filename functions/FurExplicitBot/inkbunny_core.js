@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args, config, functions, RichEmbed,
 
     let uri = 'https://e621.net/post/index.json';
     if (message.channel.nsfw === false) uri = 'https://e926.net/post/index.json';
-    if (limit > 10) {
+    if (limit > 10 && message.author.id !== config.owner) {
       message.reply('you can only requwest a maximum of 10 images at the twime.')
         .then(msg => msg.delete(10000));
       reaction_loading.remove(client.user);
