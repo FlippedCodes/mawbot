@@ -21,7 +21,7 @@ if (fs.existsSync('./config/test_token.json')) {
 }
 
 module.exports.run = async (client, message, args, con, config) => {
-  const teamCheck = message.member.roles.find(role => role.name === config.adminRole);
+  const teamCheck = message.member.roles.find(role => role.id === config.adminRole);
 
   let [subcmd, name] = args;
 

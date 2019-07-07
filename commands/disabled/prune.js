@@ -1,5 +1,5 @@
 module.exports.run = async (client, message, args, con, config) => {
-  if (!message.member.roles.find(role => role.name === config.adminRole)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
+  if (!message.member.roles.find(role => role.id === config.adminRole)) return message.channel.send(`Do I know you **${message.author.tag}**? Only the **teammembers** can use this~`).then(message.react('❌'));
 
   message.guild.members.forEach((user) => {
     if (user.user.bot) return;
