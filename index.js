@@ -180,7 +180,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(client, reaction, requester, config, user, con);
 
   // check if reaction is from check-in
-  if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client);
+  if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client, Discord);
 
   // check if reaction is from keep me
   // if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') return client.functions.get('reaction_saveme').run(reaction, requester, user, con);

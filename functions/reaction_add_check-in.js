@@ -1,4 +1,4 @@
-module.exports.run = async (emoji, user, reaction, config, client) => {
+module.exports.run = async (emoji, user, reaction, config, client, Discord) => {
   reaction.message.guild.fetchMember(user)
     .then(async (member) => {
       if (!member.roles.get(config.team)) {
@@ -17,9 +17,11 @@ module.exports.run = async (emoji, user, reaction, config, client) => {
           return;
 
         case '✋':
+          let embed = new Discord.RichEmbed()
+            .setDescription('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
           await reaction.message.author.send('It seems like your check-in got declined. Please get in touch with the team.');
           await reaction.message.channel.bulkDelete(100);
-          await client.channels.get(config.checkin_channelID).send('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
+          await client.channels.get(config.checkin_channelID).send({ embed });
           client.channels.get(config.checkin_channelID).send(`Rejected \`${reaction.message.author.tag}\` to be checked-in`)
             .then(msg2 => msg2.delete(4000));
           return;
