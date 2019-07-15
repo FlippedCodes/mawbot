@@ -274,7 +274,7 @@ client.on('message', async (message) => {
     }
     return;
   }
-  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
+  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID && !message.member.roles.find(role => role.id === config.team)) {
     if (!checkinWarned.has(userID)) {
       let embed = new Discord.RichEmbed()
         .setDescription('Hey there,\nthanks for checking out our server, we can\'t check-in you just yet...\nPlease give <#496948681656893440> another read and come back when you\'ve done so. ^^');
