@@ -6,6 +6,8 @@ const mysql = require('mysql');
 
 const fs = require('fs');
 
+const checkinWarned = new Set();
+
 let token;
 
 // let con = '// lol ';
@@ -260,11 +262,24 @@ client.on('message', async (message) => {
   // other server fallthough
   if (message.channel.guild.id === !config.serverID) return;
 
+  let userID = message.author.id;
   if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
+    checkinWarned.add(userID);
     await message.react('👌');
     await message.react('✋');
     if (teamlist.indexOf('online' || 'dnd') === -1) {
-      message.channel.send('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
+      let embed = new Discord.RichEmbed()
+        .setDescription('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
+      message.channel.send({ embed });
+    }
+    return;
+  }
+  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
+    if (!checkinWarned.has(userID)) {
+      let embed = new Discord.RichEmbed()
+        .setDescription('Hey there,\nthanks for checking out our server, we can\'t check-in you just yet...\nPlease give <#496948681656893440> another read and come back when you\'ve done so. ^^');
+      message.channel.send({ embed });
+      checkinWarned.add(userID);
     }
     return;
   }
