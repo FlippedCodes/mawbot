@@ -1,41 +1,10 @@
 **Changelog:**
-+ added user-age policy with db:
-    + added age questioning in DM of user
-    + added DB table for age recordings
-    + added autoremoval for roles, if a DB entry gets changed
-    * Renamed DB tablefor underage users
-    + added userage log-channel
-    * merged existing CMDs =nsfw_allow & =nsfw_forbidden into one =nsfw
-    * Renamed role 'No NSFW' into 'NSFW Access' in #rolerequest
-    * Changed assignment logic
-    * Changed permissions for own RP
-    + added =nsfw CMD (syntax: =nsfw SUBCMD USERID ARGUMENTS):
-        create: Adds a entry to the database
-        allow: Removes underage block for the provided user
-        age: changes userage
-        search: Looks up the database info for the provided user
-        help: Gets a list of commands
-        (Note: Removal will not be an option til later/admin only)
-    - disabled old CMDs (nsfw_allow.js & nsfw_forbidden.js)
-+ added warning-message removal for e621 requests (that thing that comes, if you request more then 3)
-* fixed spamming in e621 requests
-* redone CMDs/functions:
-    =userinfo (better user end experience with error handler)
-    =avatar (fixed ID requests)
-    rolerequest uses less database lookups
-* moved timemanager for own RP into own function
-* splited e621 bot into own files
-* cleaned alot of code (mainly Rich Embets)
-* new icons in #rolerequest
-* fixed reaction change after every checkin
-* fixed minor spelling misstakes (please tell me if you find any)
-- Removed Herobrine
+* Better message displayment in #checkin
++ added user notice if wrongly checked-in
 
 **Plannings:**
 + add CMD overview will get added
 + add help for every CMD for better user end experience
 + add Better message displayment
-+ add autoassign for rejoining user (except for muted users)
-+ requested user removal in e621 requests
-+ NSFW FurAffinity requests
++ ~~add autoassign for rejoining user (except for muted users)~~
 * code for own RP will be redone
