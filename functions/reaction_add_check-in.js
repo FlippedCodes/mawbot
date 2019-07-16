@@ -6,10 +6,10 @@ module.exports.run = async (emoji, user, reaction, config, client, Discord) => {
         reaction.message.channel.send('Sorry, but you can\'t check-in yourself or other people!\nPlease wait for a Teammember to check you in.');
         return;
       }
+      let embed;
       switch (emoji) {
         case '👌':
-          
-          let embed = new Discord.RichEmbed()
+          embed = new Discord.RichEmbed()
             .setDescription('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
           reaction.message.member.addRole(config.checkinRole);
           await reaction.message.channel.bulkDelete(100);
@@ -20,7 +20,7 @@ module.exports.run = async (emoji, user, reaction, config, client, Discord) => {
           return;
 
         case '✋':
-          let embed = new Discord.RichEmbed()
+          embed = new Discord.RichEmbed()
             .setDescription('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
           await reaction.message.author.send('It seems like your check-in got declined. Please get in touch with the team.');
           await reaction.message.channel.bulkDelete(100);
