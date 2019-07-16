@@ -8,9 +8,12 @@ module.exports.run = async (emoji, user, reaction, config, client, Discord) => {
       }
       switch (emoji) {
         case '👌':
+          
+          let embed = new Discord.RichEmbed()
+            .setDescription('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
           reaction.message.member.addRole(config.checkinRole);
           await reaction.message.channel.bulkDelete(100);
-          await client.channels.get(config.checkin_channelID).send('Have a read of <#496948681656893440>, then ask to be checked in here ^^\n\n(Channel is cleared after every new member)');
+          await client.channels.get(config.checkin_channelID).send({ embed });
           await client.channels.get(config.general).send(`${reaction.message.author}, you are checked-in now! Have a great time on the server! :3`);
           client.channels.get(config.checkin_channelID).send(`Checked \`${reaction.message.author.tag}\` in`)
             .then(msg2 => msg2.delete(4000));
