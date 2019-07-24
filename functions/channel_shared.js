@@ -15,6 +15,7 @@ module.exports.run = async (client, message, con) => {
     con.query('SELECT * FROM shared_channels', async (err, rows) => {
       rows.forEach((ID) => {
         const vorenetwork_channel = client.channels.find(channel => channel.id === ID.channelID);
+        if (!vorenetwork_channel) return;
         if (message.channel.nsfw && !vorenetwork_channel.nsfw) return;
         if (!message.channel.nsfw && vorenetwork_channel.nsfw) return;
 
