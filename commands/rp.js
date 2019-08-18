@@ -130,7 +130,7 @@ module.exports.run = async (client, message, args, con, config) => {
         .setDescription(`Usage: \`${config.prefix}rp SUBCMD ARGUMENT\``)
         .addField(
           `\`${config.prefix}rp create NAME\``,
-          'A\'dds a room; One active room per user.', true,
+          'Adds a room; One active room per user.', true,
         )
         .addField(
           `\`${config.prefix}rp add USERMENTION\``,
