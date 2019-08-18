@@ -5,6 +5,6 @@ I’m a private Discord-bot owned by **Phil | Flipper#3621** for TDM-Network, so
 Also, here is a link to my profile picture https://www.furaffinity.net/view/27233131/
 We have the permission to use their art by **IncredibleEdibleCalico**.
 
-The MySQL Database im working with is provided by **MrCamby**.
+The MySQL Database im working with is provided by **<remotemysql.com>**.
 
 For more Information, please contact **Phil | Flipper#3621**.
