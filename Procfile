@@ -1,1 +1,2 @@
-worker: node index.js
+mawbot: node mawbot/index.js
+furexplicitbot: node furexplicitbot/index.js
