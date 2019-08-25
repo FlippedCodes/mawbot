@@ -1,3 +1,4 @@
 /node_modules
 .eslintrc.json
 test_token.json
+.vscode/settings.json
