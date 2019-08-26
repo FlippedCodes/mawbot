@@ -12,7 +12,7 @@ if (fs.existsSync('./mawbot/config/test_token.json')) {
   const api = require('../config/test_token.json');
   tokenAPI = api.token;
 } else {
-  tokenAPI = process.env.BotTokenAgentBlack;
+  tokenAPI = process.env.BOT_TOKEN;
 }
 
 module.exports.run = async (client, message, args, DB, config) => {
