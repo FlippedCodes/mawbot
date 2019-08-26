@@ -16,7 +16,11 @@ if (fs.existsSync('./mawbot/config/test_token.json')) {
 }
 
 module.exports.run = async (client, message, args, DB, config) => {
-  // if (!config.env.get('isTeam')) return message.react('❌');
+  if (!message.member.roles.find(role => role.name === config.teamRole)) {
+    message.channel.send(`Do I know you **${message.author.tag}**? Only the Devs can use this~`)
+      .then(message.react('❌'));
+    return;
+  }
 
   let [id] = args;
 
