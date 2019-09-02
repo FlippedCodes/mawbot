@@ -26,7 +26,7 @@ module.exports.run = async (client, message, con) => {
         if (vorenetwork_channel.id !== message.channel.id) {
           // Post shared message on all servers
           const embed = new Discord.RichEmbed()
-            .setAuthor(message.author.username, pic)
+            .setAuthor(message.author.tag, pic)
             .setColor(message.member.displayColor)
             .setDescription(message.content)
             .setTimestamp()
