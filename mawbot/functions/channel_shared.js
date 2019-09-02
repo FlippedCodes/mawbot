@@ -32,22 +32,6 @@ module.exports.run = async (client, message, con) => {
               message.channel.send('Something went wrong sending the message to one of the other servers. Please report this to the Team.');
               return;
             });
-        // webhook solution
-        // con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
-        // vorenetwork_channel.fetchWebhooks()
-        //   .then((webhook) => {
-        //     const hook = webhook.find(hook => hook.name === rows[0].webhookName);
-        //     hook.send(`[${message.channel.guild.name}]\n${message.content}`, {
-        //       username: message.author.username,
-        //       avatarURL: pic,
-        //     })
-        //       .catch((error) => {
-        //         console.log(error);
-        //         message.channel.send('Something went wrong sending the message to one of the other servers. Please report this to the Team.');
-        //         return;
-        //       });
-        //   });
-        // });
         }
       });
     });
