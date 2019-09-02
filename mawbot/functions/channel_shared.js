@@ -13,6 +13,7 @@ module.exports.run = async (client, message, con) => {
     if (message.author.avatarURL) pic = message.author.avatarURL;
 
     con.query('SELECT * FROM shared_channels', async (err, rows) => {
+      rows.forEach((CHANNEL) => {
         // get channel
         const vorenetwork_channel = client.channels.find(channel => channel.id === CHANNEL.channelID);
         // check if channel exists
