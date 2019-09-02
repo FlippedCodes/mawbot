@@ -32,7 +32,8 @@ module.exports.run = async (client, message, con) => {
             .setTimestamp()
             .setFooter(message.channel.guild.name, message.guild.iconURL);
           // add invite, if provided in DB
-          if (CHANNEL.inviteCode) embed.setAuthor(message.author.tag, pic, `https://discord.gg/${CHANNEL.inviteCode}`);
+          let orginalChannel = rows.get(message.channel.id);
+          if (orginalChannel.inviteCode) embed.setAuthor(message.author.tag, pic, `https://discord.gg/${orginalChannel.inviteCode}`);
           vorenetwork_channel.send({ embed })
             .catch((error) => {
               console.log(error);
