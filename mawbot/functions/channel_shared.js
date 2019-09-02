@@ -13,19 +13,24 @@ module.exports.run = async (client, message, con) => {
     if (message.author.avatarURL) pic = message.author.avatarURL;
 
     con.query('SELECT * FROM shared_channels', async (err, rows) => {
-      rows.forEach((ID) => {
-        const vorenetwork_channel = client.channels.find(channel => channel.id === ID.channelID);
+        // get channel
+        const vorenetwork_channel = client.channels.find(channel => channel.id === CHANNEL.channelID);
+        // check if channel exists
         if (!vorenetwork_channel) return;
+        // check if sfw or nsfw
         if (message.channel.nsfw && !vorenetwork_channel.nsfw) return;
         if (!message.channel.nsfw && vorenetwork_channel.nsfw) return;
 
+        // check if its from channel where it has beed send from
         if (vorenetwork_channel.id !== message.channel.id) {
+          // Post shared message on all servers
           const embed = new Discord.RichEmbed()
             .setAuthor(message.author.username, pic)
             .setColor(message.member.displayColor)
             .setDescription(message.content)
             .setTimestamp()
             .setFooter(message.channel.guild.name, message.guild.iconURL);
+          // add invite, if provided in DB
           vorenetwork_channel.send({ embed })
             .catch((error) => {
               console.log(error);
