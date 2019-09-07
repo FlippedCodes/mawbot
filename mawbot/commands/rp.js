@@ -42,7 +42,7 @@ module.exports.run = async (client, message, args, con, config) => {
           return;
         }
 
-        if (message.guild.channels.find(channel => channel.name === name)) {
+        if (message.guild.channels.find((channel) => channel.name === name)) {
           message.channel.send('Sorry, a channel with the same name exists already.');
           message.react('❌');
           return;

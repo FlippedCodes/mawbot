@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args, config, RichEmbed, messageOwn
     // FIXME: NSFW content is shown in sfw rooms, currently disabled in said rooms
     if (message.channel.nsfw === false) {
       message.reply('EDITOR NOTE: Hey there, I\'m sorry but this feature was taken out in SFW rooms for the time being. I made a mistake with NSFW content being shown in there and haven\'t found time yet to fix it. I hope you understand and sorry for the inconvenience. You can use this command without problems in a NSFW marked room.')
-        .then(msg => msg.delete(30000));
+        .then((msg) => msg.delete(30000));
       reaction_loading.remove(client.user);
       return;
     }
@@ -59,18 +59,18 @@ module.exports.run = async (client, message, args, config, RichEmbed, messageOwn
       case 'recent':
         if (searchwords) {
           message.reply('there awre nwo tags needewd in recent.')
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
         }
         if (limit > 10 && message.author.id !== config.owner) {
           message.reply('you can only requwest a maximum of 10 images at the twime.')
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
           reaction_loading.remove(client.user);
           return;
         }
         if (limit > 3) {
           let embed = new RichEmbed().setDescription('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<');
           message.channel.send({ embed })
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
         }
         Recent(Type.Artwork).then((pool) => {
           for (let i = 0; i < limit; i++) {
@@ -84,13 +84,13 @@ module.exports.run = async (client, message, args, config, RichEmbed, messageOwn
       //   let post = limit;
       //   if (!post) {
       //     message.reply('plewse prwide an id for me to fiwnd.')
-      //       .then(msg => msg.delete(10000));
+      //       .then((msg) => msg.delete(10000));
       //     reaction_loading.remove(client.user);
       //     return;
       //   }
       //   if (searchwords) {
       //     message.reply('there awre nwo tags needewd to get a submission.')
-      //       .then(msg => msg.delete(10000));
+      //       .then((msg) => msg.delete(10000));
       //   }
       //   Submission(post).then((submission) => {
       //     let embed = new RichEmbed()
@@ -114,9 +114,9 @@ module.exports.run = async (client, message, args, config, RichEmbed, messageOwn
       //       .setFooter('Furaffinity', config.logo_fa)
       //       .setTimestamp();
       //     message.channel.send({ embed })
-      //       .then((msg) => {
+      //       .then(((msg)) => {
       //         msg.react('❌');
-      //         Timeout(msg, message.author.id, messageOwner, config);
+      //         Timeout((msg), message.author.id, messageOwner, config);
       //         reaction_loading.remove(client.user);
       //       });
       //   });
@@ -124,20 +124,20 @@ module.exports.run = async (client, message, args, config, RichEmbed, messageOwn
       case 'search':
         if (!searchwords) {
           message.reply('plewse prowide me something I should search.')
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
           reaction_loading.remove(client.user);
           return;
         }
         if (limit > 10 && message.author.id !== config.owner) {
           message.reply('you can only requwest a maximum of 10 images at the twime.')
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
           reaction_loading.remove(client.user);
           return;
         }
         if (limit > 3) {
           let embed = new RichEmbed().setDescription('you requwested over 3 images and this might take somwe time. Pleawse don\'t rush me. >.<');
           message.channel.send({ embed })
-            .then(msg => msg.delete(10000));
+            .then((msg) => msg.delete(10000));
         }
         Search(searchwords).then((pool) => {
           for (let i = 0; i < limit; i++) {
