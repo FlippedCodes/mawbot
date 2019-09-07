@@ -103,11 +103,6 @@ client.on('ready', async () => {
   client.functions.get('setup_role_request').run(client, servers, config)
     .then(() => console.log('Resetted rolerequest!'));
 
-  // load and start FA notifications
-  // TODO: Create fa notifications ticker
-  // client.functions.get('fa_notifications').run(client, servers, fs)
-  //   .then(() => console.log('Resetted saveme!'));
-
   // load and start RP-room timers
   console.log('Starting up RP timers!');
   client.functions.get('own_rp_timer').run(client, servers, fs, con);
@@ -118,6 +113,11 @@ client.on('ready', async () => {
 
   console.log('Starting CVL roleassignment bot!');
   client.functions.get('bot_CVL').run(fs, client.functions);
+
+  // load and start FA notifications
+  // TODO: Create fa notifications ticker
+  console.log('Starting up FA Notifiactions!');
+  client.functions.get('fa_notifications').run(client, fs, config, Discord);
 
   await console.log('[ROOT] Startup complete! All modules operational!');
 });
