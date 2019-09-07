@@ -1,3 +1,11 @@
+const {
+  Recent,
+  Type,
+  Login,
+  Submission,
+  Search,
+} = require('furaffinity');
+
 module.exports.run = async (client, servers, fs) => {
   let fa_token_A;
   let fa_token_B;
