@@ -39,7 +39,8 @@ module.exports.run = async (client, message, con) => {
           if (message.attachments.size > 0) {
             embed
               .setImage(message.attachments.array()[0].url)
-              .addField('File link:', message.attachments.array()[0].url, true);
+              .setTitle('Attachment link')
+              .setURL(message.attachments.array()[0].url);
           }
           vorenetwork_channel.send({ embed })
             .catch((error) => {
