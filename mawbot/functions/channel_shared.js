@@ -22,6 +22,7 @@ module.exports.run = async (client, message, con) => {
         if (message.channel.nsfw && !vorenetwork_channel.nsfw) return;
         if (!message.channel.nsfw && vorenetwork_channel.nsfw) return;
 
+        // TODO: Try running code only once, as not being changed
         // check if its from channel where it has beed send from
         if (vorenetwork_channel.id !== message.channel.id) {
           // Post shared message on all servers
