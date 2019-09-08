@@ -15,7 +15,7 @@ module.exports.run = async (client, message, con) => {
     con.query('SELECT * FROM shared_channels', async (err, rows) => {
       rows.forEach((CHANNEL) => {
         // get channel
-        const vorenetwork_channel = client.channels.find(channel => channel.id === CHANNEL.channelID);
+        const vorenetwork_channel = client.channels.find((channel) => channel.id === CHANNEL.channelID);
         // check if channel exists
         if (!vorenetwork_channel) return;
         // check if sfw or nsfw
@@ -32,7 +32,7 @@ module.exports.run = async (client, message, con) => {
             .setTimestamp()
             .setFooter(message.channel.guild.name, message.guild.iconURL);
           // add invite, if provided in DB
-          let orginalChannel = rows.find(entry => entry.channelID === message.channel.id);
+          let orginalChannel = rows.find((entry) => entry.channelID === message.channel.id);
           if (orginalChannel.inviteCode) embed.setAuthor(message.author.tag, pic, `https://discord.gg/${orginalChannel.inviteCode}`);
           vorenetwork_channel.send({ embed })
             .catch((error) => {
