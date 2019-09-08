@@ -35,6 +35,12 @@ module.exports.run = async (client, message, con) => {
           // add invite, if provided in DB
           let orginalChannel = rows.find((entry) => entry.channelID === message.channel.id);
           if (orginalChannel.inviteCode) embed.setAuthor(message.author.tag, pic, `https://discord.gg/${orginalChannel.inviteCode}`);
+          // add attachment, if provided by the sender
+          if (message.attachments.size > 0) {
+            embed
+              .setImage(message.attachments.array()[0].url)
+              .addField('File link:', message.attachments.array()[0].url, true);
+          }
           vorenetwork_channel.send({ embed })
             .catch((error) => {
               console.log(error);
