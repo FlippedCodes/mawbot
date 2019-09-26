@@ -9,7 +9,7 @@ const servers = require('../config/servers.json');
 module.exports.run = async (fs, functions) => {
   // login
   let token;
-  if (fs.existsSync('./mawbot/config/test_token.json')) {
+  if (fs.existsSync('./config/test_token.json')) {
     token = require('../config/test_token.json');
     console.log('[CVL] The Bot is run in a test envirement and gets shutdown now.');
     client.destroy();

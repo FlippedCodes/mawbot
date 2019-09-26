@@ -6,7 +6,7 @@ module.exports.run = async (client, servers, fs, con) => {
   let RPChannelArchive;
   let RPChannelLog;
 
-  if (fs.existsSync('./mawbot/config/test_token.json')) {
+  if (fs.existsSync('./config/test_token.json')) {
     server = servers.testing;
     RPChannelCategory = servers.RPChannelCategory_testing;
     RPChannelArchive = servers.RPChannelArchive_testing;

@@ -10,7 +10,7 @@ let RPChannelArchive;
 let RPChannelLog;
 let RPChannelCategory;
 
-if (fs.existsSync('./mawbot/config/test_token.json')) {
+if (fs.existsSync('./config/test_token.json')) {
   RPChannelArchive = servers.RPChannelArchive_testing;
   RPChannelLog = servers.RPChannelLog_testing;
   RPChannelCategory = servers.RPChannelCategory_testing;

@@ -14,7 +14,7 @@ let token;
 
 let con;
 
-if (fs.existsSync('./mawbot/config/test_token.json')) {
+if (fs.existsSync('./config/test_token.json')) {
   token = require('./config/test_token.json');
   con = mysql.createConnection({
     host: token.DB_host,
@@ -32,7 +32,7 @@ if (fs.existsSync('./mawbot/config/test_token.json')) {
 }
 
 // login!
-if (fs.existsSync('./mawbot/config/test_token.json')) {
+if (fs.existsSync('./config/test_token.json')) {
   client.login(token.token);
 } else {
   client.login(process.env.BOT_TOKEN);
@@ -49,7 +49,7 @@ const servers = require('./config/servers.json');
 const blacklist = require('./config/blacklist.json');
 
 client.commands = new Discord.Collection();
-fs.readdir('./mawbot/commands/', (err, files) => {
+fs.readdir('./commands/', (err, files) => {
   if (err) console.error(err);
 
   let jsfiles = files.filter(f => f.split('.').pop() === 'js');
@@ -70,7 +70,7 @@ fs.readdir('./mawbot/commands/', (err, files) => {
 // ---------------------
 
 client.functions = new Discord.Collection();
-fs.readdir('./mawbot/functions/', (err, files) => {
+fs.readdir('./functions/', (err, files) => {
   if (err) console.error(err);
 
   let jsfiles = files.filter(f => f.split('.').pop() === 'js');
@@ -152,7 +152,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   let RPChannelLog;
   let RPChannelCategory;
 
-  if (fs.existsSync('./mawbot/config/test_token.json')) {
+  if (fs.existsSync('./config/test_token.json')) {
     RPChannelArchive = servers.RPChannelArchive_testing;
     RPChannelLog = servers.RPChannelLog_testing;
     RPChannelCategory = servers.RPChannelCategory_testing;

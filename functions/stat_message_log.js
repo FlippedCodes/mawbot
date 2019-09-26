@@ -3,7 +3,7 @@ const toTime = require('pretty-ms');
 const startupTime = +new Date();
 
 module.exports.run = async (client, config, con, fs) => {
-  if (fs.existsSync('./mawbot/config/test_token.json')) return;
+  if (fs.existsSync('./config/test_token.json')) return;
   con.query('SELECT * FROM stat_offline WHERE entry = \'1\'', async (err, rows) => {
     if (err) throw err;
     const embed = {
