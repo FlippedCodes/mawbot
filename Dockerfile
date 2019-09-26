@@ -1,3 +1,4 @@
+# get node version 10
 FROM node:10
 
 # Create app directory
