@@ -111,9 +111,6 @@ client.on('ready', async () => {
   console.log('Posting bot status message!');
   client.functions.get('stat_message_log').run(client, config, con, fs);
 
-  console.log('Starting CVL roleassignment bot!');
-  client.functions.get('bot_CVL').run(fs, client.functions);
-
   // load and start FA notifications
   // TODO: Create fa notifications ticker
   console.log('Starting up FA Notifiactions!');
