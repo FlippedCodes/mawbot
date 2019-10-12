@@ -50,15 +50,18 @@ module.exports.run = async (setting, config, client, reaction, RPChannelLog, con
             return;
 
           default:
-            reaction.message.channel.send('It seems something went wrong. Please contact the owners of the server with following error-code: `err in: reaction_rp_setup`');
+            reaction.message.channel.send('It seems something went wrong. Please contact the owners of the server with following error-code: `err in: reaction_rp_setup`')
+              .then((msg) => msg.delete(10000));
             return;
         }
       } else {
-        reaction.message.channel.send('Sorry you are not allowed to change settings in this room!');
+        reaction.message.channel.send('Sorry you are not allowed to change settings in this room!')
+          .then((msg) => msg.delete(10000));
         reaction.remove(user);
       }
     } catch (error) {
-      reaction.message.channel.send('It seems something went wrong. Make sure you at least have written something sinse the last restart of the bot. Please contact the owners of the server if this error keeps poping up, with following error-code: `err in: reaction_rp_setup`');
+      reaction.message.channel.send('It seems something went wrong. Make sure you at least have written something sinse the last restart of the bot. Please contact the owners of the server if this error keeps poping up, with following error-code: `err in: reaction_rp_setup`')
+        .then((msg) => msg.delete(10000));
     }
   });
 };
