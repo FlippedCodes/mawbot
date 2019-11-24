@@ -21,7 +21,7 @@ if (fs.existsSync('./config/test_token.json')) {
 }
 
 module.exports.run = async (client, message, args, con, config) => {
-  const teamCheck = message.member.roles.find(role => role.id === config.adminRole);
+  const teamCheck = message.member.roles.find((role) => role.id === config.adminRole);
 
   let [subcmd, name] = args;
 
@@ -49,9 +49,9 @@ module.exports.run = async (client, message, args, con, config) => {
         }
 
         const channel = await message.guild.createChannel(args.join('_').slice(subcmd.length + 1), 'text')
-          .then(channel => channel.setParent(config.parentRP))
-          .then(channel => channel.lockPermissions())
-          .then(channel => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
+          .then((channel) => channel.setParent(config.parentRP))
+          .then((channel) => channel.lockPermissions())
+          .then((channel) => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
           .catch(console.log);
 
         message.channel.send(`Your RP channel (<#${channel.id}>) got created! Have fun :3`);
@@ -109,10 +109,10 @@ module.exports.run = async (client, message, args, con, config) => {
       con.query(`SELECT * FROM rp_owner WHERE ownerID = '${message.author.id}' AND channelID = '${message.channel.id}'`, async (err, rows) => {
         if (err) throw err;
 
-        if (rows[0] || message.member.roles.find(role => role.name === config.teamRole)) {
+        if (rows[0] || message.member.roles.find((role) => role.name === config.teamRole)) {
           if (message.channel.parentID === RPChannelCategory) {
             message.channel.setParent(RPChannelArchive)
-              .then(channel => channel.lockPermissions());
+              .then((channel) => channel.lockPermissions());
             message.channel.send('This channel got moved to **archived rooms** because it got ended by the owner of the room!\nIf needed the team can reopen this channel within that time with `=rp reopen`.\nIt might takes 5 additional minutes before you can create a new channel.');
           } else {
             message.reply('you are not allowed to end the RP in this room!');
@@ -239,7 +239,7 @@ module.exports.run = async (client, message, args, con, config) => {
       if (message.member.roles.get(config.team)) {
         if (message.channel.parentID === RPChannelArchive) {
           message.channel.setParent(RPChannelCategory)
-            .then(channel => channel.lockPermissions());
+            .then((channel) => channel.lockPermissions());
           message.channel.send('This channel has been reopned. Don\'t forget to give the owner of the channel it\'s rights back and set the following setting(s).');
           client.channels.get(RPChannelLog).send(`The channel <#${message.channel.id}> (${message.channel.id}) got reopened!`);
           client.functions.get('usersetup_rp_channel').run('noIntro', message.channel, message)
