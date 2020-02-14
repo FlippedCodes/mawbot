@@ -111,10 +111,11 @@ client.on('ready', async () => {
   console.log('Posting bot status message!');
   client.functions.get('stat_message_log').run(client, config, con, fs);
 
+  // DISABLED: due to fa connection issues, spamming log and overloading hte internet
   // load and start FA notifications
   // TODO: Create fa notifications ticker
-  console.log('Starting up FA Notifiactions!');
-  client.functions.get('fa_notifications').run(client, fs, config, Discord);
+  // console.log('Starting up FA Notifiactions!');
+  // client.functions.get('fa_notifications').run(client, fs, config, Discord);
 
   await console.log('[ROOT] Startup complete! All modules operational!');
 });
