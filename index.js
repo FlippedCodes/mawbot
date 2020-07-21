@@ -96,8 +96,8 @@ client.on('ready', async () => {
 
   console.log(`[MawBot] Logged in as ${client.user.tag}!`);
   // set status
-  client.functions.get('setup_status').run(client, fs)
-    .then(() => console.log('Set status!'));
+  // client.functions.get('setup_status').run(client, fs)
+  //   .then(() => console.log('Set status!'));
 
   // set rolerequest message
   client.functions.get('setup_role_request').run(client, servers, config)
