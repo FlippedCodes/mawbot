@@ -52,7 +52,7 @@ client.commands = new Discord.Collection();
 fs.readdir('./commands/', (err, files) => {
   if (err) console.error(err);
 
-  let jsfiles = files.filter(f => f.split('.').pop() === 'js');
+  let jsfiles = files.filter((f) => f.split('.').pop() === 'js');
   if (jsfiles.length <= 0) {
     console.log('No CMD(s) to load!');
     return;
@@ -73,7 +73,7 @@ client.functions = new Discord.Collection();
 fs.readdir('./functions/', (err, files) => {
   if (err) console.error(err);
 
-  let jsfiles = files.filter(f => f.split('.').pop() === 'js');
+  let jsfiles = files.filter((f) => f.split('.').pop() === 'js');
   if (jsfiles.length <= 0) {
     console.log('No function(s) to load!');
     return;
@@ -245,7 +245,7 @@ client.on('message', async (message) => {
 
   // settings
   let teamlist;
-  if (message.guild.id === servers.main || message.guild.id === servers.testing) teamlist = message.guild.roles.get(config.team).members.map(s => s.presence.status).sort().join('\n');
+  if (message.guild.id === servers.main || message.guild.id === servers.testing) teamlist = message.guild.roles.get(config.team).members.map((s) => s.presence.status).sort().join('\n');
 
   con.query(`SELECT * FROM shared_channels WHERE channelID = '${message.channel.id}'`, async (err, rows) => {
     if (rows[0]) return client.functions.get('channel_shared').run(client, message, con);
@@ -268,7 +268,7 @@ client.on('message', async (message) => {
     }
     return;
   }
-  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID && !message.member.roles.find(role => role.id === config.team)) {
+  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID && !message.member.roles.find((role) => role.id === config.team)) {
     if (!checkinWarned.has(userID)) {
       let embed = new Discord.RichEmbed()
         .setDescription('Hey there,\nthanks for checking out our server, we can\'t check-in you just yet...\nPlease give <#496948681656893440> another read and come back when you\'ve done so. ^^');
