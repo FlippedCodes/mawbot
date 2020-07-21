@@ -7,7 +7,7 @@ module.exports.run = async (client, config, con, fs) => {
   con.query('SELECT * FROM stat_offline WHERE entry = \'1\'', async (err, rows) => {
     if (err) throw err;
     const embed = {
-      title: 'Bot back online!',
+      title: 'Mawbot - Bot back online!',
       fields: [{
         name: 'The time the bot was offline:',
         value: `${toTime(startupTime - rows[0].time * 1)}`,
