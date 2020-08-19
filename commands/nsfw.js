@@ -6,9 +6,7 @@ module.exports.run = async (client, message, args, con, config) => {
   function roleremoval(id) {
     if (message.guild.members.get(id)) {
       const userwithrole = message.guild.members.get(id);
-      userwithrole.removeRoles(config.NSFL)
-        .catch(console.log);
-      userwithrole.addRole(config.NSFW)
+      userwithrole.removeRoles([config.NSFL, config.NSFW])
         .catch(console.log);
     } else {
       message.channel.send('I am unable to remove the roles from the user. They are not in this server.');
