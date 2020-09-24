@@ -6,7 +6,7 @@ const mysql = require('mysql');
 
 const fs = require('fs');
 
-const checkinWarned = new Set();
+// const checkinWarned = new Set();
 
 let token;
 
@@ -89,7 +89,7 @@ fs.readdir('./functions/', (err, files) => {
   console.log(`Loaded ${jsfiles.length} function(s)!`);
 });
 
-client.on('ready', async () => {
+client.once('ready', async () => {
   await console.log('[ROOT] Starting modules...');
 
   const config = require('./config/main/config.json');
@@ -176,7 +176,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.message.channel.id === config.rolerequest) client.functions.get('role_request').run(client, reaction, requester, config, user, con);
 
   // check if reaction is from check-in
-  if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client, Discord);
+  // if (reaction.message.channel.id === config.checkin_channelID) return client.functions.get('reaction_add_check-in').run(reaction.emoji.name, user, reaction, config, client, Discord);
 
   // check if reaction is from keep me
   // if (reaction.message.channel.id === config.saveme_channelID && reaction.emoji.name === '👌') return client.functions.get('reaction_saveme').run(reaction, requester, user, con);
@@ -256,27 +256,27 @@ client.on('message', async (message) => {
   // other server fallthough
   if (message.channel.guild.id === !config.serverID) return;
 
-  let userID = message.author.id;
-  if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
-    checkinWarned.add(userID);
-    await message.react('👌');
-    await message.react('✋');
-    if (teamlist.indexOf('online' || 'dnd') === -1) {
-      let embed = new Discord.RichEmbed()
-        .setDescription('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
-      message.channel.send({ embed });
-    }
-    return;
-  }
-  if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID && !message.member.roles.find((role) => role.id === config.team)) {
-    if (!checkinWarned.has(userID)) {
-      let embed = new Discord.RichEmbed()
-        .setDescription('Hey there,\nthanks for checking out our server, we can\'t check-in you just yet...\nPlease give <#496948681656893440> another read and come back when you\'ve done so. ^^');
-      message.channel.send({ embed });
-      checkinWarned.add(userID);
-    }
-    return;
-  }
+  // let userID = message.author.id;
+  // if (message.isMentioned(config.team) && message.channel.id === config.checkin_channelID) {
+  //   checkinWarned.add(userID);
+  //   await message.react('👌');
+  //   await message.react('✋');
+  //   if (teamlist.indexOf('online' || 'dnd') === -1) {
+  //     let embed = new Discord.RichEmbed()
+  //       .setDescription('Sorry, but there are no team members currently online (idle excluded).\nPlease wait until someone is available!');
+  //     message.channel.send({ embed });
+  //   }
+  //   return;
+  // }
+  // if (!message.isMentioned(config.team) && message.channel.id === config.checkin_channelID && !message.member.roles.find((role) => role.id === config.team)) {
+  //   if (!checkinWarned.has(userID)) {
+  //     let embed = new Discord.RichEmbed()
+  //       .setDescription('Hey there,\nthanks for checking out our server, we can\'t check-in you just yet...\nPlease give <#496948681656893440> another read and come back when you\'ve done so. ^^');
+  //     message.channel.send({ embed });
+  //     checkinWarned.add(userID);
+  //   }
+  //   return;
+  // }
 
   let messageArray = message.content.split(/\s+/g);
   let command = messageArray[0];
