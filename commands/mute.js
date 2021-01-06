@@ -1,7 +1,7 @@
 const client = module.require('discord.js');
 
 module.exports.run = async (client, message, args, con, config) => {
-  if (!message.member.roles.find(role => role.name === config.teamRole)) {
+  if (!message.member.roles.find((role) => role.name === config.teamRole)) {
     message.channel.send(`Do I know you **${message.author.tag}**? Only the Devs can use this~`)
       .then(message.react('❌'));
     return;
