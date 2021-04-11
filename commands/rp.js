@@ -52,6 +52,7 @@ module.exports.run = async (client, message, args, con, config) => {
           .then((channel) => channel.setParent(config.parentRP))
           .then((channel) => channel.lockPermissions())
           .then((channel) => channel.overwritePermissions(message.author, { SEND_MESSAGES: true }))
+          .then((channel) => channel.overwritePermissions(channel.guild.defaultRole, { VIEW_CHANNEL: false }))
           .catch(console.log);
 
         message.channel.send(`Your RP channel (<#${channel.id}>) got created! Have fun :3`);
