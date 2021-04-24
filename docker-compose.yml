@@ -9,8 +9,8 @@ services:
     environment:
       BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DB_host: db
-      DB_name: ${DB_USERNAME}
-      DB_user: ${DB_USERNAME}
+      DB_name: mawbot
+      DB_user: mawbot
       DB_passw: ${DB_PASSWORD}
       FA_COOKIE_A: ${FURAFF_COOKIE_A}
       FA_COOKIE_B: ${FURAFF_COOKIE_B}
@@ -24,8 +24,8 @@ services:
       - db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
-      MYSQL_DATABASE: ${DB_USERNAME}
-      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_DATABASE: mawbot
+      MYSQL_USER: mawbot
       MYSQL_PASSWORD: ${DB_PASSWORD}
 volumes:
   db_data:
