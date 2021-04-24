@@ -39,8 +39,8 @@ jobs:
       - name: Build app
         run: docker-compose build
 
-        - name: Spin up DB
-        run: docker-compose up -d db
+      - name: Spin up DB
+      run: docker-compose up -d db
 
       # - name: Update DB structure
       #   run: npm i sequelize-cli
