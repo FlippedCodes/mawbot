@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  bot:
+    build:
+      context: ./
+    depends_on:
+      - db
+    restart: always
+    environment:
+      BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DB_host: db
+      DB_name: ${DB_USERNAME}
+      DB_user: ${DB_USERNAME}
+      DB_passw: ${DB_PASSWORD}
+      FA_COOKIE_A: ${FURAFF_COOKIE_A}
+      FA_COOKIE_B: ${FURAFF_COOKIE_B}
+
+  db:
+    image: mariadb:latest
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
+      MYSQL_DATABASE: ${DB_USERNAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+volumes:
+  db_data:
