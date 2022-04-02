@@ -1,11 +1,25 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
+
+# 
+# 
+# 
+# 
+# THIS DISCORD BOT HAS BEEN DELAUNCHED AND SHOULD NOT BE USED IN PRODUCTION ANYMORE
+# 
+# 
+# 
+# 
+
+
+
+
 name: Deploy
 
 on:
   push:
-    branches: [ ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -32,11 +46,11 @@ jobs:
       #   with:
       #     node-version: ${{ matrix.node-version }}
 
-      - name: Update 3rd party docker containers
-        run: docker-compose pull
+      # - name: Update 3rd party docker containers
+      #   run: docker-compose pull
 
-      - name: Build app
-        run: docker-compose build
+      # - name: Build app
+      #   run: docker-compose build
 
       # - name: Spin up DB
       #   run: docker-compose up -d db
@@ -45,5 +59,8 @@ jobs:
       #   run: npm i sequelize-cli
       #   run: sequelize db:migrate
 
+      # - name: Spin up containers
+      #   run: docker-compose up -d
+
       - name: Spin up containers
-        run: docker-compose up -d
+        run: docker-compose down -v
